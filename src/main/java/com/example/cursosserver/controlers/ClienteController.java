@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/Clientes")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin("*")
 @Log4j2
 public class ClienteController {
 
