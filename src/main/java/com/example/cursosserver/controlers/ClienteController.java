@@ -1,9 +1,9 @@
 package com.example.cursosserver.controlers;
 
-import com.example.cursosserver.dtos.CursoDto;
+import com.example.cursosserver.dtos.ClienteDto;
 import com.example.cursosserver.exceptions.ObjetoInexistenteException;
-import com.example.cursosserver.models.Curso;
-import com.example.cursosserver.services.CursoService;
+import com.example.cursosserver.models.Cliente;
+import com.example.cursosserver.services.ClienteService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.extern.log4j.Log4j2;
@@ -15,18 +15,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
-@CrossOrigin("*")
+@RequestMapping("/Clientes")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @Log4j2
-public class CursoController {
+public class ClienteController {
 
     @Autowired
-    private CursoService service;
+    private ClienteService service;
 
-    @PostMapping("/Cursos/New")
-    public ResponseEntity<String> save(@RequestBody @Valid CursoDto dto){
+    @PostMapping("/New")
+    public ResponseEntity<String> save(@RequestBody @Valid ClienteDto dto){
         try {
-            this.service.salvarCurso(dto.tranform());
+            this.service.salvarCliente(dto.tranform());
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         catch(RuntimeException e){
@@ -34,8 +34,8 @@ public class CursoController {
         }
     }
 
-    @GetMapping("/Cursos/Todos")
-    public ResponseEntity<List<Curso>> listar(){
+    @GetMapping("/Todos")
+    public ResponseEntity<List<Cliente>> listar(){
 
         try{
             return ResponseEntity.status(HttpStatus.OK).body(service.listarTodos());
@@ -45,25 +45,12 @@ public class CursoController {
         }
     }
 
-    @GetMapping("/Cursos/Details")
-    public ResponseEntity<Curso> getCurso(@RequestParam(name = "nome") @Valid String nome){
+    @PutMapping("/Edit")
+    public ResponseEntity<String> atualizar(@RequestBody @Valid ClienteDto dto
+            , @RequestParam(name = "id") @NotBlank Long id){
 
         try{
-            Curso curso = service.getByNome(nome);
-            System.out.println("Curso: [ "+ nome +" ] Requisitado!");
-            return ResponseEntity.status(HttpStatus.OK).body(curso);
-
-        }catch(ObjetoInexistenteException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
-
-    @PutMapping("/Cursos/Edit")
-    public ResponseEntity<String> atualizar(@RequestBody @Valid CursoDto dto
-            , @RequestParam(name = "nome") @NotBlank String nome){
-
-        try{
-            service.atualizarCurso(dto.tranform(), nome);
+            service.atualizarCliente(dto.tranform(), id);
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         catch(ObjetoInexistenteException e){
@@ -74,12 +61,11 @@ public class CursoController {
         }
     }
 
-    @DeleteMapping("/Cursos/Delete")
-    public ResponseEntity<String> remover(@RequestParam(name = "nome") @NotBlank String nome){
+    @DeleteMapping("/Delete")
+    public ResponseEntity<String> remover(@RequestParam(name = "id") @NotBlank Long id){
 
-        System.out.println("Removendo: [ " + nome +" ]");
         try{
-            service.apagarCurso(nome);
+            service.apagarCliente(id);
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         catch(ObjetoInexistenteException e){
