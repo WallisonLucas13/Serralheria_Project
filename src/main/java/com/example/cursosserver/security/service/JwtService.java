@@ -2,6 +2,7 @@ package com.example.cursosserver.security.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +49,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + Integer.parseInt(EXPIRATION)))
-                .signWith(getAuthKey())
+                .signWith(getAuthKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
