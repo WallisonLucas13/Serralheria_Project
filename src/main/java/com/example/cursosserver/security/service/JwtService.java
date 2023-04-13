@@ -23,13 +23,15 @@ public class JwtService {
 
     @Value("${EXPIRATION}")
     private String EXPIRATION;
+
     public String extractUsername(String token) {
+        System.out.println(extractClaim(token, Claims::getSubject));
+        
         return extractClaim(token, Claims::getSubject);
     }
 
     private <T> T extractClaim(String token, Function<Claims, T> f){
-       Claims claims = extractAllClaims(token);
-       return f.apply(claims);
+       return f.apply(extractAllClaims(token));
     }
 
     private Claims extractAllClaims(String token){
@@ -58,9 +60,7 @@ public class JwtService {
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails){
-        String username = extractUsername(token);
-
-        return (username.equals(userDetails.getUsername()) && !tokenExpired(token));
+        return extractUsername(token).equals(userDetails.getUsername()) && !tokenExpired(token);
     }
 
     private boolean tokenExpired(String token) {
