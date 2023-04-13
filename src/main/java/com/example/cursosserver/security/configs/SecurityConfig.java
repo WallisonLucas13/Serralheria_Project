@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/Clientes/Todos")
                 .hasRole("USER")
                 .anyRequest()
-                .authenticated()
+                .hasRole("USER")
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
