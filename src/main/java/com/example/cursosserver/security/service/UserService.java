@@ -32,6 +32,7 @@ public class UserService {
         boolean exist = repository.existsByUsername(userModel.getUsername());
 
         if(exist){
+            System.out.println("Existe!");
             throw new RuntimeException();
         }
 
