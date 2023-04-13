@@ -35,25 +35,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
 
         String header = request.getHeader("Authorization");
-        System.out.println("Request Chegou, aqui está o header: " + header);
 
         if(header == null || !header.startsWith(PREFIX)){
             filterChain.doFilter(request, response);
-            System.out.println("Request Chegou, mas não tem o prefixo: " + header);
             return;
         }
 
         String token = header.substring(7);
         String username = jwtService.extractUsername(token);
 
-        System.out.println("Header passou, aqui está o token: " + token);
-        System.out.println("Header passou, aqui está o username: " + username);
-
         if(username != null &&
                 SecurityContextHolder.getContext().getAuthentication() == null){
 
             UserDetails user = service.loadUserByUsername(username);
-            System.out.println("Username passou, aqui está o user: " + user);
 
             if(jwtService.isTokenValid(token, user)){
 
@@ -61,7 +55,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         user, null, user.getAuthorities()
                 );
 
-                System.out.println("Token é válido, aqui está o auth: " + auth);
                 auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(auth);
