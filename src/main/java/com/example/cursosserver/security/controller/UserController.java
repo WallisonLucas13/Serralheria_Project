@@ -22,9 +22,11 @@ public class UserController {
         System.out.println("Login");
         try{
             AuthenticationResponse res = service.login(dto.toUser());
+            System.out.println("Entrou");
             return ResponseEntity.status(HttpStatus.OK).body(res);
         }
         catch(IllegalArgumentException e){
+            System.out.println("Acesso Negado!");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
