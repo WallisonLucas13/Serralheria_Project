@@ -31,6 +31,8 @@ public class SecurityConfig {
                 .permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/register")
                 .permitAll()
+                .requestMatchers(HttpMethod.GET, "/Clientes/Todos")
+                .hasRole("USER")
                 .anyRequest()
                 .authenticated()
                 .and()
