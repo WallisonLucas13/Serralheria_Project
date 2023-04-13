@@ -25,7 +25,7 @@ public class JwtService {
     private String EXPIRATION;
 
     public String extractUsername(String token) {
-        System.out.println("Extract:\n" + Jwts.parser().setSigningKey(getAuthKey()).parseClaimsJws(token).getBody());
+        //System.out.println("Extract:\n" + Jwts.parser().setSigningKey(getAuthKey()).parseClaimsJws(token).getBody());
         System.out.println(extractClaim(token, Claims::getSubject));
 
         return extractClaim(token, Claims::getSubject);
@@ -50,8 +50,8 @@ public class JwtService {
         System.out.println(userDetails.getUsername());
 
         return Jwts.builder()
-                .setSubject(userDetails.getUsername())
                 .setClaims(extraClaims)
+                .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + Integer.parseInt(EXPIRATION)))
                 .signWith(getAuthKey(), SignatureAlgorithm.HS256)
