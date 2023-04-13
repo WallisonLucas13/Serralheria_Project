@@ -25,7 +25,7 @@ public class JwtService {
     private String EXPIRATION;
 
     public String extractUsername(String token) {
-        System.out.println(Jwts.parser().setSigningKey(getAuthKey()).parseClaimsJws(token).getBody().getSubject());
+        System.out.println("Extract:\n" + Jwts.parser().setSigningKey(getAuthKey()).parseClaimsJws(token).getBody());
         System.out.println(extractClaim(token, Claims::getSubject));
 
         return extractClaim(token, Claims::getSubject);
