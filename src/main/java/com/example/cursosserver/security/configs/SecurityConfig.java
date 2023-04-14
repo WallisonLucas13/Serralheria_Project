@@ -28,6 +28,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/api/login")
                 .permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/login/access")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
