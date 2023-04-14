@@ -50,10 +50,12 @@ public class SendMailService{
 
             helper.setSubject(mailBody.titleMail(adress.getAdress()));
             helper.setText(mailBody.attachmentBody());
+            helper.setFrom("Serralheria Qualidade e Pontualidade");
             helper.setTo(adress.getAdress());
 
             Resource file = resourceLoader.getResource("file:files\\" + orcamento);
-            helper.addAttachment(file.getFilename(), file);
+            helper.addAttachment("Orçamento", file);
+            helper.setText(mailBody.attachmentBodyEnd());
             javaMailSender.send(mimeMessage);
         }
         catch(Exception e){
