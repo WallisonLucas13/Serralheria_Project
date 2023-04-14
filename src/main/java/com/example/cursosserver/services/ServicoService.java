@@ -22,7 +22,6 @@ public class ServicoService {
     @Autowired
     private ClienteService clienteService;
 
-
     @Autowired
     private SendMailService sendMailService;
 
@@ -44,9 +43,6 @@ public class ServicoService {
 
         if(!exist){throw new ObjetoInexistenteException("Servico Inexistente!");}
 
-        System.out.println(exist);
-
-        System.out.println(id);
         servico.setId(id);
         repository.save(servico);
     }
@@ -57,7 +53,6 @@ public class ServicoService {
             throw new ObjetoInexistenteException("Cliente Inexistente!");
         }
 
-        System.out.println(id);
         repository.deleteById(id);
     }
 
@@ -159,9 +154,6 @@ public class ServicoService {
 
         Cliente cliente = clienteService.getById(adress.getIdCliente());
         Servico servico = repository.findById(id).get();
-
-        System.out.println("Nome Cliente: " + cliente.getNome());
-        System.out.println("Nome Serviço: " + servico.getNome());
 
         sendMailService.createMailAndSendWithAttachments(adress, cliente, servico);
     }

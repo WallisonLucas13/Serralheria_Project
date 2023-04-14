@@ -257,7 +257,6 @@ public class CreateAttachmentFile {
             document.add(tableDescontoAplicado);
         }
 
-        //document.add(paragraphEmpty());
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 

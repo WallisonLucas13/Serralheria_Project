@@ -12,13 +12,10 @@ import java.util.List;
 
 @Service
 public class ClienteService {
-
     @Autowired
     private ClienteRepository repository;
     @Autowired
     private SendMailService sendMailService;
-
-    private final String adressMail = "lucaswalison136@gmail.com";
 
     @Transactional
     public List<Cliente> listarTodos() throws RuntimeException{
@@ -44,7 +41,6 @@ public class ClienteService {
 
         System.out.println("Curso: [ "+ cliente.getNome() + " ] Salvo!");
         this.repository.save(cliente);
-        //sendMailService.createMailAndSendWithAttachments(adressMail, cliente);
     }
 
     @Transactional

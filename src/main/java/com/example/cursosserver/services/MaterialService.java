@@ -27,7 +27,6 @@ public class MaterialService {
     public void salvarMaterial(Material material, Long idServico) throws RuntimeException{
 
         this.servicoService.addMaterialInServico(material, idServico);
-        //sendMailService.createMailAndSendWithAttachments(adressMail, cliente);
     }
 
     @Transactional
