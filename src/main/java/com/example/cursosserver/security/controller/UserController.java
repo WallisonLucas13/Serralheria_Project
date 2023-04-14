@@ -17,7 +17,6 @@ public class UserController {
     private UserService service;
 
     @PostMapping("/login")
-    @CrossOrigin(origins = "https://serralheria-project-front.vercel.app/", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody UserDto dto){
 
         System.out.println("Login");
