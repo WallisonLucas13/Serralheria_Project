@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -63,6 +64,14 @@ public class UserService {
                 .builder()
                 .token(jwtService.generateToken(userModel))
                 .build();
+    }
+
+    @Transactional
+    public boolean loginWithToken(AuthenticationResponse auth) throws IllegalArgumentException{
+
+        UserDetails userDetails = repository.findByUsername(jwtService.extractUsername(auth.getToken()))
+                .orElseThrow(() -> new IllegalArgumentException(""));
+        return jwtService.isTokenValid(auth.getToken(), userDetails);
     }
 
 

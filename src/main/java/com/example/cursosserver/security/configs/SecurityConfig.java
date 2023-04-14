@@ -38,5 +38,5 @@ public class SecurityConfig {
                 .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
-    
+
 }

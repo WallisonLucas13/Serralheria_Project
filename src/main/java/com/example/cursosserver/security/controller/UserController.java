@@ -29,6 +29,22 @@ public class UserController {
         }
     }
 
+    @PostMapping("/login/access")
+    public ResponseEntity<AuthenticationResponse> loginWithToken(@RequestBody AuthenticationResponse auth){
+
+        System.out.println("Login");
+        try{
+            if(service.loginWithToken(auth)){
+                return ResponseEntity.status(HttpStatus.OK).build();
+            }
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        catch(IllegalArgumentException e){
+            System.out.println("Acesso Negado!");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody UserDto dto){
 
