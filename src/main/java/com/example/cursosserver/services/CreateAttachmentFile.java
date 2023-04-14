@@ -7,12 +7,14 @@ import com.example.cursosserver.models.Servico;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,7 +34,6 @@ public class CreateAttachmentFile {
         Document document = new Document();
 
         String documentName = "Orçamento.pdf";
-        String path = "C:\\Users\\Wallison\\Documents\\Projetos Spring-Boot\\Crud-SpringBoot\\files\\" + documentName;
 
         String empresaName = "Serralheria Qualidade e Pontualidade";
         String CNPJ = "41.221.179/0001-21";
@@ -46,7 +47,9 @@ public class CreateAttachmentFile {
 
 
         //PdfWriter.getInstance(document, new FileOutputStream(path));
-        Resource resource = resourceLoader.getResource("file:files\\logo.jpg");
+        Resource resource = resourceLoader.getResource("file:files\\" + documentName);
+        PdfWriter.getInstance(document, new FileOutputStream(resource.getFile()));
+
         System.out.println("CAMINHO: " + resource.getURL());
 
         Rectangle rectangle = new Rectangle(PageSize.A4);

@@ -3,10 +3,13 @@ package com.example.cursosserver.services;
 import com.example.cursosserver.dtos.OrcamentoAdressTo;
 import com.example.cursosserver.models.Cliente;
 import com.example.cursosserver.models.Servico;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -41,14 +44,6 @@ public class SendMailService{
     public void createMailAndSendWithAttachments(OrcamentoAdressTo adress, Cliente cliente, Servico servico) {
 
         try {
-            createAttachmentFile.create(cliente, servico, adress);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        /*
-        try {
-
             String orcamento = createAttachmentFile.create(cliente, servico, adress);
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
@@ -58,7 +53,6 @@ public class SendMailService{
             helper.setTo(adress.getAdress());
 
             Resource file = resourceLoader.getResource("file:files\\" + orcamento);
-            System.out.println(file.contentLength());
             helper.addAttachment(file.getFilename(), file);
             javaMailSender.send(mimeMessage);
         }
@@ -66,7 +60,6 @@ public class SendMailService{
             System.out.println(e.getMessage());
         }
 
-         */
     }
 
 }
