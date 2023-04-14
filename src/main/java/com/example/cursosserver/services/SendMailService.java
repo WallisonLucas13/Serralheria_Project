@@ -54,7 +54,7 @@ public class SendMailService{
             helper.setTo(adress.getAdress());
 
             Resource file = resourceLoader.getResource("file:files\\" + orcamento);
-            helper.addAttachment("Orçamento", file);
+            helper.addAttachment(file.getFilename(), file);
             helper.setText(mailBody.attachmentBodyEnd());
             javaMailSender.send(mimeMessage);
         }

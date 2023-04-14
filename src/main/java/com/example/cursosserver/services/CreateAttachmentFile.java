@@ -33,7 +33,7 @@ public class CreateAttachmentFile {
 
         Document document = new Document();
 
-        String documentName = "Orçamento.pdf";
+        String documentName = "Orcamento.pdf";
 
         String empresaName = "Serralheria Qualidade e Pontualidade";
         String CNPJ = "41.221.179/0001-21";
@@ -49,8 +49,6 @@ public class CreateAttachmentFile {
         //PdfWriter.getInstance(document, new FileOutputStream(path));
         Resource resource = resourceLoader.getResource("file:files\\" + documentName);
         PdfWriter.getInstance(document, new FileOutputStream(resource.getFile()));
-
-        System.out.println("CAMINHO: " + resource.getURL());
 
         Rectangle rectangle = new Rectangle(PageSize.A4);
 
