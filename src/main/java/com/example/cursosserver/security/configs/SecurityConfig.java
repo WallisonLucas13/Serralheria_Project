@@ -10,8 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CsrfTokenRepository;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -25,16 +23,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .cors()
-                .and()
+                .csrf()
+                .disable()
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/api/login")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
-                .csrf()
-                .disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -42,10 +38,5 @@ public class SecurityConfig {
                 .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
-
-    private CsrfTokenRepository csrfTokenRepository() {
-        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-        repository.setHeaderName("X-XSRF-TOKEN");
-        return repository;
-    }
+    
 }
