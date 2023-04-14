@@ -21,9 +21,7 @@ public class UserController {
 
         System.out.println("Login");
         try{
-            AuthenticationResponse res = service.login(dto.toUser());
-            System.out.println("Entrou");
-            return ResponseEntity.status(HttpStatus.OK).body(res);
+            return ResponseEntity.status(HttpStatus.OK).body(service.login(dto.toUser()));
         }
         catch(IllegalArgumentException e){
             System.out.println("Acesso Negado!");
