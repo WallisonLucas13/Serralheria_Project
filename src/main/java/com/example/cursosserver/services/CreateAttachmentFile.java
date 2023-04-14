@@ -8,7 +8,10 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 import java.io.FileOutputStream;
@@ -23,12 +26,15 @@ public class CreateAttachmentFile {
     @Value("${MAIL.USERNAME}")
     private String email;
 
+    @Autowired
+    private ResourceLoader resourceLoader;
+
     public String create(Cliente cliente, Servico servico, OrcamentoAdressTo orcamentoAdressTo) throws DocumentException, IOException {
 
         Document document = new Document();
 
         String documentName = "Orçamento.pdf";
-        String path = "\\files\\" + documentName;
+        String path = "C:\\Users\\Wallison\\Documents\\Projetos Spring-Boot\\Crud-SpringBoot\\files\\" + documentName;
 
         String empresaName = "Serralheria Qualidade e Pontualidade";
         String CNPJ = "41.221.179/0001-21";
@@ -42,6 +48,8 @@ public class CreateAttachmentFile {
 
 
         PdfWriter.getInstance(document, new FileOutputStream(path));
+        Resource resource = resourceLoader.getResource("file:files\\logo.jpg");
+        System.out.println("CAMINHO: " + resource.getURL());
 
         Rectangle rectangle = new Rectangle(PageSize.A4);
 
@@ -56,9 +64,6 @@ public class CreateAttachmentFile {
         rectangle.setBorder(Rectangle.BOX);
         rectangle.setBorderWidth(3);
         rectangle.setBorderColor(BaseColor.BLACK);
-
-        System.out.println(rectangle.getHeight());
-        System.out.println(rectangle.getWidth());
 
         document.setPageSize(rectangle);
         document.open();
