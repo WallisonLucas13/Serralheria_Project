@@ -25,6 +25,8 @@ public class SecurityConfig {
         return http
                 .csrf()
                 .disable()
+                .cors()
+                .and()
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/api/login")
                 .permitAll()
