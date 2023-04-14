@@ -7,14 +7,12 @@ import com.example.cursosserver.models.Servico;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -47,7 +45,7 @@ public class CreateAttachmentFile {
         boolean ocultarDesconto = orcamentoAdressTo.isOcultarDesconto();
 
 
-        PdfWriter.getInstance(document, new FileOutputStream(path));
+        //PdfWriter.getInstance(document, new FileOutputStream(path));
         Resource resource = resourceLoader.getResource("file:files\\logo.jpg");
         System.out.println("CAMINHO: " + resource.getURL());
 

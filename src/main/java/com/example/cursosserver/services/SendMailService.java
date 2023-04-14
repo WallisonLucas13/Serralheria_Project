@@ -3,13 +3,10 @@ package com.example.cursosserver.services;
 import com.example.cursosserver.dtos.OrcamentoAdressTo;
 import com.example.cursosserver.models.Cliente;
 import com.example.cursosserver.models.Servico;
-import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -43,6 +40,7 @@ public class SendMailService{
 
     public void createMailAndSendWithAttachments(OrcamentoAdressTo adress, Cliente cliente, Servico servico){
 
+        /*
         try {
 
             String orcamento = createAttachmentFile.create(cliente, servico, adress);
@@ -61,6 +59,8 @@ public class SendMailService{
         catch(Exception e){
             System.out.println(e.getMessage());
         }
+
+         */
     }
 
 }
