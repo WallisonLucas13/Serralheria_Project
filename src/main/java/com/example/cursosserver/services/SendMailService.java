@@ -50,7 +50,7 @@ public class SendMailService{
 
             helper.setSubject(mailBody.titleMail(adress.getAdress()));
             helper.setText(mailBody.attachmentBody());
-            helper.setFrom("Serralheria Qualidade e Pontualidade");
+            helper.setFrom(createAttachmentFile.email);
             helper.setTo(adress.getAdress());
 
             Resource file = resourceLoader.getResource("file:files\\" + orcamento);

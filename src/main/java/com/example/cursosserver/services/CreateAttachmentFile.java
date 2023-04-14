@@ -24,7 +24,7 @@ import java.util.List;
 public class CreateAttachmentFile {
 
     @Value("${MAIL.USERNAME}")
-    private String email;
+    public String email;
 
     @Autowired
     private ResourceLoader resourceLoader;
