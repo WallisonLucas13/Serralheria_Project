@@ -10,6 +10,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
+        registry.addMapping("/**")
+                .allowedOrigins("https://serralheria-project-front.vercel.app")
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .exposedHeaders("X-Get-Header");
     }
 }
