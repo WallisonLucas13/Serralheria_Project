@@ -8,6 +8,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.FileOutputStream;
@@ -19,19 +20,19 @@ import java.util.List;
 @Service
 public class CreateAttachmentFile {
 
+    @Value("${MAIL.USERNAME}")
+    private String email;
+
     public String create(Cliente cliente, Servico servico, OrcamentoAdressTo orcamentoAdressTo) throws DocumentException, IOException {
 
         Document document = new Document();
 
-        String logoPath = "C:\\Users\\Wallison\\Documents\\Projetos Spring-Boot\\Crud-SpringBoot\\files\\logo.jpg";
-        Image logo = Image.getInstance(logoPath);
-
         String documentName = "Orçamento.pdf";
-        String path = "C:\\Users\\Wallison\\Documents\\Projetos Spring-Boot\\Crud-SpringBoot\\files\\" + documentName;
+        String path = "\\files\\" + documentName;
 
         String empresaName = "Serralheria Qualidade e Pontualidade";
         String CNPJ = "41.221.179/0001-21";
-        String email = "pontualidade.pontualidade@gmail.com";
+        String email = this.email;
         String telefone = "(34) 98848-3279";
         List<Material> materiais = servico.getMateriais();
 
