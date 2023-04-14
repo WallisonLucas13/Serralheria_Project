@@ -38,8 +38,14 @@ public class SendMailService{
         }
     }
 
-    public void createMailAndSendWithAttachments(OrcamentoAdressTo adress, Cliente cliente, Servico servico){
+    public void createMailAndSendWithAttachments(OrcamentoAdressTo adress, Cliente cliente, Servico servico) {
 
+        try {
+            createAttachmentFile.create(cliente, servico, adress);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         /*
         try {
 
