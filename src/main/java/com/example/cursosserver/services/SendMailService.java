@@ -49,13 +49,12 @@ public class SendMailService{
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 
             helper.setSubject(mailBody.titleMail(adress.getAdress()));
-            helper.setText(mailBody.attachmentBody());
-            helper.setFrom(createAttachmentFile.email);
+            helper.setFrom("Serralheria");
             helper.setTo(adress.getAdress());
 
             Resource file = resourceLoader.getResource("file:files\\" + orcamento);
             helper.addAttachment(file.getFilename(), file);
-            helper.setText(mailBody.attachmentBodyEnd());
+            helper.setText(mailBody.attachmentBody());
             javaMailSender.send(mimeMessage);
         }
         catch(Exception e){
