@@ -50,6 +50,8 @@ public class UserService {
     @Transactional
     public AuthenticationResponse login(UserModel model) throws IllegalArgumentException{
 
+        System.out.println("Entrou no método!");
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                     model.getUsername(),
@@ -57,8 +59,12 @@ public class UserService {
                 )
         );
 
+        System.out.println("Find...");
+
         UserModel userModel = repository.findByUsername(model.getUsername())
                 .orElseThrow(IllegalArgumentException::new);
+
+        System.out.println("Usuário Encontrado: " + userModel.getUsername());
 
         return AuthenticationResponse
                 .builder()
