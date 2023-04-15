@@ -17,7 +17,7 @@ public class MailBody {
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-        return "Nós da Serralheria Qualidade e Pontualidade Agradecemos por consumir nossos serviços! Estamos focados em fornecer o melhor para nossos clientes!\n\n\n" +
+        return "Nós da Serralheria Qualidade e Pontualidade Agradecemos por utilizar nossos serviços! Estamos focados em fornecer o melhor para nossos clientes!\n\n\n" +
                 "Data de Emissão: " + format.format(date);
     }
 
