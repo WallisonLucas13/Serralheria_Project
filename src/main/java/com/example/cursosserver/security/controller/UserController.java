@@ -19,12 +19,10 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody UserDto dto){
 
-        System.out.println("Login");
         try{
             return ResponseEntity.status(HttpStatus.OK).body(service.login(dto.toUser()));
         }
         catch(IllegalArgumentException e){
-            System.out.println("Acesso Negado!");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
@@ -32,7 +30,6 @@ public class UserController {
     @PostMapping("/login/access")
     public ResponseEntity<AuthenticationResponse> loginWithToken(@RequestBody AuthenticationResponse auth){
 
-        System.out.println("Login");
         try{
             if(service.loginWithToken(auth)){
                 return ResponseEntity.status(HttpStatus.OK).build();
@@ -40,7 +37,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         catch(IllegalArgumentException e){
-            System.out.println("Acesso Negado!");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
