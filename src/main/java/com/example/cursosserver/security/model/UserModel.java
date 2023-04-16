@@ -17,10 +17,10 @@ import java.util.UUID;
 @Setter
 public class UserModel implements UserDetails {
 
-    public UserModel(String username, String password, String key){
+    public UserModel(String username, String password, String chaveAccess){
         this.username = username;
         this.password = password;
-        this.key = key;
+        this.chaveAccess = chaveAccess;
     }
 
     @Id
@@ -33,7 +33,7 @@ public class UserModel implements UserDetails {
     @Column(unique = true, nullable = false)
     private String password;
 
-    private String key;
+    private String chaveAccess;
 
     @ManyToMany(cascade = CascadeType.ALL)
     private List<RoleModel> roles;
