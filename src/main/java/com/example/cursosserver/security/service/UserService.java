@@ -71,9 +71,9 @@ public class UserService {
         if(roles.size() == 2){
                 String key = new BCryptPasswordEncoder().encode(ADMIN_KEY);
                 System.out.println(key);
-                System.out.println(model.getChaveAccess());
-                
-                if(!key.equals(model.getChaveAccess())){
+                System.out.println(userModel.getChaveAccess());
+
+                if(!key.equals(userModel.getChaveAccess())){
                     throw new IllegalArgumentException();
                 };
                 System.out.println("Chave Correta!");
