@@ -41,7 +41,7 @@ public class UserService {
         }
 
         userModel.setPassword(new BCryptPasswordEncoder().encode(userModel.getPassword()));
-        userModel.setRoles(List.of(generateRoleUser(), generateRoleAdmin()));
+        userModel.setRoles(List.of(generateRoleUser()));
         userModel.setChaveAccess(new BCryptPasswordEncoder().encode(userModel.getChaveAccess()));
 
         repository.save(userModel);
@@ -73,7 +73,6 @@ public class UserService {
                 if(!model.getChaveAccess().equals(ADMIN_KEY)){
                     throw new IllegalArgumentException();
                 };
-                System.out.println("Chave Correta!");
             }
 
         return AuthenticationResponse
@@ -97,9 +96,4 @@ public class UserService {
         return roleModel;
     }
 
-    private RoleModel generateRoleAdmin(){
-        RoleModel roleModel = new RoleModel();
-        roleModel.setRoleName(RoleName.ROLE_ADMIN);
-        return roleModel;
-    }
 }

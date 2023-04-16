@@ -41,6 +41,7 @@ public class UserController {
         }
     }
 
+    /*
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody UserDto dto){
 
@@ -52,4 +53,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+
+     */
 }

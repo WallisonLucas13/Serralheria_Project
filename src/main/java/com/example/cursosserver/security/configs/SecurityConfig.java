@@ -32,8 +32,6 @@ public class SecurityConfig {
                 .permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/login/access")
                 .permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/register")
-                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
