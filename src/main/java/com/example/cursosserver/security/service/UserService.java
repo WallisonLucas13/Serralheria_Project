@@ -8,6 +8,7 @@ import com.example.cursosserver.security.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,6 +28,9 @@ public class UserService {
 
     private final AuthenticationManager authenticationManager;
 
+    @Value("${ADMIN_KEY}")
+    private String ADMIN_KEY;
+
     @Transactional
     public AuthenticationResponse register(UserModel userModel){
 
@@ -37,7 +41,7 @@ public class UserService {
         }
 
         userModel.setPassword(new BCryptPasswordEncoder().encode(userModel.getPassword()));
-        userModel.setRoles(List.of(generateRoleUser()));
+        userModel.setRoles(List.of(generateRoleUser(), generateRoleAdmin()));
 
         repository.save(userModel);
 
@@ -59,6 +63,18 @@ public class UserService {
 
         UserModel userModel = repository.findByUsername(model.getUsername())
                 .orElseThrow(IllegalArgumentException::new);
+
+        List<String> roles = userModel.getRoles().stream()
+                .map(r -> r.getRoleName().name()).toList();
+
+        if(roles.size() == 2){
+            List<String> list = roles.stream().filter(r -> r.equals(RoleName.ROLE_ADMIN)).toList();
+            if(!list.isEmpty()){
+                if(!model.getKey().equals(ADMIN_KEY)){
+                    throw new IllegalArgumentException();
+                };
+            }
+        }
 
         return AuthenticationResponse
                 .builder()

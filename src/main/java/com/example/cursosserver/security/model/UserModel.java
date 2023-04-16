@@ -32,6 +32,8 @@ public class UserModel implements UserDetails {
     @Column(unique = true, nullable = false)
     private String password;
 
+    private String key;
+
     @ManyToMany(cascade = CascadeType.ALL)
     private List<RoleModel> roles;
 
