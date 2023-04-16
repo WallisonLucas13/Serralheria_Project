@@ -69,11 +69,9 @@ public class UserService {
                 .map(r -> r.getRoleName().name()).toList();
 
         if(roles.size() == 2){
-            roles.stream().forEach(r -> System.out.println(r));
-                System.out.println("De fato é ADMIN");
                 String key = new BCryptPasswordEncoder().encode(ADMIN_KEY);
 
-                if(!new BCryptPasswordEncoder().matches(key, model.getChaveAccess())){
+                if(!key.equals(model.getChaveAccess())){
                     throw new IllegalArgumentException();
                 };
                 System.out.println("Chave Correta!");
