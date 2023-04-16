@@ -70,7 +70,7 @@ public class UserService {
         if(roles.size() == 2){
             List<String> list = roles.stream().filter(r -> r.equals(RoleName.ROLE_ADMIN)).toList();
             if(!list.isEmpty()){
-                if(!model.getKey().equals(ADMIN_KEY)){
+                if(!model.getChaveAccess().equals(ADMIN_KEY)){
                     throw new IllegalArgumentException();
                 };
             }
