@@ -70,15 +70,12 @@ public class UserService {
 
         if(roles.size() == 2){
             roles.stream().forEach(r -> System.out.println(r));
-            List<String> list = roles.stream().filter(r -> r.equals(RoleName.ROLE_ADMIN)).toList();
-            if(!list.isEmpty()){
                 System.out.println("De fato é ADMIN");
                 if(!new BCryptPasswordEncoder().matches(ADMIN_KEY, model.getChaveAccess())){
                     throw new IllegalArgumentException();
                 };
                 System.out.println("Chave Correta!");
             }
-        }
 
         return AuthenticationResponse
                 .builder()
