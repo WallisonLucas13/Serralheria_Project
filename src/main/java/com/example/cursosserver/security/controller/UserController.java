@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin("*")
@@ -20,7 +22,7 @@ public class UserController {
     public ResponseEntity<AuthenticationResponse> login(@RequestBody UserDto dto){
 
         try{
-            return ResponseEntity.status(HttpStatus.OK).body(service.login(dto.toUser()));
+            return ResponseEntity.status(HttpStatus.OK).body(service.login(dto));
         }
         catch(Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -41,7 +43,6 @@ public class UserController {
         }
     }
 
-    /*
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody UserDto dto){
 
@@ -54,5 +55,8 @@ public class UserController {
         }
     }
 
-     */
+    @GetMapping("/users")
+    public ResponseEntity<List<String>> users(){
+        return ResponseEntity.status(HttpStatus.OK).body(service.findAllUsers());
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.cursosserver.security.service;
 
+import com.example.cursosserver.security.dto.UserDto;
 import com.example.cursosserver.security.enums.RoleName;
 import com.example.cursosserver.security.model.AuthenticationResponse;
 import com.example.cursosserver.security.model.RoleModel;
@@ -16,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -42,7 +44,6 @@ public class UserService {
 
         userModel.setPassword(new BCryptPasswordEncoder().encode(userModel.getPassword()));
         userModel.setRoles(List.of(generateRoleUser()));
-        userModel.setChaveAccess(new BCryptPasswordEncoder().encode(userModel.getChaveAccess()));
 
         repository.save(userModel);
 
@@ -53,7 +54,9 @@ public class UserService {
     }
 
     @Transactional
-    public AuthenticationResponse login(UserModel model) throws IllegalArgumentException{
+    public AuthenticationResponse login(UserDto modelDto) throws IllegalArgumentException{
+
+        UserModel model = modelDto.toUser();
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -70,7 +73,7 @@ public class UserService {
 
         if(roles.size() == 2){
 
-                if(!model.getChaveAccess().equals(ADMIN_KEY)){
+                if(!modelDto.getChaveAccess().equals(ADMIN_KEY)){
                     throw new IllegalArgumentException();
                 };
             }
@@ -96,4 +99,11 @@ public class UserService {
         return roleModel;
     }
 
+    @Transactional
+    public List<String> findAllUsers(){
+        return repository.findAll().stream()
+                .map(user -> user.getUsername())
+                .collect(Collectors.toList());
+    }
+    
 }

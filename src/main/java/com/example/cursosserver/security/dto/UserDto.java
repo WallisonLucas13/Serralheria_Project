@@ -18,6 +18,6 @@ public class UserDto {
     private String chaveAccess;
 
     public UserModel toUser(){
-        return new UserModel(username, password, chaveAccess);
+        return new UserModel(username, password);
     }
 }
