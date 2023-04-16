@@ -51,6 +51,8 @@ public class UserService {
     public AuthenticationResponse login(UserModel model) throws IllegalArgumentException{
 
         System.out.println("Entrou no método!");
+        System.out.println(model.getUsername());
+        System.out.println(model.getPassword());
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
