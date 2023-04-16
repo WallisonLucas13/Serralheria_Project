@@ -42,6 +42,7 @@ public class UserService {
 
         userModel.setPassword(new BCryptPasswordEncoder().encode(userModel.getPassword()));
         userModel.setRoles(List.of(generateRoleUser(), generateRoleAdmin()));
+        userModel.setChaveAccess(new BCryptPasswordEncoder().encode(userModel.getChaveAccess()));
 
         repository.save(userModel);
 
@@ -70,7 +71,7 @@ public class UserService {
         if(roles.size() == 2){
             List<String> list = roles.stream().filter(r -> r.equals(RoleName.ROLE_ADMIN)).toList();
             if(!list.isEmpty()){
-                if(!model.getChaveAccess().equals(ADMIN_KEY)){
+                if(!new BCryptPasswordEncoder().matches(ADMIN_KEY, model.getChaveAccess())){
                     throw new IllegalArgumentException();
                 };
             }
