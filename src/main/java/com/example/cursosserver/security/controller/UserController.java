@@ -23,8 +23,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body(service.login(dto.toUser()));
         }
         catch(Exception e){
-            System.out.println(e.getMessage());
-            e.getStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
