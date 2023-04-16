@@ -17,9 +17,10 @@ import java.util.UUID;
 @Setter
 public class UserModel implements UserDetails {
 
-    public UserModel(String username, String password){
+    public UserModel(String username, String password, String key){
         this.username = username;
         this.password = password;
+        this.key = key;
     }
 
     @Id

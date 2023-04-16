@@ -15,7 +15,9 @@ public class UserDto {
     @NotBlank
     private String password;
 
+    private String key;
+
     public UserModel toUser(){
-        return new UserModel(username, password);
+        return new UserModel(username, password, key);
     }
 }
