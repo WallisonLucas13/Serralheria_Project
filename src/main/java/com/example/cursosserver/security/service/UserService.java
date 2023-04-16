@@ -70,7 +70,9 @@ public class UserService {
 
         if(roles.size() == 2){
                 String key = new BCryptPasswordEncoder().encode(ADMIN_KEY);
-
+                System.out.println(key);
+                System.out.println(model.getChaveAccess());
+                
                 if(!key.equals(model.getChaveAccess())){
                     throw new IllegalArgumentException();
                 };
