@@ -39,7 +39,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         System.out.println(request.getContextPath());
         System.out.println(request.getQueryString());
         System.out.println(request.getServletPath());
-        System.out.println(request.getParts());
 
         String header = request.getHeader("Authorization");
 
