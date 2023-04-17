@@ -60,8 +60,10 @@ public class UserService {
         userModel.setPassword(new BCryptPasswordEncoder().encode(userModel.getPassword()));
 
         if(dto.getWritePermission().equals("true")) {
+            System.out.println("Permissão de Escrita");
             userModel.setRoles(List.of(generateRoleUser()));
         }else{
+            System.out.println("Permissão de Leitura");
             userModel.setRoles(List.of(generateRoleRead()));
         }
 
