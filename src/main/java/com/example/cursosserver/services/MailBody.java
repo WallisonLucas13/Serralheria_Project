@@ -21,6 +21,10 @@ public class MailBody {
                 "Data de Emissão: " + format.format(date);
     }
 
+    public String bodyKeyMail(String code){
+        return "Olá ADM, aqui está o seu código temporário!\\" + code;
+    }
+
     public String titleMail(String adress){
         return "Orçamento";
     }

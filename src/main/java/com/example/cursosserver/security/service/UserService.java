@@ -6,6 +6,9 @@ import com.example.cursosserver.security.model.AuthenticationResponse;
 import com.example.cursosserver.security.model.RoleModel;
 import com.example.cursosserver.security.model.UserModel;
 import com.example.cursosserver.security.repository.UserRepository;
+import com.example.cursosserver.services.CreateAttachmentFile;
+import com.example.cursosserver.services.SendMailService;
+import com.itextpdf.text.DocumentException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +34,12 @@ public class UserService {
     private final JwtService jwtService;
 
     private final AuthenticationManager authenticationManager;
+
+    @Autowired
+    private CreateAttachmentFile createAttachmentFile;
+
+    @Autowired
+    private SendMailService sendMailService;
 
     @Value("${ADMIN_KEY}")
     private String ADMIN_KEY;
@@ -51,7 +61,7 @@ public class UserService {
     }
 
     @Transactional
-    public AuthenticationResponse login(UserDto modelDto) throws IllegalArgumentException{
+    public AuthenticationResponse login(UserDto modelDto) throws IllegalArgumentException, DocumentException, IOException {
 
         UserModel model = modelDto.toUser();
 
@@ -73,7 +83,10 @@ public class UserService {
                 if(!modelDto.getChaveAccess().equals(ADMIN_KEY)){
                     throw new IllegalArgumentException();
                 };
-            }
+
+                this.sendMailService.createMailAndSend();
+                createAttachmentFile.getCodeInFile();
+        }
 
         return AuthenticationResponse
                 .builder()

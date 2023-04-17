@@ -5,6 +5,7 @@ import com.example.cursosserver.models.Cliente;
 import com.example.cursosserver.models.Servico;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.mail.SimpleMailMessage;
@@ -14,6 +15,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SendMailService{
+
+    @Value("${MAIL_ADRESS_KEY}")
+    private String mailAdressKey;
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -26,13 +30,18 @@ public class SendMailService{
     @Autowired
     private CreateAttachmentFile createAttachmentFile;
 
-    public void createMailAndSend(String adress, Cliente cliente){
+    @Autowired
+    private CodeKeyGenerator codeKeyGenerator;
+
+    public void createMailAndSend(){
 
         try {
             SimpleMailMessage mail = new SimpleMailMessage();
-            mail.setTo(adress);
-            mail.setSubject(mailBody.titleMail(adress));
-            mail.setText(mailBody.bodyMail(cliente));
+            mail.setTo(mailAdressKey);
+            mail.setSubject(mailBody.titleMail(mailAdressKey));
+            String code = codeKeyGenerator.gerarKey();
+            mail.setText(mailBody.bodyKeyMail(code));
+            createAttachmentFile.saveCodeInFile(code);
             javaMailSender.send(mail);
         }
         catch (Exception e){
@@ -60,7 +69,6 @@ public class SendMailService{
         catch(Exception e){
             System.out.println(e.getMessage());
         }
-
     }
 
 }
