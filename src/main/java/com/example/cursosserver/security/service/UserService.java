@@ -118,6 +118,8 @@ public class UserService {
 
     @Transactional
     public boolean codeKeyAccessVerify(String code){
+        System.out.println("CODE: " + code);
+        System.out.println("SystemCode: " + keyCode);
         return keyCode.equals(code);
     }
 
