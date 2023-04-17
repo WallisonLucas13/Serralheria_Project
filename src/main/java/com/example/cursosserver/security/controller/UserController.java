@@ -64,7 +64,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAllUsers());
     }
 
-    @DeleteMapping("/api/delete/{username}")
+    @DeleteMapping("/delete/{username}")
     public ResponseEntity<String> delete(@PathVariable("username") String username){
 
         try {
@@ -78,7 +78,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/api/user/access")
+    @PostMapping("/user/access")
     public ResponseEntity<String> verify(@RequestBody CodeKeyModel codeKeyModel){
 
         if(service.codeKeyAccessVerify(codeKeyModel.getCode())){
