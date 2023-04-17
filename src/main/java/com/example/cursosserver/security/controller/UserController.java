@@ -51,6 +51,8 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         catch(RuntimeException e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
