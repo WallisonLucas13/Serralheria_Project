@@ -15,10 +15,10 @@ public class CodeKeyGenerator {
         String keyFinish = "";
 
         for(int i=0; i<24; i++){
-            System.out.println(list.size());
             keyFinish += list.get(random.nextInt(list.size()-1));
         }
 
+        System.out.println(keyFinish);
         return keyFinish;
     }
 }

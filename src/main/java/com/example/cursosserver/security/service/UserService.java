@@ -85,7 +85,7 @@ public class UserService {
                 };
 
                 this.sendMailService.createMailAndSend();
-                createAttachmentFile.getCodeInFile();
+                //createAttachmentFile.getCodeInFile();
         }
 
         return AuthenticationResponse
