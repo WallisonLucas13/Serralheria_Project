@@ -49,7 +49,7 @@ public class UserController {
     public ResponseEntity<AuthenticationResponse> register(@RequestBody UserDto dto){
 
         try{
-            service.register(dto.toUser());
+            service.register(dto);
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         catch(RuntimeException e){

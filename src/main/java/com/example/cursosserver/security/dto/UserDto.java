@@ -17,6 +17,8 @@ public class UserDto {
 
     private String chaveAccess;
 
+    private String writePermission;
+
     public UserModel toUser(){
         return new UserModel(username, password);
     }

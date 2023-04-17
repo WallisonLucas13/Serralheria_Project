@@ -32,7 +32,7 @@ public class UserModel implements UserDetails {
     @Column(unique = true, nullable = false)
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<RoleModel> roles;
 
     @Override

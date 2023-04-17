@@ -47,7 +47,9 @@ public class UserService {
     private String ADMIN_KEY;
 
     @Transactional
-    public void register(UserModel userModel){
+    public void register(UserDto dto){
+
+        UserModel userModel = dto.toUser();
 
         boolean exist = repository.existsByUsername(userModel.getUsername());
 
@@ -56,7 +58,12 @@ public class UserService {
         }
 
         userModel.setPassword(new BCryptPasswordEncoder().encode(userModel.getPassword()));
-        userModel.setRoles(List.of(generateRoleUser()));
+
+        if(dto.getWritePermission().equals("true")) {
+            userModel.setRoles(List.of(generateRoleUser()));
+        }else{
+            userModel.setRoles(List.of(generateRoleRead()));
+        }
 
         repository.save(userModel);
 
@@ -118,8 +125,6 @@ public class UserService {
 
     @Transactional
     public boolean codeKeyAccessVerify(String code){
-        System.out.println("CODE: " + code);
-        System.out.println("SystemCode: " + keyCode);
         return keyCode.equals(code);
     }
 
@@ -127,6 +132,12 @@ public class UserService {
     private RoleModel generateRoleUser(){
         RoleModel roleModel = new RoleModel();
         roleModel.setRoleName(RoleName.ROLE_USER);
+        return roleModel;
+    }
+
+    private RoleModel generateRoleRead(){
+        RoleModel roleModel = new RoleModel();
+        roleModel.setRoleName(RoleName.ROLE_READ);
         return roleModel;
     }
 
