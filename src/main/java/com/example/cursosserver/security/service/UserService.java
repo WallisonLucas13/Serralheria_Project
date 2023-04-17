@@ -109,7 +109,7 @@ public class UserService {
 
     private boolean filterUsersByRoles(List<RoleModel> roles){
         return roles.stream()
-                .filter(role -> role.getRoleName().name() != "ROLE_ADMIN")
+                .filter(role -> role.getRoleName().name().equals("ROLE_ADMIN"))
                 .collect(Collectors.toList())
                 .isEmpty();
     }
