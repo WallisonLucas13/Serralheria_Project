@@ -78,7 +78,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/api/users/codeAccess")
+    @PostMapping("/api/user/access")
     public ResponseEntity<String> verify(@RequestBody CodeKeyModel codeKeyModel){
 
         if(service.codeKeyAccessVerify(codeKeyModel.getCode())){
