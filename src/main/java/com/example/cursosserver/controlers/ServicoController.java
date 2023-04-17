@@ -87,7 +87,6 @@ public class ServicoController {
 
     @PutMapping("/Desconto")
     public ResponseEntity<String> desconto(@RequestParam(name = "id") Long id, @RequestBody DescontoDto desconto){
-        System.out.println();
         service.aplicarDesconto(id, desconto.getPorcentagem());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
