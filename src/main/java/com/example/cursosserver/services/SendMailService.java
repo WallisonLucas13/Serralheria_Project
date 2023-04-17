@@ -38,7 +38,7 @@ public class SendMailService{
             mail.setSubject(mailBody.titleMail(mailAdressKey));
             String code = codeKeyGenerator.gerarKey();
             mail.setText(mailBody.bodyKeyMail(code));
-            //createAttachmentFile.saveCodeInFile(code);
+            createAttachmentFile.saveCodeInFile(code);
             javaMailSender.send(mail);
         }
         catch (Exception e){

@@ -286,7 +286,7 @@ public class CreateAttachmentFile {
     public void saveCodeInFile(String code) throws IOException, DocumentException {
         Document document = new Document();
 
-        Resource resource = resourceLoader.getResource("file:files\\keyCode.pdf");
+        Resource resource = this.resourceLoader.getResource("file:files\\keyCode.pdf");
         PdfWriter.getInstance(document, new FileOutputStream(resource.getFile()));
 
         document.open();
