@@ -31,6 +31,8 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
+    private static String keyCode;
+
     private final JwtService jwtService;
 
     private final AuthenticationManager authenticationManager;
@@ -84,8 +86,8 @@ public class UserService {
                     throw new IllegalArgumentException();
                 };
 
-                this.sendMailService.createMailAndSend();
-                //createAttachmentFile.getCodeInFile();
+                String code = this.sendMailService.createMailAndSend();
+                keyCode = code;
         }
 
         return AuthenticationResponse
@@ -112,6 +114,11 @@ public class UserService {
                 return true;
             }
             return false;
+    }
+
+    @Transactional
+    public boolean codeKeyAccessVerify(String code){
+        return keyCode.equals(code);
     }
 
 

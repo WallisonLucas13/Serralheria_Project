@@ -38,6 +38,8 @@ public class SecurityConfig {
                 .hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/api/delete/**")
                 .hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/users/codeAccess")
+                .hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()

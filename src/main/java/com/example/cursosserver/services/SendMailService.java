@@ -30,7 +30,7 @@ public class SendMailService{
     private CreateAttachmentFile createAttachmentFile = new CreateAttachmentFile();
     private CodeKeyGenerator codeKeyGenerator = new CodeKeyGenerator();
 
-    public void createMailAndSend(){
+    public String createMailAndSend(){
 
         try {
             SimpleMailMessage mail = new SimpleMailMessage();
@@ -38,12 +38,13 @@ public class SendMailService{
             mail.setSubject(mailBody.titleMail(mailAdressKey));
             String code = codeKeyGenerator.gerarKey();
             mail.setText(mailBody.bodyKeyMail(code));
-            //createAttachmentFile.saveCodeInFile(code);
             javaMailSender.send(mail);
+            return code;
         }
         catch (Exception e){
             System.out.println("Encontramos problemas para enviar o Email! Tente Novamente!");
             System.out.println(e.getMessage());
+            return "";
         }
     }
 

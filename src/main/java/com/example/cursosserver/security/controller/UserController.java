@@ -2,6 +2,7 @@ package com.example.cursosserver.security.controller;
 
 import com.example.cursosserver.security.dto.UserDto;
 import com.example.cursosserver.security.model.AuthenticationResponse;
+import com.example.cursosserver.security.model.CodeKeyModel;
 import com.example.cursosserver.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -75,5 +76,15 @@ public class UserController {
         }catch(UsernameNotFoundException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+    }
+
+    @PostMapping("/api/users/codeAccess")
+    public ResponseEntity<String> verify(@RequestBody CodeKeyModel codeKeyModel){
+
+        if(service.codeKeyAccessVerify(codeKeyModel.getCode())){
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 }
