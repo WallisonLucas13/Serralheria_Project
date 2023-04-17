@@ -18,7 +18,6 @@ public class CodeKeyGenerator {
             keyFinish += list.get(random.nextInt(list.size()-1));
         }
 
-        System.out.println(keyFinish);
         return keyFinish;
     }
 }
