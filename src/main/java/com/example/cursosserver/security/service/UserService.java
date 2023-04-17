@@ -34,7 +34,7 @@ public class UserService {
     private String ADMIN_KEY;
 
     @Transactional
-    public AuthenticationResponse register(UserModel userModel){
+    public void register(UserModel userModel){
 
         boolean exist = repository.existsByUsername(userModel.getUsername());
 
@@ -46,10 +46,6 @@ public class UserService {
         userModel.setRoles(List.of(generateRoleUser()));
 
         repository.save(userModel);
-
-        return AuthenticationResponse.builder()
-                .token(jwtService.generateToken(userModel))
-                .build();
 
     }
 

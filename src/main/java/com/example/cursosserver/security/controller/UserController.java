@@ -47,8 +47,8 @@ public class UserController {
     public ResponseEntity<AuthenticationResponse> register(@RequestBody UserDto dto){
 
         try{
-            AuthenticationResponse res = service.register(dto.toUser());
-            return ResponseEntity.status(HttpStatus.OK).body(res);
+            service.register(dto.toUser());
+            return ResponseEntity.status(HttpStatus.OK).build();
         }
         catch(RuntimeException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
