@@ -10,11 +10,11 @@ public class CodeKeyGenerator {
 
         Random random = new Random();
 
-        String keyLine = "%,&,q,w,e,r,t,y,u,i,o,p,a,s,d,f,g,h,j,k,l,ç,x,c,v,b,n,m,.;,/,~,ç,l,o,i,p,0,9,8,7,6,5,4,3,2,1,-,=,1,!";
+        String keyLine = "q,Q,w,W,e,E,r,R,t,T,y,Y,u,U,i,I,o,O,p,P,A,a,s,S,d,D,f,F,g,G,h,H,j,J,k,K,l,L,ç,Ç,z,Z,x,X,c,C,v,V,b,B,n,N,m,M,1234567890";
         List<String> list = Arrays.asList(keyLine.split(","));
         String keyFinish = "";
 
-        for(int i=0; i<24; i++){
+        for(int i=0; i<48; i++){
             keyFinish += list.get(random.nextInt(list.size()-1));
         }
 

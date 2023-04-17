@@ -22,7 +22,7 @@ public class MailBody {
     }
 
     public String bodyKeyMail(String code){
-        return "Olá ADM, aqui está o seu código temporário!\\" + code;
+        return "Olá ADM, aqui está o seu código temporário!\n\n" + code;
     }
 
     public String titleMail(String adress){
