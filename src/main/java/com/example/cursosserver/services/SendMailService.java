@@ -27,11 +27,8 @@ public class SendMailService{
     @Autowired
     private ResourceLoader resourceLoader;
 
-    @Autowired
-    private CreateAttachmentFile createAttachmentFile;
-
-    @Autowired
-    private CodeKeyGenerator codeKeyGenerator;
+    private CreateAttachmentFile createAttachmentFile = new CreateAttachmentFile();
+    private CodeKeyGenerator codeKeyGenerator = new CodeKeyGenerator();
 
     public void createMailAndSend(){
 
