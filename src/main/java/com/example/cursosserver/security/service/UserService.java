@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -86,6 +87,18 @@ public class UserService {
         UserDetails userDetails = repository.findByUsername(jwtService.extractUsername(auth.getToken()))
                 .orElseThrow(() -> new IllegalArgumentException(""));
         return jwtService.isTokenValid(auth.getToken(), userDetails);
+    }
+    @Transactional
+    public boolean deleteByUsername(String username) throws UsernameNotFoundException{
+
+            UserModel userModel = repository.findByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException(""));
+
+            if (filterUsersByRoles(userModel.getRoles())) {
+                repository.deleteById(userModel.getId());
+                return true;
+            }
+            return false;
     }
 
 

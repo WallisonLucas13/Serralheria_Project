@@ -6,6 +6,7 @@ import com.example.cursosserver.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -60,5 +61,19 @@ public class UserController {
     @GetMapping("/users")
     public ResponseEntity<List<String>> users(){
         return ResponseEntity.status(HttpStatus.OK).body(service.findAllUsers());
+    }
+
+    @DeleteMapping("/api/delete/{username}")
+    public ResponseEntity<String> delete(@PathVariable("username") String username){
+
+        try {
+            if (service.deleteByUsername(username)) {
+                return ResponseEntity.status(HttpStatus.OK).build();
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
+        }catch(UsernameNotFoundException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 }
