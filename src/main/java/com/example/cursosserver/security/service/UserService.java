@@ -102,8 +102,16 @@ public class UserService {
     @Transactional
     public List<String> findAllUsers(){
         return repository.findAll().stream()
+                .filter(user -> filterUsersByRoles(user.getRoles()))
                 .map(user -> user.getUsername())
                 .collect(Collectors.toList());
     }
-    
+
+    private boolean filterUsersByRoles(List<RoleModel> roles){
+        return roles.stream()
+                .filter(role -> role.getRoleName().name() != "ROLE_ADMIN")
+                .collect(Collectors.toList())
+                .isEmpty();
+    }
+
 }
