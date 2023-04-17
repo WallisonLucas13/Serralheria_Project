@@ -7,10 +7,7 @@ import com.example.cursosserver.models.Servico;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.parser.PdfTextExtractor;
-import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -281,25 +278,6 @@ public class CreateAttachmentFile {
         document.close();
 
         return documentName;
-    }
-
-    public void saveCodeInFile(String code) throws IOException, DocumentException {
-        Document document = new Document();
-
-        Resource resource = resourceLoader.getResource("file:files\\keyCode.pdf");
-        PdfWriter.getInstance(document, new FileOutputStream(resource.getFile()));
-
-        document.open();
-
-        document.add(new PdfPCell(new Phrase(code)));
-    }
-
-    public void getCodeInFile() throws IOException, DocumentException {
-
-        Resource resource = resourceLoader.getResource("file:files\\keyCode.pdf");
-        PdfReader reader = new PdfReader(resource.getFile().toURL());
-        System.out.println(PdfTextExtractor.getTextFromPage(reader, 1, new SimpleTextExtractionStrategy()));
-
     }
 
     private PdfPCell cellBackgroundGray(String body, Font font) {

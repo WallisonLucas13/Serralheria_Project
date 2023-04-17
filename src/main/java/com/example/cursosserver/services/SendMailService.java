@@ -6,6 +6,7 @@ import com.example.cursosserver.models.Servico;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.mail.SimpleMailMessage;
@@ -24,9 +25,7 @@ public class SendMailService{
     @Autowired
     private MailBody mailBody;
 
-    @Autowired
-    private ResourceLoader resourceLoader;
-
+    private ResourceLoader resourceLoader = new DefaultResourceLoader();
     private CreateAttachmentFile createAttachmentFile = new CreateAttachmentFile();
     private CodeKeyGenerator codeKeyGenerator = new CodeKeyGenerator();
 
