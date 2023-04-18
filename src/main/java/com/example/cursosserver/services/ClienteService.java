@@ -39,7 +39,6 @@ public class ClienteService {
         boolean exist = repository.existsByNome(cliente.getNome());
         if(exist){throw new RuntimeException();}
 
-        System.out.println("Curso: [ "+ cliente.getNome() + " ] Salvo!");
         this.repository.save(cliente);
     }
 

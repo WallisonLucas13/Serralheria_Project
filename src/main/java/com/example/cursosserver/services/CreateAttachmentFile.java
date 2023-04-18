@@ -23,7 +23,7 @@ import java.util.List;
 @Service
 public class CreateAttachmentFile {
 
-    @Value("${MAIL.USERNAME}")
+    @Value("${spring.mail.username}")
     public String email;
 
     public String create(Cliente cliente, Servico servico, OrcamentoAdressTo orcamentoAdressTo) throws DocumentException, IOException {
