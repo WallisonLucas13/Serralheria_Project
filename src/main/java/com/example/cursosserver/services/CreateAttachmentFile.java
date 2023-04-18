@@ -45,10 +45,6 @@ public class CreateAttachmentFile {
 
         Rectangle rectangle = new Rectangle(PageSize.A4);
 
-        if(ocultarMateriais) {
-            rectangle = new Rectangle(595, 550);
-        }
-
         rectangle.enableBorderSide(1);
         rectangle.enableBorderSide(2);
         rectangle.enableBorderSide(4);
