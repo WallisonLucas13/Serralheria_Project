@@ -25,7 +25,6 @@ public class SendMailService{
     @Autowired
     private MailBody mailBody;
 
-    private ResourceLoader resourceLoader = new DefaultResourceLoader();
     private CreateAttachmentFile createAttachmentFile = new CreateAttachmentFile();
     private CodeKeyGenerator codeKeyGenerator = new CodeKeyGenerator();
 
@@ -53,10 +52,12 @@ public class SendMailService{
             String orcamento = createAttachmentFile.create(cliente, servico, adress);
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+            ResourceLoader resourceLoader = new DefaultResourceLoader();
 
             helper.setSubject(mailBody.titleMail(adress.getAdress()));
             helper.setFrom("Serralheria");
             helper.setTo(adress.getAdress());
+
 
             Resource file = resourceLoader.getResource("file:files\\" + orcamento);
             helper.addAttachment(file.getFilename(), file);
