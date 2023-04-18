@@ -8,8 +8,8 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
@@ -25,9 +25,6 @@ public class CreateAttachmentFile {
 
     @Value("${MAIL.USERNAME}")
     public String email;
-
-    @Autowired
-    private ResourceLoader resourceLoader;
 
     public String create(Cliente cliente, Servico servico, OrcamentoAdressTo orcamentoAdressTo) throws DocumentException, IOException {
 
@@ -45,7 +42,7 @@ public class CreateAttachmentFile {
         boolean ocultarMaoDeObra = orcamentoAdressTo.isOcultarMaoDeObra();
         boolean ocultarDesconto = orcamentoAdressTo.isOcultarDesconto();
 
-
+        ResourceLoader resourceLoader = new DefaultResourceLoader();
         //PdfWriter.getInstance(document, new FileOutputStream(path));
         Resource resource = resourceLoader.getResource("file:files\\" + documentName);
         PdfWriter.getInstance(document, new FileOutputStream(resource.getFile()));

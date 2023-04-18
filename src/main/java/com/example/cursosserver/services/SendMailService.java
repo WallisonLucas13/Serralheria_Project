@@ -35,7 +35,7 @@ public class SendMailService{
             mail.setTo(mailAdressKey);
             mail.setSubject(mailBody.titleMail(mailAdressKey));
             String code = codeKeyGenerator.gerarKey();
-            mail.setText(mailBody.bodyKeyMail(code));
+            mail.setText("Código de Acesso");
             javaMailSender.send(mail);
             return code;
         }
@@ -57,7 +57,6 @@ public class SendMailService{
             helper.setSubject(mailBody.titleMail(adress.getAdress()));
             helper.setFrom("Serralheria");
             helper.setTo(adress.getAdress());
-
 
             Resource file = resourceLoader.getResource("file:files\\" + orcamento);
             helper.addAttachment(file.getFilename(), file);
