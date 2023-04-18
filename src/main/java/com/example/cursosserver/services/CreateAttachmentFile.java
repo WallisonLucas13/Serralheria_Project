@@ -94,8 +94,8 @@ public class CreateAttachmentFile {
         PdfPTable tableServicoHeader = new PdfPTable(new float[]{5f});
         tableServicoHeader.setWidthPercentage(100f);
 
-        PdfPTable tableServicoBody = new PdfPTable(new float[]{1f,4f});
-        tableServicoBody.setWidthPercentage(100f);
+        PdfPTable tableServicoBody = new PdfPTable(new float[]{1f,20f});
+        tableServicoBody.setWidthPercentage(300f);
 
         PdfPTable tableMateriaisHeader = new PdfPTable(new float[]{5f});
         tableMateriaisHeader.setWidthPercentage(100f);
