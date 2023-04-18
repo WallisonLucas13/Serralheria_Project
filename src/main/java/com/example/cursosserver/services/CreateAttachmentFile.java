@@ -163,7 +163,8 @@ public class CreateAttachmentFile {
         tableServicoBody.completeRow();
         tableServicoBody.addCell(cellBackgroundGray("Descrição", fontTrs));
         PdfPCell c = cellConteudo(servico.getDesc().replace("\n", " "), fontBody);
-        c.setMinimumHeight(40f);
+        c.setMinimumHeight(100f);
+        c.setVerticalAlignment(Element.ALIGN_CENTER);
         tableServicoBody.addCell(c);
         tableServicoBody.completeRow();
 
