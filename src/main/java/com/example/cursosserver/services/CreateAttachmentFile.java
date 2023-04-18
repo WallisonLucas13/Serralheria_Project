@@ -58,7 +58,6 @@ public class CreateAttachmentFile {
         rectangle.setBorderColor(BaseColor.BLACK);
 
         document.setPageSize(rectangle);
-        document.setMargins(0,0,0,0);
         document.open();
         document.add(rectangle);
 
@@ -95,7 +94,7 @@ public class CreateAttachmentFile {
         PdfPTable tableServicoHeader = new PdfPTable(new float[]{5f});
         tableServicoHeader.setWidthPercentage(100f);
 
-        PdfPTable tableServicoBody = new PdfPTable(new float[]{2f, 10f});
+        PdfPTable tableServicoBody = new PdfPTable(new float[]{1f,4f});
         tableServicoBody.setWidthPercentage(100f);
 
         PdfPTable tableMateriaisHeader = new PdfPTable(new float[]{5f});
