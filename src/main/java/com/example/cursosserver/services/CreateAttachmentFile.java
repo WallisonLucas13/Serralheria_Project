@@ -35,7 +35,7 @@ public class CreateAttachmentFile {
         String empresaName = "Serralheria Qualidade e Pontualidade";
         String CNPJ = "41.221.179/0001-21";
         String email = this.email;
-        System.out.println("EMAIL COMPANY: " + email);
+        System.out.println("EMAIL COMPANY: " + this.email);
         String telefone = "(34) 98848-3279";
         List<Material> materiais = servico.getMateriais();
 
