@@ -5,6 +5,7 @@ import com.example.cursosserver.security.enums.RoleName;
 import com.example.cursosserver.security.model.AuthenticationResponse;
 import com.example.cursosserver.security.model.RoleModel;
 import com.example.cursosserver.security.model.UserModel;
+import com.example.cursosserver.security.model.UserViewModel;
 import com.example.cursosserver.security.repository.UserRepository;
 import com.example.cursosserver.services.CreateAttachmentFile;
 import com.example.cursosserver.services.SendMailService;
@@ -62,7 +63,7 @@ public class UserService {
         if(dto.getWritePermission() == null){
             dto.setWritePermission("false");
         }
-        
+
         if(dto.getWritePermission().equals("true")) {
             System.out.println("Permissão de Escrita");
             userModel.setRoles(List.of(generateRoleUser()));
@@ -148,11 +149,23 @@ public class UserService {
     }
 
     @Transactional
-    public List<String> findAllUsers(){
+    public List<UserViewModel> findAllUsers(){
         return repository.findAll().stream()
                 .filter(user -> filterUsersByRoles(user.getRoles()))
-                .map(user -> user.getUsername())
+                .map(user -> new UserViewModel(user.getUsername(), viewRoles(user.getRoles())))
                 .collect(Collectors.toList());
+    }
+
+    private String viewRoles(List<RoleModel> roles){
+
+        List<RoleModel> list = roles.stream()
+                .filter(role -> role.getRoleName().name().equals("ROLE_READ")).toList();
+
+        if(list.isEmpty()){
+            return "Leitura/Escrita";
+        }
+
+        return "Leitura";
     }
 
     private boolean filterUsersByRoles(List<RoleModel> roles){

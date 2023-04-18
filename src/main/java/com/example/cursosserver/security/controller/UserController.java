@@ -3,6 +3,7 @@ package com.example.cursosserver.security.controller;
 import com.example.cursosserver.security.dto.UserDto;
 import com.example.cursosserver.security.model.AuthenticationResponse;
 import com.example.cursosserver.security.model.CodeKeyModel;
+import com.example.cursosserver.security.model.UserViewModel;
 import com.example.cursosserver.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,7 +61,7 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<String>> users(){
+    public ResponseEntity<List<UserViewModel>> users(){
         return ResponseEntity.status(HttpStatus.OK).body(service.findAllUsers());
     }
 
