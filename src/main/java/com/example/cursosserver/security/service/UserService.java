@@ -142,10 +142,10 @@ public class UserService {
     }
 
     @Transactional
-    public boolean codeKeyAccessVerify(String code){
+    public boolean codeKeyAccessVerify(String code) throws IllegalAccessException{
 
         if(keyCode.isEmpty()){
-            return false;
+            throw new IllegalAccessException("");
         }
 
         return keyCode.equals(code);

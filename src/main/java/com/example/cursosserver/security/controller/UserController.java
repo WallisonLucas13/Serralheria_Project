@@ -82,10 +82,15 @@ public class UserController {
     @PostMapping("/user/access")
     public ResponseEntity<String> verify(@RequestBody CodeKeyModel codeKeyModel){
 
-        if(service.codeKeyAccessVerify(codeKeyModel.getCode())){
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }
+        try {
+            if (service.codeKeyAccessVerify(codeKeyModel.getCode())) {
+                return ResponseEntity.status(HttpStatus.OK).build();
+            }
 
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        catch(IllegalAccessException e){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+        }
     }
 }
