@@ -31,8 +31,6 @@ public class CreateAttachmentFile {
         String empresaName = "Serralheria Qualidade e Pontualidade";
         String CNPJ = "41.221.179/0001-21";
         String email = mailCompany;
-        System.out.println("EMAIL COMPANY: " + email);
-        System.out.println("Descrição: " + servico.getDesc().replace("\n", " "));
         String telefone = "(34) 98848-3279";
         List<Material> materiais = servico.getMateriais();
 
@@ -164,7 +162,7 @@ public class CreateAttachmentFile {
         tableServicoBody.addCell(cellConteudo(servico.getNome(), fontBody));
         tableServicoBody.completeRow();
         tableServicoBody.addCell(cellBackgroundGray("Descrição", fontTrs));
-        tableServicoBody.addCell(cellConteudo(servico.getDesc(), fontBody));
+        tableServicoBody.addCell(cellConteudo(servico.getDesc().replace("\n", " "), fontBody));
         tableServicoBody.completeRow();
 
         tableMateriaisHeader.addCell(cellBackgroundGray("Lista De Materiais",fontTrs));
