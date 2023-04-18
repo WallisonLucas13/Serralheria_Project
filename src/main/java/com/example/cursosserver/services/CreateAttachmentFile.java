@@ -32,6 +32,7 @@ public class CreateAttachmentFile {
         String CNPJ = "41.221.179/0001-21";
         String email = mailCompany;
         System.out.println("EMAIL COMPANY: " + email);
+        System.out.println("Descrição: " + servico.getDesc());
         String telefone = "(34) 98848-3279";
         List<Material> materiais = servico.getMateriais();
 
