@@ -20,6 +20,9 @@ public class SendMailService{
     @Value("${MAIL_ADRESS_KEY}")
     private String mailAdressKey;
 
+    @Value("${MAIL_COMPANY")
+    private String mailCompany;
+
     @Autowired
     private JavaMailSender javaMailSender;
     @Autowired
@@ -48,7 +51,7 @@ public class SendMailService{
     public void createMailAndSendWithAttachments(OrcamentoAdressTo adress, Cliente cliente, Servico servico) {
 
         try {
-            String orcamento = createAttachmentFile.create(cliente, servico, adress);
+            String orcamento = createAttachmentFile.create(cliente, servico, adress, mailCompany);
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
             ResourceLoader resourceLoader = new DefaultResourceLoader();

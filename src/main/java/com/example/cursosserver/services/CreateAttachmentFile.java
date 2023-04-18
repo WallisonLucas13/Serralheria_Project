@@ -8,7 +8,6 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -23,10 +22,7 @@ import java.util.List;
 @Service
 public class CreateAttachmentFile {
 
-    @Value("${MAIL_COMPANY}")
-    public String email;
-
-    public String create(Cliente cliente, Servico servico, OrcamentoAdressTo orcamentoAdressTo) throws DocumentException, IOException {
+    public String create(Cliente cliente, Servico servico, OrcamentoAdressTo orcamentoAdressTo, String mailCompany) throws DocumentException, IOException {
 
         Document document = new Document();
 
@@ -34,8 +30,8 @@ public class CreateAttachmentFile {
 
         String empresaName = "Serralheria Qualidade e Pontualidade";
         String CNPJ = "41.221.179/0001-21";
-        String email = this.email;
-        System.out.println("EMAIL COMPANY: " + this.email);
+        String email = mailCompany;
+        System.out.println("EMAIL COMPANY: " + email);
         String telefone = "(34) 98848-3279";
         List<Material> materiais = servico.getMateriais();
 
