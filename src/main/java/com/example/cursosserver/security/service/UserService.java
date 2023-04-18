@@ -77,7 +77,7 @@ public class UserService {
     }
 
     @Transactional
-    public AuthenticationResponse login(UserDto modelDto) throws IllegalArgumentException, DocumentException, IOException {
+    public AuthenticationResponse login(UserDto modelDto) throws IllegalArgumentException, DocumentException, IOException, InterruptedException {
 
         UserModel model = modelDto.toUser();
 
@@ -100,8 +100,19 @@ public class UserService {
                     throw new IllegalArgumentException();
                 };
 
-                String code = this.sendMailService.createMailAndSend();
-                keyCode = code;
+                keyCode = this.sendMailService.createMailAndSend();
+
+                new Thread(){
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(1000*60*3);
+                            keyCode = "";
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }.start();
         }
 
         return AuthenticationResponse
@@ -132,6 +143,11 @@ public class UserService {
 
     @Transactional
     public boolean codeKeyAccessVerify(String code){
+
+        if(keyCode.isEmpty()){
+            return false;
+        }
+
         return keyCode.equals(code);
     }
 
