@@ -41,7 +41,6 @@ public class SendMailService{
         }
         catch (Exception e){
             System.out.println("Encontramos problemas para enviar o Email! Tente Novamente!");
-            System.out.println(e.getMessage());
             return "";
         }
     }

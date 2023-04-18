@@ -65,10 +65,8 @@ public class UserService {
         }
 
         if(dto.getWritePermission().equals("true")) {
-            System.out.println("Permissão de Escrita");
             userModel.setRoles(List.of(generateRoleUser()));
         }else{
-            System.out.println("Permissão de Leitura");
             userModel.setRoles(List.of(generateRoleRead()));
         }
 
@@ -107,7 +105,6 @@ public class UserService {
                     public void run() {
                         try {
                             Thread.sleep(1000*60*3);
-                            System.out.println("Código Acabou de Expirar!");
                             keyCode = "";
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
