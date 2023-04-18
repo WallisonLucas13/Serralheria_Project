@@ -20,7 +20,7 @@ public class SendMailService{
     @Value("${MAIL_ADRESS_KEY}")
     private String mailAdressKey;
 
-    @Value("${MAIL_COMPANY")
+    @Value("${MAIL_COMPANY}")
     private String mailCompany;
 
     @Autowired
