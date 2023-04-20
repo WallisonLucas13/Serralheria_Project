@@ -14,4 +14,8 @@ public class ValoresServico {
     private int valorFinal;
 
     private int desconto;
+
+    private Entrada entrada;
+
+    private PagamentoFinal pagamentoFinal;
 }

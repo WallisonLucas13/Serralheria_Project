@@ -1,5 +1,6 @@
 package com.example.cursosserver.models;
 
+import com.example.cursosserver.enums.FormaPagamento;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +37,22 @@ public class Servico {
 
     @Column
     private int desconto = 0;
+
+    @Column
+    private String porcentagemEntrada = "0";
+
+    @Column
+    private String valorEntrada = "0";
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private FormaPagamento formaPagamentoEntrada;
+
+    @Column
+    private String valorPagamentoFinal = "0";
+
+    @Enumerated(EnumType.STRING)
+    private FormaPagamento formaPagamentoFinal;
 
     @ManyToOne
     private Cliente cliente;

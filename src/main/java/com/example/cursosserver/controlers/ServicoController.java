@@ -1,9 +1,6 @@
 package com.example.cursosserver.controlers;
 
-import com.example.cursosserver.dtos.DescontoDto;
-import com.example.cursosserver.dtos.OrcamentoAdressTo;
-import com.example.cursosserver.dtos.ServicoDto;
-import com.example.cursosserver.dtos.ValoresServico;
+import com.example.cursosserver.dtos.*;
 import com.example.cursosserver.exceptions.ObjetoInexistenteException;
 import com.example.cursosserver.models.Servico;
 import com.example.cursosserver.services.ServicoService;
@@ -88,6 +85,12 @@ public class ServicoController {
     @PutMapping("/Desconto")
     public ResponseEntity<String> desconto(@RequestParam(name = "id") Long id, @RequestBody DescontoDto desconto){
         service.aplicarDesconto(id, desconto.getPorcentagem());
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PutMapping("/Entrada/{id}")
+    public ResponseEntity<String> entrada(@PathVariable("id") Long id, @RequestBody Entrada entrada){
+        service.sendEntrada(entrada, id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

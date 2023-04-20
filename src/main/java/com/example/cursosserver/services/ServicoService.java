@@ -1,7 +1,10 @@
 package com.example.cursosserver.services;
 
+import com.example.cursosserver.dtos.Entrada;
 import com.example.cursosserver.dtos.OrcamentoAdressTo;
+import com.example.cursosserver.dtos.PagamentoFinal;
 import com.example.cursosserver.dtos.ValoresServico;
+import com.example.cursosserver.enums.FormaPagamento;
 import com.example.cursosserver.exceptions.ObjetoInexistenteException;
 import com.example.cursosserver.models.Cliente;
 import com.example.cursosserver.models.Material;
@@ -130,6 +133,8 @@ public class ServicoService {
         aplicarDesconto(servico.getId(), servico.getDesconto());
         valoresServico.setValorFinal(servico.getValorFinal());
         valoresServico.setDesconto(servico.getDesconto());
+        valoresServico.setEntrada(new Entrada(servico.getPorcentagemEntrada(), servico.getValorEntrada(), servico.getFormaPagamentoEntrada().name()));
+        valoresServico.setPagamentoFinal(new PagamentoFinal(servico.getValorPagamentoFinal(), servico.getFormaPagamentoFinal()));
         return valoresServico;
     }
 
@@ -156,5 +161,32 @@ public class ServicoService {
         Servico servico = repository.findById(id).get();
 
         sendMailService.createMailAndSendWithAttachments(adress, cliente, servico);
+    }
+
+    @Transactional
+    public void sendEntrada(Entrada entrada, Long idServico){
+        Servico servico = repository.findById(idServico).get();
+
+        servico.setValorFinal(servico.getMaoDeObra() + servico.getValorTotalMateriais());
+        repository.save(servico);
+
+
+        servico.setPorcentagemEntrada(String.valueOf(entrada.getPorcentagem()));
+        int valorEntrada = servico.getValorFinal()*(Integer.parseInt(entrada.getPorcentagem())/100);
+        servico.setValorEntrada(String.valueOf(valorEntrada));
+        servico.setFormaPagamentoEntrada(formatarFormaPagamento(entrada));
+        repository.save(servico);
+    }
+
+    private FormaPagamento formatarFormaPagamento(Entrada entrada){
+
+        switch (entrada.getFormaPagamento()){
+            case "PIX": return FormaPagamento.PIX;
+            case "DEBITO": return FormaPagamento.DEBITO;
+            case "CREDITO": return FormaPagamento.CREDITO;
+            case "DINHEIRO": return FormaPagamento.DINHEIRO;
+
+            default: return FormaPagamento.DINHEIRO;
+        }
     }
 }
