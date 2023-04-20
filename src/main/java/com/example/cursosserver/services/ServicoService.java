@@ -126,7 +126,7 @@ public class ServicoService {
     public ValoresServico getValores(Long id){
 
         Servico servico = repository.findById(id).get();
-        
+
         if(servico.getFormaPagamentoEntrada() == null){
             servico.setFormaPagamentoEntrada(FormaPagamento.DEFAULT);
             repository.save(servico);

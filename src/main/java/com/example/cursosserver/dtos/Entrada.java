@@ -1,19 +1,21 @@
 package com.example.cursosserver.dtos;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class Entrada {
-
-    private String porcentagem;
 
     public Entrada(String porcentagem, String valor, String formaPagamento) {
         this.porcentagem = porcentagem;
         this.valor = valor;
         this.formaPagamento = formaPagamento;
     }
+
+    private String porcentagem;
 
     private String valor;
 
