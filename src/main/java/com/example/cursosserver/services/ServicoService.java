@@ -76,6 +76,7 @@ public class ServicoService {
         servico.setMateriais(novaLista);
         servico.setValorTotalMateriais(calcularValorTotalMateriais(servico.getMateriais()));
         servico.setValorFinal(servico.getMaoDeObra() + servico.getValorTotalMateriais());
+        servico.setValorEntrada(String.valueOf((servico.getValorFinal()*Integer.parseInt(servico.getPorcentagemEntrada()))/100));
         repository.save(servico);
 
     }
@@ -93,6 +94,7 @@ public class ServicoService {
                 materiais.remove(material);
                 todos.get(i).setValorTotalMateriais(calcularValorTotalMateriais(materiais));
                 todos.get(i).setValorFinal(todos.get(i).getValorTotalMateriais() + todos.get(i).getMaoDeObra());
+                todos.get(i).setValorEntrada(String.valueOf((todos.get(i).getValorFinal()*Integer.parseInt(todos.get(i).getPorcentagemEntrada()))/100));
                 repository.save(todos.get(i));
             }
         }
@@ -119,6 +121,7 @@ public class ServicoService {
         Servico servico = repository.findById(id).get();
         servico.setMaoDeObra(maoDeObra);
         servico.setValorFinal(servico.getMaoDeObra() + servico.getValorTotalMateriais());
+        servico.setValorEntrada(String.valueOf((servico.getValorFinal()*Integer.parseInt(servico.getPorcentagemEntrada()))/100));
         repository.save(servico);
     }
 
@@ -161,6 +164,7 @@ public class ServicoService {
         servico.setValorFinal((int) (servico.getValorFinal() - desc));
 
         servico.setDesconto(desconto);
+        servico.setValorEntrada(String.valueOf((servico.getValorFinal()*Integer.parseInt(servico.getPorcentagemEntrada()))/100));
         repository.save(servico);
     }
 
