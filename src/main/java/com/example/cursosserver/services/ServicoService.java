@@ -186,7 +186,7 @@ public class ServicoService {
             case "CREDITO": return FormaPagamento.CREDITO;
             case "DINHEIRO": return FormaPagamento.DINHEIRO;
 
-            default: return FormaPagamento.DINHEIRO;
+            default: return FormaPagamento.DEFAULT;
         }
     }
 }
