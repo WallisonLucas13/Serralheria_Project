@@ -183,7 +183,7 @@ public class ServicoService {
 
         servico.setPorcentagemEntrada(String.valueOf(entrada.getPorcentagem()));
         int valorEntrada = servico.getValorFinal()*(Integer.parseInt(entrada.getPorcentagem())/100);
-        servico.setValorEntrada(String.valueOf(valorEntrada));
+        servico.setValorEntrada(String.valueOf((servico.getValorFinal()*Integer.parseInt(entrada.getPorcentagem()))/100));
         servico.setFormaPagamentoEntrada(formatarFormaPagamento(entrada));
         repository.save(servico);
     }
