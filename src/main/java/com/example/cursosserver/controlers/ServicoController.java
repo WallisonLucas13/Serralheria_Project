@@ -90,6 +90,7 @@ public class ServicoController {
 
     @PutMapping("/Entrada/{id}")
     public ResponseEntity<String> entrada(@PathVariable("id") Long id, @RequestBody Entrada entrada){
+        System.out.println("Entrou!");
         service.sendEntrada(entrada, id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
