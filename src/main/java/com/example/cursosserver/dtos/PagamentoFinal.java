@@ -8,12 +8,12 @@ import lombok.Setter;
 @Setter
 public class PagamentoFinal {
 
-    private String valor;
-
     public PagamentoFinal(String valor, FormaPagamento formaPagamento) {
         this.valor = valor;
         this.formaPagamento = formaPagamento;
     }
+
+    private String valor;
 
     private FormaPagamento formaPagamento;
 }
