@@ -1,6 +1,5 @@
 package com.example.cursosserver.dtos;
 
-import com.example.cursosserver.enums.FormaPagamento;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,12 +7,12 @@ import lombok.Setter;
 @Setter
 public class PagamentoFinal {
 
-    public PagamentoFinal(String valor, FormaPagamento formaPagamento) {
+    public PagamentoFinal(String valor,String formaPagamento) {
         this.valor = valor;
         this.formaPagamento = formaPagamento;
     }
 
     private String valor;
 
-    private FormaPagamento formaPagamento;
+    private String formaPagamento;
 }

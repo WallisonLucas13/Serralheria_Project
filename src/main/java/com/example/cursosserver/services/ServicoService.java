@@ -150,7 +150,7 @@ public class ServicoService {
         valoresServico.setValorFinal(servico.getValorFinal());
         valoresServico.setDesconto(servico.getDesconto());
         valoresServico.setEntrada(new Entrada(servico.getPorcentagemEntrada(), servico.getValorEntrada(), servico.getFormaPagamentoEntrada().name()));
-        valoresServico.setPagamentoFinal(new PagamentoFinal(servico.getValorPagamentoFinal(), servico.getFormaPagamentoFinal()));
+        valoresServico.setPagamentoFinal(new PagamentoFinal(servico.getValorPagamentoFinal(), servico.getFormaPagamentoFinal().name()));
         return valoresServico;
     }
 
@@ -191,15 +191,22 @@ public class ServicoService {
 
         servico.setPorcentagemEntrada(String.valueOf(entrada.getPorcentagem()));
         servico.setValorEntrada(String.valueOf((servico.getValorFinal()*Integer.parseInt(entrada.getPorcentagem()))/100));
-        servico.setFormaPagamentoEntrada(formatarFormaPagamento(entrada));
+        servico.setFormaPagamentoEntrada(formatarFormaPagamento(entrada.getFormaPagamento()));
         servico.setValorPagamentoFinal(String.valueOf(servico.getValorFinal() - Integer.parseInt(servico.getValorEntrada())));
-        System.out.println(servico.getValorPagamentoFinal());
         repository.save(servico);
     }
 
-    private FormaPagamento formatarFormaPagamento(Entrada entrada){
+    @Transactional
+    public void sendFormaPagamentoFinal(PagamentoFinal pagamentoFinal, Long idServico){
+        Servico servico = repository.findById(idServico).get();
 
-        switch (entrada.getFormaPagamento()){
+        servico.setFormaPagamentoFinal(formatarFormaPagamento(pagamentoFinal.getFormaPagamento()));
+        repository.save(servico);
+    }
+
+    private FormaPagamento formatarFormaPagamento(String forma){
+
+        switch (forma){
             case "PIX": return FormaPagamento.PIX;
             case "DEBITO": return FormaPagamento.DEBITO;
             case "CREDITO": return FormaPagamento.CREDITO;
