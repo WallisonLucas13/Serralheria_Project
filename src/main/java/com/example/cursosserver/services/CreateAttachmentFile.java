@@ -213,7 +213,7 @@ public class CreateAttachmentFile {
         tableEntrada.addCell(cellBackgroundGray("Entrada", fontTrs));
         tableEntrada.addCell(cellConteudo(String.valueOf(servico.getPorcentagemEntrada()) + "% / " + "R$ " + servico.getValorEntrada() + ",00", fontImportant));
         tableEntrada.addCell(cellBackgroundGray("Forma de Pagamento", fontTrs));
-        tableEntrada.addCell(cellConteudo(servico.getFormaPagamentoEntrada().name(), fontValues));
+        tableEntrada.addCell(cellConteudo("Forma de Pagamento: DÉBITO | CRÉDITO | PIX | DINHEIRO", fontValues));
 
 
         Paragraph title = new Paragraph(new Phrase(20f,"Serralheria Qualidade e Pontualidade", FontFactory.getFont(FontFactory.HELVETICA, 18F)));
@@ -271,7 +271,7 @@ public class CreateAttachmentFile {
         document.add(pagamentoFinal);
         document.add(paragraphEmpty());
 
-        Paragraph formaPagamentoFinal = new Paragraph(new Phrase("Forma de Pagamento: " + servico.getFormaPagamentoFinal(), fontImportant));
+        Paragraph formaPagamentoFinal = new Paragraph(new Phrase("Forma de Pagamento: DÉBITO | CRÉDITO | PIX | DINHEIRO", fontImportant));
         pagamentoFinal.setAlignment(Element.ALIGN_LEFT);
         pagamentoFinal.setSpacingBefore(-14f);
         document.add(formaPagamentoFinal);
