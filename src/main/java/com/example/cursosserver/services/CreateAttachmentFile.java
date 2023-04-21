@@ -263,10 +263,16 @@ public class CreateAttachmentFile {
         document.add(paragraphEmpty());
         document.add(tableEntrada);
 
-        Paragraph pagamentoFinal = new Paragraph(new Phrase("Total a pagar na conclusão do serviço: R$" + servico.getValorPagamentoFinal() + ",00", FontFactory.getFont(FontFactory.HELVETICA, 14)));
+        Paragraph pagamentoFinal = new Paragraph(new Phrase("Total a pagar na conclusão do serviço: R$" + servico.getValorPagamentoFinal() + ",00", FontFactory.getFont(FontFactory.HELVETICA, 13)));
         pagamentoFinal.setAlignment(Element.ALIGN_LEFT);
         pagamentoFinal.setSpacingBefore(-14f);
+        document.add(paragraphEmpty());
         document.add(pagamentoFinal);
+        
+        Paragraph formaPagamentoFinal = new Paragraph(new Phrase("Forma de Pagamento: " + servico.getFormaPagamentoFinal(), fontImportant));
+        pagamentoFinal.setAlignment(Element.ALIGN_LEFT);
+        pagamentoFinal.setSpacingBefore(-14f);
+        document.add(formaPagamentoFinal);
 
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
