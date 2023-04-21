@@ -7,6 +7,6 @@ public enum FormaPagamento {
     DEBITO,
     DINHEIRO,
 
-    DEFAULT
+    NENHUMA
 
 }

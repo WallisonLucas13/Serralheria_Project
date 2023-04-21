@@ -134,12 +134,12 @@ public class ServicoService {
         Servico servico = repository.findById(id).get();
 
         if(servico.getFormaPagamentoEntrada() == null){
-            servico.setFormaPagamentoEntrada(FormaPagamento.DEFAULT);
+            servico.setFormaPagamentoEntrada(FormaPagamento.NENHUMA);
             repository.save(servico);
         }
 
         if(servico.getFormaPagamentoFinal() == null){
-            servico.setFormaPagamentoFinal(FormaPagamento.DEFAULT);
+            servico.setFormaPagamentoFinal(FormaPagamento.NENHUMA);
             repository.save(servico);
         }
 
@@ -212,7 +212,7 @@ public class ServicoService {
             case "CREDITO": return FormaPagamento.CREDITO;
             case "DINHEIRO": return FormaPagamento.DINHEIRO;
 
-            default: return FormaPagamento.DEFAULT;
+            default: return FormaPagamento.NENHUMA;
         }
     }
 }

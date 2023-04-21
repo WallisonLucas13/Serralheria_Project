@@ -267,8 +267,10 @@ public class CreateAttachmentFile {
         pagamentoFinal.setAlignment(Element.ALIGN_LEFT);
         pagamentoFinal.setSpacingBefore(-14f);
         document.add(paragraphEmpty());
+        document.add(paragraphEmpty());
         document.add(pagamentoFinal);
-        
+        document.add(paragraphEmpty());
+
         Paragraph formaPagamentoFinal = new Paragraph(new Phrase("Forma de Pagamento: " + servico.getFormaPagamentoFinal(), fontImportant));
         pagamentoFinal.setAlignment(Element.ALIGN_LEFT);
         pagamentoFinal.setSpacingBefore(-14f);
