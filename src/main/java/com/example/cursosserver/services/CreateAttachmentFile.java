@@ -39,7 +39,6 @@ public class CreateAttachmentFile {
         boolean ocultarDesconto = orcamentoAdressTo.isOcultarDesconto();
 
         ResourceLoader resourceLoader = new DefaultResourceLoader();
-        //PdfWriter.getInstance(document, new FileOutputStream(path));
         Resource resource = resourceLoader.getResource("file:files\\" + documentName);
         PdfWriter.getInstance(document, new FileOutputStream(resource.getFile()));
 
@@ -110,6 +109,9 @@ public class CreateAttachmentFile {
 
         PdfPTable tableDescontoAplicado = new PdfPTable(new float[]{2f, 1f, 3f, 2f});
         tableDescontoAplicado.setWidthPercentage(100f);
+
+        PdfPTable tableEntrada = new PdfPTable(new float[]{1f, 2f, 2f, 3f});
+        tableEntrada.setWidthPercentage(100f);
 
         PdfPTable tableTime = new PdfPTable(new float[]{2f, 1f});
         tableTime.setWidthPercentage(40f);
@@ -199,14 +201,19 @@ public class CreateAttachmentFile {
         tableMaoDeObra.addCell(cellConteudo("R$ " + String.valueOf(servico.getMaoDeObra()) + ",00", fontValues));
         tableMaoDeObra.completeRow();
 
-        tableCustoFinalServico.addCell(cellBackgroundGray("Total Do Serviço", fontTrs));
+        tableCustoFinalServico.addCell(cellBackgroundGray("SubTotal", fontTrs));
         tableCustoFinalServico.addCell(cellConteudo("R$ " + String.valueOf(servico.getValorTotalMateriais() + servico.getMaoDeObra()) + ",00", fontValues));
         tableCustoFinalServico.completeRow();
 
         tableDescontoAplicado.addCell(cellBackgroundGray("Desconto Aplicado", fontTrs));
         tableDescontoAplicado.addCell(cellConteudo(String.valueOf(servico.getDesconto()) + "%", fontImportant));
-        tableDescontoAplicado.addCell(cellBackgroundGray("Total Com Desconto", fontTrs));
+        tableDescontoAplicado.addCell(cellBackgroundGray("SubTotal com Desconto", fontTrs));
         tableDescontoAplicado.addCell(cellConteudo("R$ " + String.valueOf(servico.getValorFinal()) + ",00", fontValues));
+
+        tableEntrada.addCell(cellBackgroundGray("Entrada", fontTrs));
+        tableEntrada.addCell(cellConteudo(String.valueOf(servico.getPorcentagemEntrada()) + "% / " + "R$ " + servico.getValorEntrada() + ",00", fontImportant));
+        tableEntrada.addCell(cellBackgroundGray("Forma de Pagamento", fontTrs));
+        tableEntrada.addCell(cellConteudo(servico.getFormaPagamentoEntrada().name(), fontValues));
 
 
         Paragraph title = new Paragraph(new Phrase(20f,"Serralheria Qualidade e Pontualidade", FontFactory.getFont(FontFactory.HELVETICA, 18F)));
@@ -252,6 +259,9 @@ public class CreateAttachmentFile {
             document.add(paragraphEmpty());
             document.add(tableDescontoAplicado);
         }
+
+        document.add(paragraphEmpty());
+        document.add(tableEntrada);
 
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
