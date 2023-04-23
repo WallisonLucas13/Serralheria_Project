@@ -79,11 +79,11 @@ public class CreateAttachmentFile {
 
         Font fontEndQuestions = new Font();
         fontEndQuestions.setColor(new BaseColor(244, 244, 244, 1));
-        fontEndQuestions.setSize(14);
+        fontEndQuestions.setSize(12);
 
         Font fontEndQuestionsStyled = new Font();
         fontEndQuestionsStyled.setColor(new BaseColor(255, 187, 51));
-        fontEndQuestionsStyled.setSize(14);
+        fontEndQuestionsStyled.setSize(12);
 
         //TABLES
         PdfPTable tablePrestador = new PdfPTable(new float[]{5f});
@@ -277,6 +277,7 @@ public class CreateAttachmentFile {
         headerEntrada.add(bodyEntrada);
 
         Paragraph entrada = new Paragraph(headerEntrada);
+        entrada.setExtraParagraphSpace(2L);
         entrada.setAlignment(Element.ALIGN_LEFT);
         document.add(entrada);
         //----------------------------------------------------------------------------------------------
@@ -293,7 +294,7 @@ public class CreateAttachmentFile {
 
         //Formas Pagamento
         Phrase headerPagamentoForm = new Phrase("Formas de Pagamento: ", fontEndQuestions);
-        Phrase bodyPagamentoForm = new Phrase("DÉBITO | CRÉDITO | PIX | DINHEIRO", FontFactory.getFont(FontFactory.HELVETICA, 14, new BaseColor(255, 187, 51)));
+        Phrase bodyPagamentoForm = new Phrase("DÉBITO | CRÉDITO | PIX | DINHEIRO", FontFactory.getFont(FontFactory.HELVETICA, 12, new BaseColor(255, 187, 51)));
         headerPagamentoForm.add(bodyPagamentoForm);
 
         Paragraph formaPagamentoFinal = new Paragraph(headerPagamentoForm);
@@ -321,7 +322,7 @@ public class CreateAttachmentFile {
         //Footer
         Paragraph footer = new Paragraph(new Phrase("By Serralheria Qualidade e Pontualidade", FontFactory.getFont(FontFactory.TIMES_ITALIC, 11, new BaseColor(255, 187, 51))));
         footer.setAlignment(Element.ALIGN_CENTER);
-
+        footer.setExtraParagraphSpace(2L);
         document.add(footer);
         //-------------------------------------------------------------------------------------------------
         document.close();
