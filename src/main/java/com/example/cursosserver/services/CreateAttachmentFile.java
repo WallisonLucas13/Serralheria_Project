@@ -306,7 +306,7 @@ public class CreateAttachmentFile {
 
         Paragraph pagamentoFinal = new Paragraph(text);
         pagamentoFinal.setSpacingBefore(10f);
-        pagamentoFinal.setSpacingAfter(5f);
+        pagamentoFinal.setSpacingAfter(15f);
         pagamentoFinal.setAlignment(Element.ALIGN_LEFT);
         document.add(pagamentoFinal);
         //-----------------------------------------------------------------------------------------------
@@ -319,7 +319,7 @@ public class CreateAttachmentFile {
         Paragraph formaPagamentoFinal = new Paragraph(headerPagamentoForm);
 
         formaPagamentoFinal.setAlignment(Element.ALIGN_LEFT);
-        formaPagamentoFinal.setSpacingAfter(15f);
+        formaPagamentoFinal.setSpacingAfter(10f);
         document.add(formaPagamentoFinal);
         //------------------------------------------------------------------------------------------------
 
@@ -358,7 +358,9 @@ public class CreateAttachmentFile {
         return material.getNome() + " | " + "R$ " + material.getValor() + ",00" + " /" + material.getQuant() + " = R$ " + material.getValor()*material.getQuant() + ",00";
     }
     private Paragraph divider(){
-        Phrase p = new Phrase("____________________________________________________________", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, new BaseColor(123, 123, 123, 1)));
+        Phrase p = new Phrase("_________________________________________________________________", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, new BaseColor(123, 123, 123, 1)));
+        Paragraph a = new Paragraph(p);
+        a.setAlignment(Element.ALIGN_CENTER);
         return new Paragraph(p);
     }
 }
