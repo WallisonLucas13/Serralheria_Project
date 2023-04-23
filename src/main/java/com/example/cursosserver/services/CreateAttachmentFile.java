@@ -5,9 +5,8 @@ import com.example.cursosserver.models.Cliente;
 import com.example.cursosserver.models.Material;
 import com.example.cursosserver.models.Servico;
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -22,16 +21,24 @@ import java.util.List;
 @Service
 public class CreateAttachmentFile {
 
+    @Value("${EMPRESA}")
+    private String empresa;
+
+    @Value("${CNPJ}")
+    private String cnpj;
+
+    @Value("${EMAIL}")
+    private String email;
+
+    @Value("${TELEFONE}")
+    private String telefone;
+
     public String create(Cliente cliente, Servico servico, OrcamentoAdressTo orcamentoAdressTo, String mailCompany) throws DocumentException, IOException {
 
         Document document = new Document();
 
         String documentName = "Orcamento.pdf";
 
-        String empresaName = "Serralheria Qualidade e Pontualidade";
-        String CNPJ = "41.221.179/0001-21";
-        String email = mailCompany;
-        String telefone = "(34) 98848-3279";
         List<Material> materiais = servico.getMateriais();
 
         boolean ocultarMateriais = orcamentoAdressTo.isOcultarMateriais();
@@ -85,147 +92,7 @@ public class CreateAttachmentFile {
         fontEndQuestionsStyled.setColor(new BaseColor(255, 187, 51));
         fontEndQuestionsStyled.setSize(12);
 
-        //TABLES
-        PdfPTable tablePrestador = new PdfPTable(new float[]{5f});
-        tablePrestador.setWidthPercentage(100f);
-
-        PdfPTable tableHeader = new PdfPTable(new float[]{5f});
-        tableHeader.setWidthPercentage(100f);
-
-        PdfPTable table = new PdfPTable(new float[]{1f, 3f, 1f, 2f});
-        table.setWidthPercentage(100f);
-
-        PdfPTable empresaTable = new PdfPTable(new float[]{1f,3f,1f,2f});
-        empresaTable.setWidthPercentage(100f);
-
-        PdfPTable tableAdress = new PdfPTable(new float[]{1f,3f,1f,2f});
-        tableAdress.setWidthPercentage(100f);
-
-        PdfPTable tableServicoHeader = new PdfPTable(new float[]{5f});
-        tableServicoHeader.setWidthPercentage(100f);
-
-        PdfPTable tableServicoBody = new PdfPTable(new float[]{1f,4f});
-        tableServicoBody.setWidthPercentage(100f);
-
-        PdfPTable tableMateriaisHeader = new PdfPTable(new float[]{5f});
-        tableMateriaisHeader.setWidthPercentage(100f);
-
-        PdfPTable tableMateriaisBody = new PdfPTable(new float[]{1f, 1f, 1f, 1f});
-        tableMateriaisBody.setWidthPercentage(100f);
-
-        PdfPTable tableMateriaisValorFinal = new PdfPTable(new float[]{1f, 1f});
-        tableMateriaisValorFinal.setWidthPercentage(50f);
-
-        PdfPTable tableMaoDeObra = new PdfPTable(new float[]{4f, 2f});
-        tableMaoDeObra.setWidthPercentage(50f);
-
-        PdfPTable tableCustoFinalServico = new PdfPTable(new float[]{1f, 1f});
-        tableCustoFinalServico.setWidthPercentage(100f);
-
-        PdfPTable tableDescontoAplicado = new PdfPTable(new float[]{2f, 1f, 3f, 2f});
-        tableDescontoAplicado.setWidthPercentage(100f);
-
-        PdfPTable tableTime = new PdfPTable(new float[]{2f, 1f});
-        tableTime.setWidthPercentage(40f);
-
-        //CELLS
-        tablePrestador.addCell(cellBackgroundGray("Prestador Do Serviço", fontTrs));
-
-        empresaTable.addCell(cellBackgroundGray("Prestador", fontTrs));
-        PdfPCell cellEmpresa = cellConteudo(empresaName, fontBody);
-        empresaTable.addCell(cellEmpresa);
-        empresaTable.addCell(cellBackgroundGray("CNPJ", fontTrs));
-        PdfPCell cellCNPJ = cellConteudo(CNPJ, fontBody);
-        empresaTable.addCell(cellCNPJ);
-        empresaTable.completeRow();
-
-        empresaTable.addCell(cellBackgroundGray("Email", fontTrs));
-        PdfPCell cellEmail = cellConteudo(email, fontBody);
-        empresaTable.addCell(cellEmail);
-        empresaTable.addCell(cellBackgroundGray("Telefone", fontTrs));
-        PdfPCell cellTelefone = cellConteudo(telefone, fontBody);
-        empresaTable.addCell(cellTelefone);
-        empresaTable.completeRow();
-
-        PdfPCell titleCellCliente = cellBackgroundGray("Cliente", fontTrs);
-        tableHeader.addCell(titleCellCliente);
-
-        PdfPCell cellName = cellConteudo(cliente.getNome(), fontBody);
-        PdfPCell cellTel = cellConteudo(cliente.getTel(), fontBody);
-        PdfPCell cellBairro = cellConteudo(cliente.getBairro(), fontBody);
-        PdfPCell cellAdress = cellConteudo(cliente.getEndereco(), fontBody);
-
-        table.addCell(cellBackgroundGray("Nome", fontTrs));
-        table.addCell(cellName);
-        table.addCell(cellBackgroundGray("Telefone", fontTrs));
-        table.addCell(cellTel);
-        table.completeRow();
-
-        tableAdress.addCell(cellBackgroundGray("Endereço", fontTrs));
-        tableAdress.addCell(cellAdress);
-        tableAdress.addCell(cellBackgroundGray("Bairro", fontTrs));
-        tableAdress.addCell(cellBairro);
-        tableAdress.completeRow();
-
-        tableServicoHeader.addCell(cellBackgroundGray("Serviço Realizado", fontTrs));
-        tableServicoBody.addCell(cellBackgroundGray("Serviço", fontTrs));
-        tableServicoBody.addCell(cellConteudo(servico.getNome(), fontBody));
-        tableServicoBody.completeRow();
-        PdfPCell desc = cellBackgroundGray("Descrição", fontTrs);
-        desc.setVerticalAlignment(Element.ALIGN_CENTER);
-        desc.setHorizontalAlignment(Element.ALIGN_CENTER);
-        tableServicoBody.addCell(desc);
-
-        PdfPCell c = cellConteudo(servico.getDesc().replace("\n", " "), fontBody);
-        c.setMinimumHeight(80f);
-        c.setVerticalAlignment(Element.ALIGN_CENTER);
-        tableServicoBody.addCell(c);
-        tableServicoBody.completeRow();
-
-        tableMateriaisHeader.addCell(cellBackgroundGray("Lista De Materiais",fontTrs));
-        tableMateriaisBody.addCell(cellBackgroundGray("Material", fontTrs));
-        tableMateriaisBody.addCell(cellBackgroundGray("Valor Unitário", fontTrs));
-        tableMateriaisBody.addCell(cellBackgroundGray("Quantidade", fontTrs));
-        tableMateriaisBody.addCell(cellBackgroundGray("Total", fontTrs));
-        tableMateriaisBody.completeRow();
-
-        for(int i=0; i<materiais.size(); i++){
-
-            tableMateriaisBody.addCell(cellConteudo(materiais.get(i).getNome(), fontBody));
-            tableMateriaisBody.addCell(cellConteudo("R$ " + String.valueOf(materiais.get(i).getValor()) + ",00", fontValues));
-            tableMateriaisBody.addCell(cellConteudo(String.valueOf(materiais.get(i).getQuant()), fontBody));
-            tableMateriaisBody
-                    .addCell(cellConteudo("R$ " + String.valueOf(materiais.get(i).getQuant()
-                            * materiais.get(i).getValor() +",00"), fontValues));
-            tableMateriaisBody.completeRow();
-
-        }
-
-        for(int i=0; i<2; i++){
-            tableMateriaisBody.addCell(cellEmpty());
-            tableMateriaisBody.addCell(cellEmpty());
-            tableMateriaisBody.addCell(cellEmpty());
-            tableMateriaisBody.addCell(cellEmpty());
-            tableMateriaisBody.completeRow();
-        }
-
-        tableMateriaisValorFinal.addCell(cellBackgroundGray("Total", fontTrs));
-        tableMateriaisValorFinal.addCell(cellConteudo("R$ " +String.valueOf(servico.getValorTotalMateriais()) + ",00", fontValues));
-        tableMateriaisValorFinal.completeRow();
-
-        tableMaoDeObra.addCell(cellBackgroundGray("Mão De Obra Definida", fontTrs));
-        tableMaoDeObra.addCell(cellConteudo("R$ " + String.valueOf(servico.getMaoDeObra()) + ",00", fontValues));
-        tableMaoDeObra.completeRow();
-
-        tableCustoFinalServico.addCell(cellBackgroundGray("SubTotal", fontTrs));
-        tableCustoFinalServico.addCell(cellConteudo("R$ " + String.valueOf(servico.getValorTotalMateriais() + servico.getMaoDeObra()) + ",00", fontValues));
-        tableCustoFinalServico.completeRow();
-
-        tableDescontoAplicado.addCell(cellBackgroundGray("Desconto", fontTrs));
-        tableDescontoAplicado.addCell(cellConteudo(String.valueOf(servico.getDesconto()) + "%", fontImportant));
-        tableDescontoAplicado.addCell(cellBackgroundGray("SubTotal com Desconto", fontTrs));
-        tableDescontoAplicado.addCell(cellConteudo("R$ " + String.valueOf(servico.getValorFinal()) + ",00", fontValues));
-
+        //TITLE
         Paragraph title = new Paragraph(new Phrase(20f,"Serralheria Qualidade e Pontualidade", FontFactory.getFont(FontFactory.HELVETICA, 18F, new BaseColor(255, 187, 51))));
         title.setAlignment(Element.ALIGN_CENTER);
         Font fontDeLink = new Font(Font.FontFamily.HELVETICA, 13, Font.BOLD, new BaseColor(255, 187, 51));
@@ -236,48 +103,126 @@ public class CreateAttachmentFile {
 
         document.add(title);
         document.add(subtitle);
-        document.add(paragraphEmpty());
+        //-------------------------------------------------------------------------------------------------
 
-        document.add(paragraphEmpty());
-        document.add(tablePrestador);
-        document.add(empresaTable);
-        document.add(paragraphEmpty());
+        //PRESTADOR HEADER
+        Phrase headerPrestador = new Phrase("Prestador", fontEndQuestionsStyled);
 
-        document.add(tableHeader);
-        document.add(table);
-        document.add(tableAdress);
-        document.add(paragraphEmpty());
+        Paragraph prestador = new Paragraph(headerPrestador);
+        prestador.setAlignment(Element.ALIGN_LEFT);
+        document.add(prestador);
+        //----------------------------------------------------------------------------------------------
 
-        document.add(tableServicoHeader);
-        document.add(tableServicoBody);
-        document.add(paragraphEmpty());
+        //EMPRESA
+        Phrase headerEmpresa = new Phrase("Empresa: ", fontEndQuestions);
+        Phrase bodyEmpresa = new Phrase(this.empresa, fontEndQuestions);
+        headerEmpresa.add(bodyEmpresa);
 
-        if(!ocultarMateriais) {
-            document.add(tableMateriaisHeader);
-            document.add(paragraphEmpty());
-            document.add(tableMateriaisBody);
-            document.add(tableMateriaisValorFinal);
-        }
-        if(!ocultarMaoDeObra){
-            document.add(paragraphEmpty());
-            tableMaoDeObra.setHorizontalAlignment(Element.ALIGN_LEFT);
-            document.add(tableMaoDeObra);
-            document.add(paragraphEmpty());
-        }
-        document.add(tableCustoFinalServico);
+        Paragraph empresa = new Paragraph(headerEmpresa);
+        empresa.setAlignment(Element.ALIGN_LEFT);
+        document.add(empresa);
+        //----------------------------------------------------------------------------------------------
 
-        if(!ocultarDesconto){
-            document.add(paragraphEmpty());
-            document.add(tableDescontoAplicado);
-        }
+        //CNPJ
+        Phrase headerCNPJ = new Phrase("Cnpj: ", fontEndQuestions);
+        Phrase bodyCNPJ = new Phrase(this.cnpj, fontEndQuestions);
+        headerCNPJ.add(bodyCNPJ);
 
+        Paragraph cnpj = new Paragraph(headerCNPJ);
+        cnpj.setAlignment(Element.ALIGN_LEFT);
+        document.add(cnpj);
+        //----------------------------------------------------------------------------------------------
+
+        //EMAIL
+        Phrase headerEmail = new Phrase("Email: ", fontEndQuestions);
+        Phrase bodyEmail = new Phrase(this.email, fontEndQuestions);
+        headerEmail.add(bodyEmail);
+
+        Paragraph email = new Paragraph(headerEmail);
+        email.setAlignment(Element.ALIGN_LEFT);
+        document.add(email);
+        //----------------------------------------------------------------------------------------------
+
+        //TELEFONE
+        Phrase headerTel = new Phrase("Cnpj: ", fontEndQuestions);
+        Phrase bodyTel = new Phrase(this.telefone, fontEndQuestions);
+        headerTel.add(bodyTel);
+
+        Paragraph tel = new Paragraph(headerTel);
+        tel.setAlignment(Element.ALIGN_LEFT);
+        document.add(tel);
+        //----------------------------------------------------------------------------------------------
+
+        //SERVICO HEADER
+        Phrase headerServico = new Phrase("Serviço", fontEndQuestionsStyled);
+
+        Paragraph servicoP = new Paragraph(headerServico);
+        servicoP.setAlignment(Element.ALIGN_LEFT);
+        document.add(servicoP);
+        //----------------------------------------------------------------------------------------------
+
+        //NOME
+        Phrase headerNome = new Phrase("Nome: ", fontEndQuestions);
+        Phrase bodyNome = new Phrase(servico.getNome(), fontEndQuestions);
+        headerNome.add(bodyNome);
+
+        Paragraph nome = new Paragraph(headerNome);
+        nome.setAlignment(Element.ALIGN_LEFT);
+        document.add(nome);
+        //----------------------------------------------------------------------------------------------
+
+        //DESCRICAO
+        Phrase headerDesc = new Phrase("Descrição: ", fontEndQuestions);
+        Phrase bodyDesc = new Phrase(servico.getDesc(), fontEndQuestions);
+        headerTel.add(bodyDesc);
+
+        Paragraph desc = new Paragraph(headerDesc);
+        desc.setAlignment(Element.ALIGN_LEFT);
+        document.add(desc);
+        //----------------------------------------------------------------------------------------------
+
+        //MATERIAIS HEADER
+        Phrase headerMateriais = new Phrase("Materiais", fontEndQuestionsStyled);
+
+        Paragraph materiaisP = new Paragraph(headerMateriais);
+        materiaisP.setAlignment(Element.ALIGN_LEFT);
+        document.add(materiaisP);
+        //----------------------------------------------------------------------------------------------
+
+        //MATERIAL
+        materiais.stream().forEach((material) -> {
+
+            Phrase headerMaterial = new Phrase("Material: ", fontEndQuestions);
+            Phrase bodyMaterial = new Phrase(formatarMaterial(material), fontEndQuestions);
+            headerMaterial.add(bodyMaterial);
+
+            Paragraph m = new Paragraph(headerMaterial);
+            m.setAlignment(Element.ALIGN_LEFT);
+            try {
+                document.add(m);
+            } catch (DocumentException e) {
+                throw new RuntimeException(e);
+            }
+
+        });
+        //----------------------------------------------------------------------------------------------
+
+        //MATERIAL TOTAL
+        Phrase headerTotalM = new Phrase("Total: ", fontEndQuestionsStyled);
+        Phrase bodyTotalM = new Phrase("R$ " + servico.getValorTotalMateriais() + ",00", fontEndQuestions);
+        headerTotalM.add(bodyTotalM);
+
+        Paragraph totalM = new Paragraph(headerTotalM);
+        totalM.setAlignment(Element.ALIGN_LEFT);
+        document.add(totalM);
+        //----------------------------------------------------------------------------------------------
+        
         //ENTRADA
         Phrase headerEntrada = new Phrase("Entrada: ", fontEndQuestionsStyled);
         Phrase bodyEntrada = new Phrase(servico.getPorcentagemEntrada() + "% / " + "R$ " + servico.getValorEntrada() + ",00", fontImportant);
         headerEntrada.add(bodyEntrada);
 
         Paragraph entrada = new Paragraph(headerEntrada);
-        entrada.setExtraParagraphSpace(2L);
         entrada.setAlignment(Element.ALIGN_LEFT);
         document.add(entrada);
         //----------------------------------------------------------------------------------------------
@@ -325,38 +270,13 @@ public class CreateAttachmentFile {
         footer.setExtraParagraphSpace(2L);
         document.add(footer);
         //-------------------------------------------------------------------------------------------------
+
         document.close();
 
         return documentName;
     }
 
-    private PdfPCell cellBackgroundGray(String body, Font font) {
-        PdfPCell cell = new PdfPCell(new Phrase(body, font));
-        cell.setFixedHeight(20f);
-        cell.setBackgroundColor(new BaseColor(34, 35, 35));
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        cell.setVerticalAlignment(Element.ALIGN_CENTER);
-        return cell;
-    }
-
-    private PdfPCell cellConteudo(String body, Font font) {
-        PdfPCell cell = new PdfPCell(new Phrase(body, font));
-        cell.setFixedHeight(20f);
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        cell.setVerticalAlignment(Element.ALIGN_CENTER);
-        return cell;
-    }
-
-    private Paragraph paragraphEmpty(){
-        Phrase phrase = new Phrase("\n");
-        Paragraph paragraph = new Paragraph();
-        paragraph.add(phrase);
-        return paragraph;
-    }
-
-    private PdfPCell cellEmpty(){
-        PdfPCell cell = new PdfPCell(new Phrase(" "));
-        cell.setFixedHeight(20f);
-        return cell;
+    private String formatarMaterial(Material material){
+        return material.getNome() + " | " + "R$ " + material.getValor() + ",00" + " |" + material.getQuant() + " = R$ " + material.getValor()*material.getQuant() + ",00";
     }
 }
