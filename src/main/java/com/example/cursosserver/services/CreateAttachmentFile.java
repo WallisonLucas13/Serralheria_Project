@@ -222,7 +222,7 @@ public class CreateAttachmentFile {
         }
         materiais.stream().forEach((material) -> {
 
-            Phrase bodyMaterial = new Phrase(formatarMaterial(material), fontEndQuestions);
+            Phrase bodyMaterial = formatarMaterial(material, fontValues, fontImportant, fontEndQuestions);
 
             Paragraph m = new Paragraph(bodyMaterial);
             m.setSpacingAfter(5f);
@@ -353,8 +353,19 @@ public class CreateAttachmentFile {
         return documentName;
     }
 
-    private String formatarMaterial(Material material){
-        return material.getNome() + " | " + "R$ " + material.getValor() + ",00" + " /" + material.getQuant() + " = R$ " + material.getValor()*material.getQuant() + ",00";
+    private Phrase formatarMaterial(Material material, Font valuesFont, Font importantFont, Font fontPadrao){
+
+        Phrase quant = new Phrase(String.valueOf(material.getQuant()), importantFont);
+        Phrase unitario = new Phrase("R$ " + material.getValor() + ",00 | ", valuesFont);
+        unitario.add(quant);
+
+        int mult = material.getValor()* material.getQuant();
+        Phrase res = new Phrase(" = R$ " + mult + ",00", valuesFont);
+
+        Phrase start = new Phrase(material.getNome() + " | ", fontPadrao);
+        start.add(unitario);
+        start.add(res);
+        return start;
     }
     private Paragraph divider(){
         Phrase p = new Phrase("_____________________________________________________________________", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, new BaseColor(123, 123, 123, 1)));
