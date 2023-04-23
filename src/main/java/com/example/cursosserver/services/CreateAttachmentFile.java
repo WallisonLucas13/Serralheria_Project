@@ -79,7 +79,7 @@ public class CreateAttachmentFile {
 
         Font fontEndQuestions = new Font();
         fontEndQuestions.setColor(new BaseColor(244, 244, 244, 1));
-        fontEndQuestions.setSize(20);
+        fontEndQuestions.setSize(15);
 
         //TABLES
         PdfPTable tablePrestador = new PdfPTable(new float[]{5f});
