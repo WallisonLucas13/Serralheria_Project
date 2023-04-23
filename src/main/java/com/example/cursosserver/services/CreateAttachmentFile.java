@@ -70,12 +70,16 @@ public class CreateAttachmentFile {
         fontValues.setColor(new BaseColor(0, 128, 0));
 
         Font fontImportant = new Font();
-        fontImportant.setColor(new BaseColor(255, 187, 51));
+        fontImportant.setColor(new BaseColor(174, 6, 3));
 
         Font fontTitle = new Font();
         fontTitle.setStyle(Font.BOLD);
         fontTitle.setSize(25);
         fontTitle.setColor(new BaseColor(255, 187, 51));
+
+        Font fontEndQuestions = new Font();
+        fontEndQuestions.setColor(new BaseColor(244, 244, 244, 1));
+        fontEndQuestions.setSize(20);
 
         //TABLES
         PdfPTable tablePrestador = new PdfPTable(new float[]{5f});
@@ -216,7 +220,7 @@ public class CreateAttachmentFile {
         tableCustoFinalServico.addCell(cellConteudo("R$ " + String.valueOf(servico.getValorTotalMateriais() + servico.getMaoDeObra()) + ",00", fontValues));
         tableCustoFinalServico.completeRow();
 
-        tableDescontoAplicado.addCell(cellBackgroundGray("Desconto Aplicado", fontTrs));
+        tableDescontoAplicado.addCell(cellBackgroundGray("Desconto", fontTrs));
         tableDescontoAplicado.addCell(cellConteudo(String.valueOf(servico.getDesconto()) + "%", fontImportant));
         tableDescontoAplicado.addCell(cellBackgroundGray("SubTotal com Desconto", fontTrs));
         tableDescontoAplicado.addCell(cellConteudo("R$ " + String.valueOf(servico.getValorFinal()) + ",00", fontValues));
@@ -274,9 +278,8 @@ public class CreateAttachmentFile {
         document.add(tableEntrada);
 
         Phrase value = new Phrase("R$ " + servico.getValorPagamentoFinal() + ",00", fontValues);
-        Phrase text = new Phrase("Total a pagar na conclusão do serviço: ");
+        Phrase text = new Phrase("Total a pagar na conclusão do serviço: ", fontEndQuestions);
         text.add(value);
-        text.setFont(new Font(Font.FontFamily.HELVETICA, 17, Font.BOLD, new BaseColor(255, 187, 51)));
 
         Paragraph pagamentoFinal = new Paragraph(text);
         pagamentoFinal.setAlignment(Element.ALIGN_LEFT);
@@ -286,7 +289,11 @@ public class CreateAttachmentFile {
         document.add(pagamentoFinal);
         document.add(paragraphEmpty());
 
-        Paragraph formaPagamentoFinal = new Paragraph(new Phrase("Formas de Pagamento: DÉBITO | CRÉDITO | PIX | DINHEIRO", fontImportant));
+        Phrase headerPagamentoForm = new Phrase("Formas de Pagamento: ", fontEndQuestions);
+        Phrase bodyPagamentoForm = new Phrase("DÉBITO | CRÉDITO | PIX | DINHEIRO", fontTrs);
+        headerPagamentoForm.add(bodyPagamentoForm);
+
+        Paragraph formaPagamentoFinal = new Paragraph(headerPagamentoForm);
         pagamentoFinal.setAlignment(Element.ALIGN_LEFT);
         pagamentoFinal.setSpacingBefore(-14f);
         document.add(formaPagamentoFinal);
@@ -304,6 +311,9 @@ public class CreateAttachmentFile {
         msg.setAlignment(Element.ALIGN_LEFT);
         msg.setSpacingBefore(-14f);
         document.add(msg);
+
+        Paragraph footer = new Paragraph(new Phrase("By Serralheria Qualidade e Pontualidade", FontFactory.getFont(FontFactory.TIMES_ITALIC, 11, new BaseColor(255, 187, 51))));
+        footer.setAlignment(Element.ALIGN_CENTER);
 
         document.close();
 
