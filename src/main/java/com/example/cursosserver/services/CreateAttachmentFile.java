@@ -262,10 +262,14 @@ public class CreateAttachmentFile {
         }
 
         document.add(paragraphEmpty());
+        tableEntrada.setHorizontalAlignment(Element.ALIGN_LEFT);
         document.add(tableEntrada);
 
         Phrase value = new Phrase("R$ " + servico.getValorPagamentoFinal() + ",00", fontValues);
-        Paragraph pagamentoFinal = new Paragraph("Total a pagar na conclusão do serviço: " + value.getContent());
+        Phrase text = new Phrase("Total a pagar na conclusão do serviço: ");
+        text.add(value);
+
+        Paragraph pagamentoFinal = new Paragraph(text);
         pagamentoFinal.setAlignment(Element.ALIGN_LEFT);
         pagamentoFinal.setSpacingBefore(-14f);
         document.add(paragraphEmpty());
@@ -277,6 +281,7 @@ public class CreateAttachmentFile {
         pagamentoFinal.setAlignment(Element.ALIGN_LEFT);
         pagamentoFinal.setSpacingBefore(-14f);
         document.add(formaPagamentoFinal);
+        document.add(paragraphEmpty());
 
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
