@@ -331,9 +331,9 @@ public class CreateAttachmentFile {
         //------------------------------------------------------------------------------------------------
 
         //Footer
-        Paragraph footer = new Paragraph(new Phrase("By Serralheria Qualidade e Pontualidade", FontFactory.getFont(FontFactory.TIMES_ITALIC, 11, new BaseColor(255, 187, 51))));
+        Paragraph footer = new Paragraph(new Phrase("By "+ this.empresa, FontFactory.getFont(FontFactory.TIMES_ITALIC, 11, new BaseColor(255, 187, 51))));
         footer.setAlignment(Element.ALIGN_CENTER);
-        footer.setExtraParagraphSpace(2L);
+        footer.setSpacingBefore(25f);
         document.add(footer);
         //-------------------------------------------------------------------------------------------------
 
