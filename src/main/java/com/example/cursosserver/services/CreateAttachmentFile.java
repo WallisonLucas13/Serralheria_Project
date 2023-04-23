@@ -111,6 +111,7 @@ public class CreateAttachmentFile {
         Phrase headerPrestador = new Phrase("Prestador", fontEndQuestionsStyled);
 
         Paragraph prestador = new Paragraph(headerPrestador);
+        prestador.setSpacingBefore(8f);
         prestador.setSpacingAfter(10f);
         prestador.setAlignment(Element.ALIGN_LEFT);
         document.add(prestador);
@@ -205,9 +206,9 @@ public class CreateAttachmentFile {
             Phrase headerMateriais = new Phrase("Materiais", fontEndQuestionsStyled);
 
             Paragraph materiaisP = new Paragraph(headerMateriais);
-            materiaisP.setSpacingBefore(10f);
+            materiaisP.setSpacingBefore(-15f);
             materiaisP.setSpacingAfter(10f);
-            materiaisP.setAlignment(Element.ALIGN_LEFT);
+            materiaisP.setAlignment(Element.ALIGN_RIGHT);
             document.add(materiaisP);
             //----------------------------------------------------------------------------------------------
 
@@ -217,7 +218,7 @@ public class CreateAttachmentFile {
 
                 Paragraph e = new Paragraph(bodyEmpty);
                 e.setSpacingAfter(5f);
-                e.setAlignment(Element.ALIGN_LEFT);
+                e.setAlignment(Element.ALIGN_RIGHT);
                 document.add(e);
             }
             materiais.stream().forEach((material) -> {
@@ -226,7 +227,7 @@ public class CreateAttachmentFile {
 
                 Paragraph m = new Paragraph(bodyMaterial);
                 m.setSpacingAfter(5f);
-                m.setAlignment(Element.ALIGN_LEFT);
+                m.setAlignment(Element.ALIGN_RIGHT);
                 try {
                     document.add(m);
                 } catch (DocumentException e) {
@@ -243,7 +244,7 @@ public class CreateAttachmentFile {
                 headerTotalM.add(bodyTotalM);
 
                 Paragraph totalM = new Paragraph(headerTotalM);
-                totalM.setAlignment(Element.ALIGN_LEFT);
+                totalM.setAlignment(Element.ALIGN_RIGHT);
                 document.add(totalM);
             }
         }
