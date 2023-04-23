@@ -75,9 +75,11 @@ public class CreateAttachmentFile {
 
         Font fontValues = new Font();
         fontValues.setColor(new BaseColor(0, 128, 0));
+        fontValues.setSize(14);
 
         Font fontImportant = new Font();
         fontImportant.setColor(new BaseColor(174, 6, 3));
+        fontImportant.setSize(14);
 
         Font fontTitle = new Font();
         fontTitle.setStyle(Font.BOLD);
@@ -88,9 +90,15 @@ public class CreateAttachmentFile {
         fontEndQuestions.setColor(new BaseColor(244, 244, 244, 1));
         fontEndQuestions.setSize(12);
 
+        Font fontEndQuestionsSubtitle = new Font();
+        fontEndQuestionsSubtitle.setColor(new BaseColor(123, 123, 123, 1));
+        fontEndQuestionsSubtitle.setSize(13);
+        fontEndQuestionsSubtitle.setStyle(Font.BOLD);
+
         Font fontEndQuestionsStyled = new Font();
         fontEndQuestionsStyled.setColor(new BaseColor(255, 187, 51));
-        fontEndQuestionsStyled.setSize(14);
+        fontEndQuestionsStyled.setSize(15);
+        fontEndQuestionsStyled.setFamily(FontFactory.TIMES_ITALIC);
 
         //TITLE
         Paragraph title = new Paragraph(new Phrase(20f,"Serralheria Qualidade e Pontualidade", FontFactory.getFont(FontFactory.HELVETICA, 18F, new BaseColor(255, 187, 51))));
@@ -116,7 +124,7 @@ public class CreateAttachmentFile {
         //----------------------------------------------------------------------------------------------
 
         //EMPRESA
-        Phrase headerEmpresa = new Phrase("Empresa: ", fontEndQuestions);
+        Phrase headerEmpresa = new Phrase("Empresa: ", fontEndQuestionsSubtitle);
         Phrase bodyEmpresa = new Phrase(this.empresa, fontEndQuestions);
         headerEmpresa.add(bodyEmpresa);
 
@@ -127,7 +135,7 @@ public class CreateAttachmentFile {
         //----------------------------------------------------------------------------------------------
 
         //CNPJ
-        Phrase headerCNPJ = new Phrase("Cnpj: ", fontEndQuestions);
+        Phrase headerCNPJ = new Phrase("Cnpj: ", fontEndQuestionsSubtitle);
         Phrase bodyCNPJ = new Phrase(this.cnpj, fontEndQuestions);
         headerCNPJ.add(bodyCNPJ);
 
@@ -138,7 +146,7 @@ public class CreateAttachmentFile {
         //----------------------------------------------------------------------------------------------
 
         //EMAIL
-        Phrase headerEmail = new Phrase("Email: ", fontEndQuestions);
+        Phrase headerEmail = new Phrase("Email: ", fontEndQuestionsSubtitle);
         Phrase bodyEmail = new Phrase(this.email, fontEndQuestions);
         headerEmail.add(bodyEmail);
 
@@ -149,7 +157,7 @@ public class CreateAttachmentFile {
         //----------------------------------------------------------------------------------------------
 
         //TELEFONE
-        Phrase headerTel = new Phrase("Telefone: ", fontEndQuestions);
+        Phrase headerTel = new Phrase("Telefone: ", fontEndQuestionsSubtitle);
         Phrase bodyTel = new Phrase(this.telefone, fontEndQuestions);
         headerTel.add(bodyTel);
 
@@ -169,7 +177,7 @@ public class CreateAttachmentFile {
         //----------------------------------------------------------------------------------------------
 
         //NOME
-        Phrase headerNome = new Phrase("Nome: ", fontEndQuestions);
+        Phrase headerNome = new Phrase("Nome: ", fontEndQuestionsSubtitle);
         Phrase bodyNome = new Phrase(servico.getNome(), fontEndQuestions);
         headerNome.add(bodyNome);
 
@@ -180,7 +188,7 @@ public class CreateAttachmentFile {
         //----------------------------------------------------------------------------------------------
 
         //DESCRICAO
-        Phrase headerDesc = new Phrase("Descrição: ", fontEndQuestions);
+        Phrase headerDesc = new Phrase("Descrição: ", fontEndQuestionsSubtitle);
         Phrase bodyDesc = new Phrase(servico.getDesc(), fontEndQuestions);
         headerDesc.add(bodyDesc);
 
@@ -201,7 +209,7 @@ public class CreateAttachmentFile {
 
         //MATERIAL
         if(materiais.isEmpty()){
-            Phrase bodyEmpty = new Phrase("Não há nenhum material", fontEndQuestions);
+            Phrase bodyEmpty = new Phrase("Não há nenhum material", fontEndQuestionsSubtitle);
 
             Paragraph e = new Paragraph(bodyEmpty);
             e.setSpacingAfter(5f);
@@ -225,18 +233,20 @@ public class CreateAttachmentFile {
         //----------------------------------------------------------------------------------------------
 
         //MATERIAL TOTAL
-        Phrase headerTotalM = new Phrase("Total: ", fontEndQuestionsStyled);
-        Phrase bodyTotalM = new Phrase("R$ " + servico.getValorTotalMateriais() + ",00", fontEndQuestions);
-        headerTotalM.add(bodyTotalM);
+        if(!materiais.isEmpty()) {
+            Phrase headerTotalM = new Phrase("Total: ", fontEndQuestionsStyled);
+            Phrase bodyTotalM = new Phrase("R$ " + servico.getValorTotalMateriais() + ",00", fontValues);
+            headerTotalM.add(bodyTotalM);
 
-        Paragraph totalM = new Paragraph(headerTotalM);
-        totalM.setAlignment(Element.ALIGN_LEFT);
-        document.add(totalM);
+            Paragraph totalM = new Paragraph(headerTotalM);
+            totalM.setAlignment(Element.ALIGN_LEFT);
+            document.add(totalM);
+        }
         //----------------------------------------------------------------------------------------------
 
         //MAO DE OBRA
         Phrase headerObra = new Phrase("Mão de Obra: ", fontEndQuestionsStyled);
-        Phrase bodyObra = new Phrase("R$ " + servico.getMaoDeObra() + ",00", fontEndQuestions);
+        Phrase bodyObra = new Phrase("R$ " + servico.getMaoDeObra() + ",00", fontValues);
         headerObra.add(bodyObra);
 
         Paragraph obra = new Paragraph(headerObra);
@@ -256,9 +266,20 @@ public class CreateAttachmentFile {
         document.add(entrada);
         //----------------------------------------------------------------------------------------------
 
+        //Desconto
+        Phrase headerDesconto = new Phrase("Desconto: ", fontEndQuestionsStyled);
+        Phrase bodyDesconto = new Phrase(servico.getDesconto() + "% | " + "R$ " + (Integer.parseInt(servico.getValorPagamentoFinal())*servico.getDesconto())/100 + ",00", fontImportant);
+        headerDesconto.add(bodyDesconto);
+
+        Paragraph desconto = new Paragraph(headerDesconto);
+        desconto.setSpacingBefore(10f);
+        desconto.setAlignment(Element.ALIGN_LEFT);
+        document.add(desconto);
+        //----------------------------------------------------------------------------------------------
+
         //Total a pagar
         Phrase value = new Phrase("R$ " + servico.getValorPagamentoFinal() + ",00", fontValues);
-        Phrase text = new Phrase("Total a pagar na conclusão do serviço: ", fontEndQuestions);
+        Phrase text = new Phrase("Total a pagar na conclusão do serviço: ", fontEndQuestionsSubtitle);
         text.add(value);
 
         Paragraph pagamentoFinal = new Paragraph(text);
@@ -269,7 +290,7 @@ public class CreateAttachmentFile {
         //-----------------------------------------------------------------------------------------------
 
         //Formas Pagamento
-        Phrase headerPagamentoForm = new Phrase("Formas de Pagamento: ", fontEndQuestions);
+        Phrase headerPagamentoForm = new Phrase("Formas de Pagamento: ", fontEndQuestionsSubtitle);
         Phrase bodyPagamentoForm = new Phrase("DÉBITO | CRÉDITO | PIX | DINHEIRO", FontFactory.getFont(FontFactory.HELVETICA, 12, new BaseColor(255, 187, 51)));
         headerPagamentoForm.add(bodyPagamentoForm);
 
