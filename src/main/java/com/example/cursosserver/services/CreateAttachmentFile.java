@@ -159,7 +159,9 @@ public class CreateAttachmentFile {
         tableServicoBody.addCell(cellBackgroundGray("Serviço", fontTrs));
         tableServicoBody.addCell(cellConteudo(servico.getNome(), fontBody));
         tableServicoBody.completeRow();
-        tableServicoBody.addCell(cellBackgroundGray("Descrição", fontTrs));
+        PdfPCell desc = cellBackgroundGray("Descrição", fontTrs);
+        desc.setVerticalAlignment(Element.ALIGN_CENTER);
+        tableServicoBody.addCell(desc);
         PdfPCell c = cellConteudo(servico.getDesc().replace("\n", " "), fontBody);
         c.setMinimumHeight(100f);
         c.setVerticalAlignment(Element.ALIGN_CENTER);
@@ -213,7 +215,7 @@ public class CreateAttachmentFile {
         tableEntrada.addCell(cellBackgroundGray("Entrada", fontTrs));
         tableEntrada.addCell(cellConteudo(String.valueOf(servico.getPorcentagemEntrada()) + "% / " + "R$ " + servico.getValorEntrada() + ",00", fontImportant));
         tableEntrada.addCell(cellBackgroundGray("Forma de Pagamento", fontTrs));
-        tableEntrada.addCell(cellConteudo("Forma de Pagamento: DÉBITO | CRÉDITO | PIX | DINHEIRO", fontValues));
+        tableEntrada.addCell(cellConteudo("Débito | Crédito | Pix | Dinheiro", fontValues));
 
 
         Paragraph title = new Paragraph(new Phrase(20f,"Serralheria Qualidade e Pontualidade", FontFactory.getFont(FontFactory.HELVETICA, 18F)));
@@ -263,7 +265,8 @@ public class CreateAttachmentFile {
         document.add(paragraphEmpty());
         document.add(tableEntrada);
 
-        Paragraph pagamentoFinal = new Paragraph(new Phrase("Total a pagar na conclusão do serviço: R$" + servico.getValorPagamentoFinal() + ",00", FontFactory.getFont(FontFactory.HELVETICA, 13)));
+        Phrase frase = new Phrase("R$ " + servico.getValorPagamentoFinal() + ",00", fontValues);
+        Paragraph pagamentoFinal = new Paragraph(new Phrase("Total a pagar na conclusão do serviço: " + frase, FontFactory.getFont(FontFactory.HELVETICA, 14)));
         pagamentoFinal.setAlignment(Element.ALIGN_LEFT);
         pagamentoFinal.setSpacingBefore(-14f);
         document.add(paragraphEmpty());
