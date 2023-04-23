@@ -60,13 +60,18 @@ public class CreateAttachmentFile {
         //FONTS
         Font fontTrs = new Font(Font.FontFamily.HELVETICA);
         fontTrs.setStyle(Font.BOLD);
+        fontTrs.setColor(new BaseColor(34, 35, 35));
 
         Font fontBody = new Font();
         fontBody.setSize(11);
+        fontBody.setColor(new BaseColor(220, 221, 216));
+
         Font fontValues = new Font();
         fontValues.setColor(new BaseColor(0, 128, 0));
+
         Font fontImportant = new Font();
         fontImportant.setColor(new BaseColor(128, 0, 0));
+
         Font fontTitle = new Font();
         fontTitle.setStyle(Font.BOLD);
         fontTitle.setSize(25);
@@ -307,7 +312,7 @@ public class CreateAttachmentFile {
     private PdfPCell cellBackgroundGray(String body, Font font) {
         PdfPCell cell = new PdfPCell(new Phrase(body, font));
         cell.setFixedHeight(20f);
-        cell.setBackgroundColor(new BaseColor(148, 183, 213));
+        cell.setBackgroundColor(new BaseColor(255, 187, 51));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_CENTER);
         return cell;
