@@ -111,7 +111,6 @@ public class CreateAttachmentFile {
         Phrase headerPrestador = new Phrase("Prestador", fontEndQuestionsStyled);
 
         Paragraph prestador = new Paragraph(headerPrestador);
-        prestador.setSpacingBefore(10f);
         prestador.setSpacingAfter(10f);
         prestador.setAlignment(Element.ALIGN_LEFT);
         document.add(prestador);
@@ -202,61 +201,65 @@ public class CreateAttachmentFile {
         //----------------------------------------------------------------------------------------------
 
         //MATERIAIS HEADER
-        Phrase headerMateriais = new Phrase("Materiais", fontEndQuestionsStyled);
+        if(!ocultarMateriais) {
+            Phrase headerMateriais = new Phrase("Materiais", fontEndQuestionsStyled);
 
-        Paragraph materiaisP = new Paragraph(headerMateriais);
-        materiaisP.setSpacingBefore(10f);
-        materiaisP.setSpacingAfter(10f);
-        materiaisP.setAlignment(Element.ALIGN_LEFT);
-        document.add(materiaisP);
-        //----------------------------------------------------------------------------------------------
+            Paragraph materiaisP = new Paragraph(headerMateriais);
+            materiaisP.setSpacingBefore(10f);
+            materiaisP.setSpacingAfter(10f);
+            materiaisP.setAlignment(Element.ALIGN_LEFT);
+            document.add(materiaisP);
+            //----------------------------------------------------------------------------------------------
 
-        //MATERIAL
-        if(materiais.isEmpty()){
-            Phrase bodyEmpty = new Phrase("Não há nenhum material", fontEndQuestionsSubtitle);
+            //MATERIAL
+            if (materiais.isEmpty()) {
+                Phrase bodyEmpty = new Phrase("Não há nenhum material", fontEndQuestionsSubtitle);
 
-            Paragraph e = new Paragraph(bodyEmpty);
-            e.setSpacingAfter(5f);
-            e.setAlignment(Element.ALIGN_LEFT);
-            document.add(e);
-        }
-        materiais.stream().forEach((material) -> {
-
-            Phrase bodyMaterial = formatarMaterial(material, fontValues, fontImportant, fontEndQuestions);
-
-            Paragraph m = new Paragraph(bodyMaterial);
-            m.setSpacingAfter(5f);
-            m.setAlignment(Element.ALIGN_LEFT);
-            try {
-                document.add(m);
-            } catch (DocumentException e) {
-                throw new RuntimeException(e);
+                Paragraph e = new Paragraph(bodyEmpty);
+                e.setSpacingAfter(5f);
+                e.setAlignment(Element.ALIGN_LEFT);
+                document.add(e);
             }
+            materiais.stream().forEach((material) -> {
 
-        });
-        //----------------------------------------------------------------------------------------------
+                Phrase bodyMaterial = formatarMaterial(material, fontValues, fontImportant, fontEndQuestions);
 
-        //MATERIAL TOTAL
-        if(!materiais.isEmpty()) {
-            Phrase headerTotalM = new Phrase("Total: ", fontEndQuestionsSubtitle);
-            Phrase bodyTotalM = new Phrase("R$ " + servico.getValorTotalMateriais() + ",00", fontValues);
-            headerTotalM.add(bodyTotalM);
+                Paragraph m = new Paragraph(bodyMaterial);
+                m.setSpacingAfter(5f);
+                m.setAlignment(Element.ALIGN_LEFT);
+                try {
+                    document.add(m);
+                } catch (DocumentException e) {
+                    throw new RuntimeException(e);
+                }
 
-            Paragraph totalM = new Paragraph(headerTotalM);
-            totalM.setAlignment(Element.ALIGN_LEFT);
-            document.add(totalM);
+            });
+            //----------------------------------------------------------------------------------------------
+
+            //MATERIAL TOTAL
+            if (!materiais.isEmpty()) {
+                Phrase headerTotalM = new Phrase("Total: ", fontEndQuestionsSubtitle);
+                Phrase bodyTotalM = new Phrase("R$ " + servico.getValorTotalMateriais() + ",00", fontValues);
+                headerTotalM.add(bodyTotalM);
+
+                Paragraph totalM = new Paragraph(headerTotalM);
+                totalM.setAlignment(Element.ALIGN_LEFT);
+                document.add(totalM);
+            }
         }
         //----------------------------------------------------------------------------------------------
 
         //MAO DE OBRA
-        Phrase headerObra = new Phrase("Mão de Obra: ", fontEndQuestionsStyled);
-        Phrase bodyObra = new Phrase("R$ " + servico.getMaoDeObra() + ",00", fontValues);
-        headerObra.add(bodyObra);
+        if(!ocultarMaoDeObra) {
+            Phrase headerObra = new Phrase("Mão de Obra: ", fontEndQuestionsStyled);
+            Phrase bodyObra = new Phrase("R$ " + servico.getMaoDeObra() + ",00", fontValues);
+            headerObra.add(bodyObra);
 
-        Paragraph obra = new Paragraph(headerObra);
-        obra.setSpacingBefore(10f);
-        obra.setAlignment(Element.ALIGN_LEFT);
-        document.add(obra);
+            Paragraph obra = new Paragraph(headerObra);
+            obra.setSpacingBefore(10f);
+            obra.setAlignment(Element.ALIGN_LEFT);
+            document.add(obra);
+        }
         //----------------------------------------------------------------------------------------------
 
         document.add(divider());
@@ -275,14 +278,16 @@ public class CreateAttachmentFile {
         //----------------------------------------------------------------------------------------------
 
         //Desconto
-        Phrase headerDesconto = new Phrase("Desconto: ", fontEndQuestionsStyled);
-        Phrase bodyDesconto = new Phrase(servico.getDesconto() + "% | " + "R$ " + (Integer.parseInt(servico.getValorPagamentoFinal())*servico.getDesconto())/100 + ",00", fontImportant);
-        headerDesconto.add(bodyDesconto);
+        if(!ocultarDesconto) {
+            Phrase headerDesconto = new Phrase("Desconto: ", fontEndQuestionsStyled);
+            Phrase bodyDesconto = new Phrase(servico.getDesconto() + "% | " + "R$ " + (Integer.parseInt(servico.getValorPagamentoFinal()) * servico.getDesconto()) / 100 + ",00", fontImportant);
+            headerDesconto.add(bodyDesconto);
 
-        Paragraph desconto = new Paragraph(headerDesconto);
-        desconto.setSpacingBefore(10f);
-        desconto.setAlignment(Element.ALIGN_LEFT);
-        document.add(desconto);
+            Paragraph desconto = new Paragraph(headerDesconto);
+            desconto.setSpacingBefore(10f);
+            desconto.setAlignment(Element.ALIGN_LEFT);
+            document.add(desconto);
+        }
         //----------------------------------------------------------------------------------------------
 
         //ENTRADA
@@ -368,7 +373,7 @@ public class CreateAttachmentFile {
         return start;
     }
     private Paragraph divider(){
-        Phrase p = new Phrase("_____________________________________________________________________", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, new BaseColor(123, 123, 123, 1)));
+        Phrase p = new Phrase("__________________________________________________________________", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, new BaseColor(123, 123, 123, 1)));
         Paragraph a = new Paragraph(p);
         a.setAlignment(Element.ALIGN_CENTER);
         return new Paragraph(p);
