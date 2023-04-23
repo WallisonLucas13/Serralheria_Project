@@ -206,7 +206,7 @@ public class CreateAttachmentFile {
             Phrase headerMateriais = new Phrase("Materiais", fontEndQuestionsStyled);
 
             Paragraph materiaisP = new Paragraph(headerMateriais);
-            materiaisP.setSpacingBefore(-15f);
+            materiaisP.setSpacingBefore(-25f);
             materiaisP.setSpacingAfter(10f);
             materiaisP.setAlignment(Element.ALIGN_RIGHT);
             document.add(materiaisP);
