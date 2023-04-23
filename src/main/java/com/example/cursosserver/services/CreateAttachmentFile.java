@@ -90,7 +90,7 @@ public class CreateAttachmentFile {
 
         Font fontEndQuestionsStyled = new Font();
         fontEndQuestionsStyled.setColor(new BaseColor(255, 187, 51));
-        fontEndQuestionsStyled.setSize(12);
+        fontEndQuestionsStyled.setSize(14);
 
         //TITLE
         Paragraph title = new Paragraph(new Phrase(20f,"Serralheria Qualidade e Pontualidade", FontFactory.getFont(FontFactory.HELVETICA, 18F, new BaseColor(255, 187, 51))));
@@ -109,6 +109,8 @@ public class CreateAttachmentFile {
         Phrase headerPrestador = new Phrase("Prestador", fontEndQuestionsStyled);
 
         Paragraph prestador = new Paragraph(headerPrestador);
+        prestador.setSpacingBefore(10f);
+        prestador.setSpacingAfter(10f);
         prestador.setAlignment(Element.ALIGN_LEFT);
         document.add(prestador);
         //----------------------------------------------------------------------------------------------
@@ -144,7 +146,7 @@ public class CreateAttachmentFile {
         //----------------------------------------------------------------------------------------------
 
         //TELEFONE
-        Phrase headerTel = new Phrase("Cnpj: ", fontEndQuestions);
+        Phrase headerTel = new Phrase("Telefone: ", fontEndQuestions);
         Phrase bodyTel = new Phrase(this.telefone, fontEndQuestions);
         headerTel.add(bodyTel);
 
@@ -192,11 +194,9 @@ public class CreateAttachmentFile {
         //MATERIAL
         materiais.stream().forEach((material) -> {
 
-            Phrase headerMaterial = new Phrase("Material: ", fontEndQuestions);
             Phrase bodyMaterial = new Phrase(formatarMaterial(material), fontEndQuestions);
-            headerMaterial.add(bodyMaterial);
 
-            Paragraph m = new Paragraph(headerMaterial);
+            Paragraph m = new Paragraph(bodyMaterial);
             m.setAlignment(Element.ALIGN_LEFT);
             try {
                 document.add(m);
@@ -216,7 +216,17 @@ public class CreateAttachmentFile {
         totalM.setAlignment(Element.ALIGN_LEFT);
         document.add(totalM);
         //----------------------------------------------------------------------------------------------
-        
+
+        //MAO DE OBRA
+        Phrase headerObra = new Phrase("Mão de Obra: ", fontEndQuestionsStyled);
+        Phrase bodyObra = new Phrase("R$ " + servico.getMaoDeObra() + ",00", fontEndQuestions);
+        headerObra.add(bodyObra);
+
+        Paragraph obra = new Paragraph(headerObra);
+        obra.setAlignment(Element.ALIGN_LEFT);
+        document.add(obra);
+        //----------------------------------------------------------------------------------------------
+
         //ENTRADA
         Phrase headerEntrada = new Phrase("Entrada: ", fontEndQuestionsStyled);
         Phrase bodyEntrada = new Phrase(servico.getPorcentagemEntrada() + "% / " + "R$ " + servico.getValorEntrada() + ",00", fontImportant);
@@ -277,6 +287,6 @@ public class CreateAttachmentFile {
     }
 
     private String formatarMaterial(Material material){
-        return material.getNome() + " | " + "R$ " + material.getValor() + ",00" + " |" + material.getQuant() + " = R$ " + material.getValor()*material.getQuant() + ",00";
+        return material.getNome() + " | " + "R$ " + material.getValor() + ",00" + " /" + material.getQuant() + " = R$ " + material.getValor()*material.getQuant() + ",00";
     }
 }
