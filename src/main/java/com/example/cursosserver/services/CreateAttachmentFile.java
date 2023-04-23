@@ -33,6 +33,9 @@ public class CreateAttachmentFile {
     @Value("${TELEFONE}")
     private String telefone;
 
+    @Value("${EMPRESA_SUBTITLE}")
+    private String empresaSubTitle;
+
     public String create(Cliente cliente, Servico servico, OrcamentoAdressTo orcamentoAdressTo, String mailCompany) throws DocumentException, IOException {
 
         Document document = new Document();
@@ -101,10 +104,10 @@ public class CreateAttachmentFile {
         fontEndQuestionsStyled.setFamily(FontFactory.TIMES_ITALIC);
 
         //TITLE
-        Paragraph title = new Paragraph(new Phrase(20f,"Serralheria Qualidade e Pontualidade", FontFactory.getFont(FontFactory.HELVETICA, 18F, new BaseColor(255, 187, 51))));
+        Paragraph title = new Paragraph(new Phrase(20f,this.empresa, FontFactory.getFont(FontFactory.HELVETICA, 18F, new BaseColor(255, 187, 51))));
         title.setAlignment(Element.ALIGN_CENTER);
         Font fontDeLink = new Font(Font.FontFamily.HELVETICA, 13, Font.BOLD, new BaseColor(255, 187, 51));
-        Paragraph subtitle = new Paragraph(new Phrase(14F, "Esquadrias Metálicas", fontDeLink));
+        Paragraph subtitle = new Paragraph(new Phrase(14F, this.empresaSubTitle, fontDeLink));
         subtitle.setAlignment(Element.ALIGN_CENTER);
 
         document.addTitle("Orçamento");
@@ -255,9 +258,12 @@ public class CreateAttachmentFile {
         document.add(obra);
         //----------------------------------------------------------------------------------------------
 
+        document.add(divider());
+
         //SubTotal
         Phrase headerSub = new Phrase("SubTotal: ", fontEndQuestionsStyled);
-        Phrase bodySub = new Phrase("R$ " + servico.getMaoDeObra()+servico.getValorTotalMateriais() + ",00\n_____________________", fontValues);
+        int t = servico.getMaoDeObra() + servico.getValorTotalMateriais();
+        Phrase bodySub = new Phrase("R$ " + t + ",00\n_____________________", fontValues);
         headerSub.add(bodySub);
 
         Paragraph sub = new Paragraph(headerSub);
@@ -269,7 +275,7 @@ public class CreateAttachmentFile {
 
         //ENTRADA
         Phrase headerEntrada = new Phrase("Entrada: ", fontEndQuestionsStyled);
-        Phrase bodyEntrada = new Phrase(servico.getPorcentagemEntrada() + "% / " + "R$ " + servico.getValorEntrada() + ",00", fontImportant);
+        Phrase bodyEntrada = new Phrase(servico.getPorcentagemEntrada() + "% | " + "R$ " + servico.getValorEntrada() + ",00", fontImportant);
         headerEntrada.add(bodyEntrada);
 
         Paragraph entrada = new Paragraph(headerEntrada);
@@ -313,6 +319,8 @@ public class CreateAttachmentFile {
         document.add(formaPagamentoFinal);
         //------------------------------------------------------------------------------------------------
 
+        document.add(divider());
+
         //Data Emissão
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -344,5 +352,9 @@ public class CreateAttachmentFile {
 
     private String formatarMaterial(Material material){
         return material.getNome() + " | " + "R$ " + material.getValor() + ",00" + " /" + material.getQuant() + " = R$ " + material.getValor()*material.getQuant() + ",00";
+    }
+    private Paragraph divider(){
+        Phrase p = new Phrase("____________________________________________________________________________________________", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, new BaseColor(123, 123, 123, 1)));
+        return new Paragraph(p);
     }
 }
