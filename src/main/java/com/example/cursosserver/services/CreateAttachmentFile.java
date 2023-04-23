@@ -110,8 +110,8 @@ public class CreateAttachmentFile {
         PdfPTable tableDescontoAplicado = new PdfPTable(new float[]{2f, 1f, 3f, 2f});
         tableDescontoAplicado.setWidthPercentage(100f);
 
-        PdfPTable tableEntrada = new PdfPTable(new float[]{1f, 2f, 2f, 3f});
-        tableEntrada.setWidthPercentage(100f);
+        PdfPTable tableEntrada = new PdfPTable(new float[]{1f, 2f});
+        tableEntrada.setWidthPercentage(40f);
 
         PdfPTable tableTime = new PdfPTable(new float[]{2f, 1f});
         tableTime.setWidthPercentage(40f);
@@ -161,7 +161,9 @@ public class CreateAttachmentFile {
         tableServicoBody.completeRow();
         PdfPCell desc = cellBackgroundGray("Descrição", fontTrs);
         desc.setVerticalAlignment(Element.ALIGN_CENTER);
+        desc.setHorizontalAlignment(Element.ALIGN_CENTER);
         tableServicoBody.addCell(desc);
+
         PdfPCell c = cellConteudo(servico.getDesc().replace("\n", " "), fontBody);
         c.setMinimumHeight(100f);
         c.setVerticalAlignment(Element.ALIGN_CENTER);
@@ -214,9 +216,6 @@ public class CreateAttachmentFile {
 
         tableEntrada.addCell(cellBackgroundGray("Entrada", fontTrs));
         tableEntrada.addCell(cellConteudo(String.valueOf(servico.getPorcentagemEntrada()) + "% / " + "R$ " + servico.getValorEntrada() + ",00", fontImportant));
-        tableEntrada.addCell(cellBackgroundGray("Forma de Pagamento", fontTrs));
-        tableEntrada.addCell(cellConteudo("Débito | Crédito | Pix | Dinheiro", fontValues));
-
 
         Paragraph title = new Paragraph(new Phrase(20f,"Serralheria Qualidade e Pontualidade", FontFactory.getFont(FontFactory.HELVETICA, 18F)));
         title.setAlignment(Element.ALIGN_CENTER);
@@ -265,8 +264,8 @@ public class CreateAttachmentFile {
         document.add(paragraphEmpty());
         document.add(tableEntrada);
 
-        Phrase frase = new Phrase("R$ " + servico.getValorPagamentoFinal() + ",00", fontValues);
-        Paragraph pagamentoFinal = new Paragraph(new Phrase("Total a pagar na conclusão do serviço: " + frase, FontFactory.getFont(FontFactory.HELVETICA, 14)));
+        Phrase value = new Phrase("R$ " + servico.getValorPagamentoFinal() + ",00", fontValues);
+        Paragraph pagamentoFinal = new Paragraph("Total a pagar na conclusão do serviço: " + value.getContent());
         pagamentoFinal.setAlignment(Element.ALIGN_LEFT);
         pagamentoFinal.setSpacingBefore(-14f);
         document.add(paragraphEmpty());
@@ -274,7 +273,7 @@ public class CreateAttachmentFile {
         document.add(pagamentoFinal);
         document.add(paragraphEmpty());
 
-        Paragraph formaPagamentoFinal = new Paragraph(new Phrase("Forma de Pagamento: DÉBITO | CRÉDITO | PIX | DINHEIRO", fontImportant));
+        Paragraph formaPagamentoFinal = new Paragraph(new Phrase("Formas de Pagamento: DÉBITO | CRÉDITO | PIX | DINHEIRO", fontImportant));
         pagamentoFinal.setAlignment(Element.ALIGN_LEFT);
         pagamentoFinal.setSpacingBefore(-14f);
         document.add(formaPagamentoFinal);
