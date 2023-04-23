@@ -160,6 +160,16 @@ public class CreateAttachmentFile {
         document.add(tel);
         //----------------------------------------------------------------------------------------------
 
+        //LOCAL
+        Phrase headerLocal = new Phrase("Localização: ", fontEndQuestionsSubtitle);
+        Phrase bodyLocal = new Phrase("Uberlândia - MG", fontEndQuestions);
+        headerLocal.add(bodyLocal);
+
+        Paragraph local = new Paragraph(headerLocal);
+        local.setAlignment(Element.ALIGN_LEFT);
+        document.add(local);
+        //----------------------------------------------------------------------------------------------
+
         //SERVICO HEADER
         Phrase headerServico = new Phrase("Serviço", fontEndQuestionsStyled);
 
