@@ -116,6 +116,8 @@ public class CreateAttachmentFile {
         document.add(subtitle);
         //-------------------------------------------------------------------------------------------------
 
+        document.add(divider());
+
         //PRESTADOR HEADER
         Phrase headerPrestador = new Phrase("Prestador", fontEndQuestionsStyled);
 
@@ -237,7 +239,7 @@ public class CreateAttachmentFile {
 
         //MATERIAL TOTAL
         if(!materiais.isEmpty()) {
-            Phrase headerTotalM = new Phrase("Total: ", fontEndQuestionsStyled);
+            Phrase headerTotalM = new Phrase("Total: ", fontEndQuestionsSubtitle);
             Phrase bodyTotalM = new Phrase("R$ " + servico.getValorTotalMateriais() + ",00", fontValues);
             headerTotalM.add(bodyTotalM);
 
@@ -273,6 +275,17 @@ public class CreateAttachmentFile {
         document.add(sub);
         //----------------------------------------------------------------------------------------------
 
+        //Desconto
+        Phrase headerDesconto = new Phrase("Desconto: ", fontEndQuestionsStyled);
+        Phrase bodyDesconto = new Phrase(servico.getDesconto() + "% | " + "R$ " + (Integer.parseInt(servico.getValorPagamentoFinal())*servico.getDesconto())/100 + ",00", fontImportant);
+        headerDesconto.add(bodyDesconto);
+
+        Paragraph desconto = new Paragraph(headerDesconto);
+        desconto.setSpacingBefore(10f);
+        desconto.setAlignment(Element.ALIGN_LEFT);
+        document.add(desconto);
+        //----------------------------------------------------------------------------------------------
+
         //ENTRADA
         Phrase headerEntrada = new Phrase("Entrada: ", fontEndQuestionsStyled);
         Phrase bodyEntrada = new Phrase(servico.getPorcentagemEntrada() + "% | " + "R$ " + servico.getValorEntrada() + ",00", fontImportant);
@@ -284,16 +297,7 @@ public class CreateAttachmentFile {
         document.add(entrada);
         //----------------------------------------------------------------------------------------------
 
-        //Desconto
-        Phrase headerDesconto = new Phrase("Desconto: ", fontEndQuestionsStyled);
-        Phrase bodyDesconto = new Phrase(servico.getDesconto() + "% | " + "R$ " + (Integer.parseInt(servico.getValorPagamentoFinal())*servico.getDesconto())/100 + ",00", fontImportant);
-        headerDesconto.add(bodyDesconto);
-
-        Paragraph desconto = new Paragraph(headerDesconto);
-        desconto.setSpacingBefore(10f);
-        desconto.setAlignment(Element.ALIGN_LEFT);
-        document.add(desconto);
-        //----------------------------------------------------------------------------------------------
+        document.add(divider());
 
         //Total a pagar
         Phrase value = new Phrase("R$ " + servico.getValorPagamentoFinal() + ",00", fontValues);
@@ -354,7 +358,7 @@ public class CreateAttachmentFile {
         return material.getNome() + " | " + "R$ " + material.getValor() + ",00" + " /" + material.getQuant() + " = R$ " + material.getValor()*material.getQuant() + ",00";
     }
     private Paragraph divider(){
-        Phrase p = new Phrase("____________________________________________________________________________________________", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, new BaseColor(123, 123, 123, 1)));
+        Phrase p = new Phrase("____________________________________________________________", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, new BaseColor(123, 123, 123, 1)));
         return new Paragraph(p);
     }
 }
