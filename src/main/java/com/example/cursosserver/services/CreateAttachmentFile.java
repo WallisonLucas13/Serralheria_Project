@@ -218,9 +218,9 @@ public class CreateAttachmentFile {
         tableEntrada.addCell(cellBackgroundGray("Entrada", fontTrs));
         tableEntrada.addCell(cellConteudo(String.valueOf(servico.getPorcentagemEntrada()) + "% / " + "R$ " + servico.getValorEntrada() + ",00", fontImportant));
 
-        Paragraph title = new Paragraph(new Phrase(20f,"Serralheria Qualidade e Pontualidade", FontFactory.getFont(FontFactory.HELVETICA, 18F)));
+        Paragraph title = new Paragraph(new Phrase(20f,"Serralheria Qualidade e Pontualidade", FontFactory.getFont(FontFactory.HELVETICA, 18F, new BaseColor(255, 187, 51))));
         title.setAlignment(Element.ALIGN_CENTER);
-        Font fontDeLink = new Font(Font.FontFamily.HELVETICA, 13, Font.BOLD);
+        Font fontDeLink = new Font(Font.FontFamily.HELVETICA, 13, Font.BOLD, new BaseColor(255, 187, 51));
         Paragraph subtitle = new Paragraph(new Phrase(14F, "Esquadrias Metálicas", fontDeLink));
         subtitle.setAlignment(Element.ALIGN_CENTER);
 
