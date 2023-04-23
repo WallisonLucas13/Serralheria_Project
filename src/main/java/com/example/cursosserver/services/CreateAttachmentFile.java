@@ -79,7 +79,7 @@ public class CreateAttachmentFile {
 
         Font fontEndQuestions = new Font();
         fontEndQuestions.setColor(new BaseColor(244, 244, 244, 1));
-        fontEndQuestions.setSize(15);
+        fontEndQuestions.setSize(14);
 
         //TABLES
         PdfPTable tablePrestador = new PdfPTable(new float[]{5f});
@@ -176,7 +176,7 @@ public class CreateAttachmentFile {
         tableServicoBody.addCell(desc);
 
         PdfPCell c = cellConteudo(servico.getDesc().replace("\n", " "), fontBody);
-        c.setMinimumHeight(100f);
+        c.setMinimumHeight(80f);
         c.setVerticalAlignment(Element.ALIGN_CENTER);
         tableServicoBody.addCell(c);
         tableServicoBody.completeRow();
