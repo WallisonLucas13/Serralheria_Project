@@ -60,7 +60,7 @@ public class CreateAttachmentFile {
         //FONTS
         Font fontTrs = new Font(Font.FontFamily.HELVETICA);
         fontTrs.setStyle(Font.BOLD);
-        fontTrs.setColor(new BaseColor(34, 35, 35));
+        fontTrs.setColor(new BaseColor(255, 187, 51));
 
         Font fontBody = new Font();
         fontBody.setSize(11);
@@ -276,7 +276,7 @@ public class CreateAttachmentFile {
         Phrase value = new Phrase("R$ " + servico.getValorPagamentoFinal() + ",00", fontValues);
         Phrase text = new Phrase("Total a pagar na conclusão do serviço: ");
         text.add(value);
-        text.setFont(new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD));
+        text.setFont(new Font(Font.FontFamily.HELVETICA, 17, Font.BOLD, new BaseColor(255, 187, 51)));
 
         Paragraph pagamentoFinal = new Paragraph(text);
         pagamentoFinal.setAlignment(Element.ALIGN_LEFT);
@@ -294,13 +294,13 @@ public class CreateAttachmentFile {
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-        Paragraph time = new Paragraph(new Phrase(12F,"Data de Emissão: " + format.format(date), FontFactory.getFont(FontFactory.HELVETICA, 11)));
+        Paragraph time = new Paragraph(new Phrase(12F,"Data de Emissão: " + format.format(date), FontFactory.getFont(FontFactory.HELVETICA, 11, new BaseColor(220, 221, 216))));
         time.setAlignment(Element.ALIGN_RIGHT);
         time.setSpacingBefore(9f);
         document.add(time);
 
 
-        Paragraph msg = new Paragraph(new Phrase(14F, "O Senhor é o meu pastor: nada me faltará.\nSalmos 23:1", FontFactory.getFont(FontFactory.TIMES_ITALIC)));
+        Paragraph msg = new Paragraph(new Phrase(14F, "O Senhor é o meu pastor: nada me faltará.\nSalmos 23:1", FontFactory.getFont(FontFactory.TIMES_ITALIC, 11, new BaseColor(220, 221, 216))));
         msg.setAlignment(Element.ALIGN_LEFT);
         msg.setSpacingBefore(-14f);
         document.add(msg);
