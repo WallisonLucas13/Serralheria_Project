@@ -51,6 +51,7 @@ public class CreateAttachmentFile {
         rectangle.setBorder(Rectangle.BOX);
         rectangle.setBorderWidth(3);
         rectangle.setBorderColor(BaseColor.BLACK);
+        rectangle.setBackgroundColor(new BaseColor(34, 35, 35));
 
         document.setPageSize(rectangle);
         document.open();
@@ -283,7 +284,6 @@ public class CreateAttachmentFile {
         pagamentoFinal.setAlignment(Element.ALIGN_LEFT);
         pagamentoFinal.setSpacingBefore(-14f);
         document.add(formaPagamentoFinal);
-        document.add(paragraphEmpty());
 
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
