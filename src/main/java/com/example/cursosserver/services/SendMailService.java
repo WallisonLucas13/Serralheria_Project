@@ -23,6 +23,18 @@ public class SendMailService{
     @Value("${MAIL_COMPANY}")
     private String mailCompany;
 
+    @Value("${EMPRESA}")
+    private String empresa;
+
+    @Value("${CNPJ}")
+    private String cnpj;
+
+    @Value("${TELEFONE}")
+    private String telefone;
+
+    @Value("${EMPRESA_SUBTITLE}")
+    private String empresaSubTitle;
+
     @Autowired
     private JavaMailSender javaMailSender;
     @Autowired
@@ -51,7 +63,9 @@ public class SendMailService{
     public void createMailAndSendWithAttachments(OrcamentoAdressTo adress, Cliente cliente, Servico servico) {
 
         try {
-            String orcamento = createAttachmentFile.create(cliente, servico, adress, mailCompany);
+            String orcamento = createAttachmentFile.create(servico,
+                    adress, mailCompany, empresa, empresaSubTitle, cnpj, telefone);
+
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
             ResourceLoader resourceLoader = new DefaultResourceLoader();

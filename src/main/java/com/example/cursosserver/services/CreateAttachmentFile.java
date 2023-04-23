@@ -1,12 +1,10 @@
 package com.example.cursosserver.services;
 
 import com.example.cursosserver.dtos.OrcamentoAdressTo;
-import com.example.cursosserver.models.Cliente;
 import com.example.cursosserver.models.Material;
 import com.example.cursosserver.models.Servico;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -21,22 +19,13 @@ import java.util.List;
 @Service
 public class CreateAttachmentFile {
 
-    @Value("${EMPRESA}")
-    private String empresa;
-
-    @Value("${CNPJ}")
-    private String cnpj;
-
-    @Value("${EMAIL}")
-    private String email;
-
-    @Value("${TELEFONE}")
-    private String telefone;
-
-    @Value("${EMPRESA_SUBTITLE}")
-    private String empresaSubTitle;
-
-    public String create(Cliente cliente, Servico servico, OrcamentoAdressTo orcamentoAdressTo, String mailCompany) throws DocumentException, IOException {
+    public String create(Servico servico,
+                         OrcamentoAdressTo orcamentoAdressTo,
+                         String mailCompany,
+                         String empresa,
+                         String empresaSubTitle,
+                         String cnpj,
+                         String telefone) throws DocumentException, IOException {
 
         Document document = new Document();
 
@@ -104,10 +93,10 @@ public class CreateAttachmentFile {
         fontEndQuestionsStyled.setFamily(FontFactory.TIMES_ITALIC);
 
         //TITLE
-        Paragraph title = new Paragraph(new Phrase(20f,this.empresa, FontFactory.getFont(FontFactory.HELVETICA, 18F, new BaseColor(255, 187, 51))));
+        Paragraph title = new Paragraph(new Phrase(20f,empresa, FontFactory.getFont(FontFactory.HELVETICA, 18F, new BaseColor(255, 187, 51))));
         title.setAlignment(Element.ALIGN_CENTER);
         Font fontDeLink = new Font(Font.FontFamily.HELVETICA, 13, Font.BOLD, new BaseColor(255, 187, 51));
-        Paragraph subtitle = new Paragraph(new Phrase(14F, this.empresaSubTitle, fontDeLink));
+        Paragraph subtitle = new Paragraph(new Phrase(14F, empresaSubTitle, fontDeLink));
         subtitle.setAlignment(Element.ALIGN_CENTER);
 
         document.addTitle("Orçamento");
@@ -130,29 +119,29 @@ public class CreateAttachmentFile {
 
         //EMPRESA
         Phrase headerEmpresa = new Phrase("Empresa: ", fontEndQuestionsSubtitle);
-        Phrase bodyEmpresa = new Phrase(this.empresa, fontEndQuestions);
+        Phrase bodyEmpresa = new Phrase(empresa, fontEndQuestions);
         headerEmpresa.add(bodyEmpresa);
 
-        Paragraph empresa = new Paragraph(headerEmpresa);
-        empresa.setSpacingAfter(5f);
-        empresa.setAlignment(Element.ALIGN_LEFT);
-        document.add(empresa);
+        Paragraph empresaP = new Paragraph(headerEmpresa);
+        empresaP.setSpacingAfter(5f);
+        empresaP.setAlignment(Element.ALIGN_LEFT);
+        document.add(empresaP);
         //----------------------------------------------------------------------------------------------
 
         //CNPJ
         Phrase headerCNPJ = new Phrase("Cnpj: ", fontEndQuestionsSubtitle);
-        Phrase bodyCNPJ = new Phrase(this.cnpj, fontEndQuestions);
+        Phrase bodyCNPJ = new Phrase(cnpj, fontEndQuestions);
         headerCNPJ.add(bodyCNPJ);
 
-        Paragraph cnpj = new Paragraph(headerCNPJ);
-        cnpj.setSpacingAfter(5f);
-        cnpj.setAlignment(Element.ALIGN_LEFT);
-        document.add(cnpj);
+        Paragraph cnpjP = new Paragraph(headerCNPJ);
+        cnpjP.setSpacingAfter(5f);
+        cnpjP.setAlignment(Element.ALIGN_LEFT);
+        document.add(cnpjP);
         //----------------------------------------------------------------------------------------------
 
         //EMAIL
         Phrase headerEmail = new Phrase("Email: ", fontEndQuestionsSubtitle);
-        Phrase bodyEmail = new Phrase(this.email, fontEndQuestions);
+        Phrase bodyEmail = new Phrase(mailCompany, fontEndQuestions);
         headerEmail.add(bodyEmail);
 
         Paragraph email = new Paragraph(headerEmail);
@@ -163,7 +152,7 @@ public class CreateAttachmentFile {
 
         //TELEFONE
         Phrase headerTel = new Phrase("Telefone: ", fontEndQuestionsSubtitle);
-        Phrase bodyTel = new Phrase(this.telefone, fontEndQuestions);
+        Phrase bodyTel = new Phrase(telefone, fontEndQuestions);
         headerTel.add(bodyTel);
 
         Paragraph tel = new Paragraph(headerTel);
@@ -343,7 +332,7 @@ public class CreateAttachmentFile {
         //------------------------------------------------------------------------------------------------
 
         //Footer
-        Paragraph footer = new Paragraph(new Phrase("By "+ this.empresa, FontFactory.getFont(FontFactory.TIMES_ITALIC, 11, new BaseColor(255, 187, 51))));
+        Paragraph footer = new Paragraph(new Phrase("By "+ empresa, FontFactory.getFont(FontFactory.TIMES_ITALIC, 11, new BaseColor(255, 187, 51))));
         footer.setAlignment(Element.ALIGN_CENTER);
         footer.setSpacingBefore(25f);
         document.add(footer);
@@ -358,7 +347,7 @@ public class CreateAttachmentFile {
         return material.getNome() + " | " + "R$ " + material.getValor() + ",00" + " /" + material.getQuant() + " = R$ " + material.getValor()*material.getQuant() + ",00";
     }
     private Paragraph divider(){
-        Phrase p = new Phrase("_________________________________________________________________", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, new BaseColor(123, 123, 123, 1)));
+        Phrase p = new Phrase("_____________________________________________________________________", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, new BaseColor(123, 123, 123, 1)));
         Paragraph a = new Paragraph(p);
         a.setAlignment(Element.ALIGN_CENTER);
         return new Paragraph(p);
