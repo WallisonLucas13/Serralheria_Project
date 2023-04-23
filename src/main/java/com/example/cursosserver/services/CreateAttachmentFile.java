@@ -255,6 +255,18 @@ public class CreateAttachmentFile {
         document.add(obra);
         //----------------------------------------------------------------------------------------------
 
+        //SubTotal
+        Phrase headerSub = new Phrase("SubTotal: ", fontEndQuestionsStyled);
+        Phrase bodySub = new Phrase("R$ " + servico.getMaoDeObra()+servico.getValorTotalMateriais() + ",00\n_____________________", fontValues);
+        headerSub.add(bodySub);
+
+        Paragraph sub = new Paragraph(headerSub);
+        sub.setSpacingBefore(10f);
+        sub.setSpacingAfter(5f);
+        sub.setAlignment(Element.ALIGN_CENTER);
+        document.add(sub);
+        //----------------------------------------------------------------------------------------------
+
         //ENTRADA
         Phrase headerEntrada = new Phrase("Entrada: ", fontEndQuestionsStyled);
         Phrase bodyEntrada = new Phrase(servico.getPorcentagemEntrada() + "% / " + "R$ " + servico.getValorEntrada() + ",00", fontImportant);
