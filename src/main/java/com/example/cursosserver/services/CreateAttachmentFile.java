@@ -121,6 +121,7 @@ public class CreateAttachmentFile {
         headerEmpresa.add(bodyEmpresa);
 
         Paragraph empresa = new Paragraph(headerEmpresa);
+        empresa.setSpacingAfter(5f);
         empresa.setAlignment(Element.ALIGN_LEFT);
         document.add(empresa);
         //----------------------------------------------------------------------------------------------
@@ -131,6 +132,7 @@ public class CreateAttachmentFile {
         headerCNPJ.add(bodyCNPJ);
 
         Paragraph cnpj = new Paragraph(headerCNPJ);
+        cnpj.setSpacingAfter(5f);
         cnpj.setAlignment(Element.ALIGN_LEFT);
         document.add(cnpj);
         //----------------------------------------------------------------------------------------------
@@ -141,6 +143,7 @@ public class CreateAttachmentFile {
         headerEmail.add(bodyEmail);
 
         Paragraph email = new Paragraph(headerEmail);
+        email.setSpacingAfter(5f);
         email.setAlignment(Element.ALIGN_LEFT);
         document.add(email);
         //----------------------------------------------------------------------------------------------
@@ -159,6 +162,8 @@ public class CreateAttachmentFile {
         Phrase headerServico = new Phrase("Serviço", fontEndQuestionsStyled);
 
         Paragraph servicoP = new Paragraph(headerServico);
+        servicoP.setSpacingBefore(10f);
+        servicoP.setSpacingAfter(10f);
         servicoP.setAlignment(Element.ALIGN_LEFT);
         document.add(servicoP);
         //----------------------------------------------------------------------------------------------
@@ -169,6 +174,7 @@ public class CreateAttachmentFile {
         headerNome.add(bodyNome);
 
         Paragraph nome = new Paragraph(headerNome);
+        nome.setSpacingAfter(5f);
         nome.setAlignment(Element.ALIGN_LEFT);
         document.add(nome);
         //----------------------------------------------------------------------------------------------
@@ -176,7 +182,7 @@ public class CreateAttachmentFile {
         //DESCRICAO
         Phrase headerDesc = new Phrase("Descrição: ", fontEndQuestions);
         Phrase bodyDesc = new Phrase(servico.getDesc(), fontEndQuestions);
-        headerTel.add(bodyDesc);
+        headerDesc.add(bodyDesc);
 
         Paragraph desc = new Paragraph(headerDesc);
         desc.setAlignment(Element.ALIGN_LEFT);
@@ -187,16 +193,27 @@ public class CreateAttachmentFile {
         Phrase headerMateriais = new Phrase("Materiais", fontEndQuestionsStyled);
 
         Paragraph materiaisP = new Paragraph(headerMateriais);
+        materiaisP.setSpacingBefore(10f);
+        materiaisP.setSpacingAfter(10f);
         materiaisP.setAlignment(Element.ALIGN_LEFT);
         document.add(materiaisP);
         //----------------------------------------------------------------------------------------------
 
         //MATERIAL
+        if(materiais.isEmpty()){
+            Phrase bodyEmpty = new Phrase("Não há nenhum material", fontEndQuestions);
+
+            Paragraph e = new Paragraph(bodyEmpty);
+            e.setSpacingAfter(5f);
+            e.setAlignment(Element.ALIGN_LEFT);
+            document.add(e);
+        }
         materiais.stream().forEach((material) -> {
 
             Phrase bodyMaterial = new Phrase(formatarMaterial(material), fontEndQuestions);
 
             Paragraph m = new Paragraph(bodyMaterial);
+            m.setSpacingAfter(5f);
             m.setAlignment(Element.ALIGN_LEFT);
             try {
                 document.add(m);
@@ -223,6 +240,7 @@ public class CreateAttachmentFile {
         headerObra.add(bodyObra);
 
         Paragraph obra = new Paragraph(headerObra);
+        obra.setSpacingBefore(10f);
         obra.setAlignment(Element.ALIGN_LEFT);
         document.add(obra);
         //----------------------------------------------------------------------------------------------
@@ -233,6 +251,7 @@ public class CreateAttachmentFile {
         headerEntrada.add(bodyEntrada);
 
         Paragraph entrada = new Paragraph(headerEntrada);
+        entrada.setSpacingBefore(10f);
         entrada.setAlignment(Element.ALIGN_LEFT);
         document.add(entrada);
         //----------------------------------------------------------------------------------------------
@@ -243,6 +262,8 @@ public class CreateAttachmentFile {
         text.add(value);
 
         Paragraph pagamentoFinal = new Paragraph(text);
+        pagamentoFinal.setSpacingBefore(10f);
+        pagamentoFinal.setSpacingAfter(5f);
         pagamentoFinal.setAlignment(Element.ALIGN_LEFT);
         document.add(pagamentoFinal);
         //-----------------------------------------------------------------------------------------------
@@ -253,7 +274,9 @@ public class CreateAttachmentFile {
         headerPagamentoForm.add(bodyPagamentoForm);
 
         Paragraph formaPagamentoFinal = new Paragraph(headerPagamentoForm);
-        pagamentoFinal.setAlignment(Element.ALIGN_LEFT);
+
+        formaPagamentoFinal.setAlignment(Element.ALIGN_LEFT);
+        formaPagamentoFinal.setSpacingAfter(15f);
         document.add(formaPagamentoFinal);
         //------------------------------------------------------------------------------------------------
 
