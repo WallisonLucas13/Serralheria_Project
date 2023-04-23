@@ -81,6 +81,10 @@ public class CreateAttachmentFile {
         fontEndQuestions.setColor(new BaseColor(244, 244, 244, 1));
         fontEndQuestions.setSize(14);
 
+        Font fontEndQuestionsStyled = new Font();
+        fontEndQuestionsStyled.setColor(new BaseColor(255, 187, 51));
+        fontEndQuestionsStyled.setSize(14);
+
         //TABLES
         PdfPTable tablePrestador = new PdfPTable(new float[]{5f});
         tablePrestador.setWidthPercentage(100f);
@@ -120,9 +124,6 @@ public class CreateAttachmentFile {
 
         PdfPTable tableDescontoAplicado = new PdfPTable(new float[]{2f, 1f, 3f, 2f});
         tableDescontoAplicado.setWidthPercentage(100f);
-
-        PdfPTable tableEntrada = new PdfPTable(new float[]{1f, 2f});
-        tableEntrada.setWidthPercentage(40f);
 
         PdfPTable tableTime = new PdfPTable(new float[]{2f, 1f});
         tableTime.setWidthPercentage(40f);
@@ -225,9 +226,6 @@ public class CreateAttachmentFile {
         tableDescontoAplicado.addCell(cellBackgroundGray("SubTotal com Desconto", fontTrs));
         tableDescontoAplicado.addCell(cellConteudo("R$ " + String.valueOf(servico.getValorFinal()) + ",00", fontValues));
 
-        tableEntrada.addCell(cellBackgroundGray("Entrada", fontTrs));
-        tableEntrada.addCell(cellConteudo(String.valueOf(servico.getPorcentagemEntrada()) + "% / " + "R$ " + servico.getValorEntrada() + ",00", fontImportant));
-
         Paragraph title = new Paragraph(new Phrase(20f,"Serralheria Qualidade e Pontualidade", FontFactory.getFont(FontFactory.HELVETICA, 18F, new BaseColor(255, 187, 51))));
         title.setAlignment(Element.ALIGN_CENTER);
         Font fontDeLink = new Font(Font.FontFamily.HELVETICA, 13, Font.BOLD, new BaseColor(255, 187, 51));
@@ -273,31 +271,37 @@ public class CreateAttachmentFile {
             document.add(tableDescontoAplicado);
         }
 
-        document.add(paragraphEmpty());
-        tableEntrada.setHorizontalAlignment(Element.ALIGN_LEFT);
-        document.add(tableEntrada);
+        //ENTRADA
+        Phrase headerEntrada = new Phrase("Entrada: ", fontEndQuestionsStyled);
+        Phrase bodyEntrada = new Phrase(servico.getPorcentagemEntrada() + "% / " + "R$ " + servico.getValorEntrada() + ",00", fontImportant);
+        headerEntrada.add(bodyEntrada);
 
+        Paragraph entrada = new Paragraph(headerEntrada);
+        entrada.setAlignment(Element.ALIGN_LEFT);
+        document.add(entrada);
+        //----------------------------------------------------------------------------------------------
+
+        //Total a pagar
         Phrase value = new Phrase("R$ " + servico.getValorPagamentoFinal() + ",00", fontValues);
         Phrase text = new Phrase("Total a pagar na conclusão do serviço: ", fontEndQuestions);
         text.add(value);
 
         Paragraph pagamentoFinal = new Paragraph(text);
         pagamentoFinal.setAlignment(Element.ALIGN_LEFT);
-        pagamentoFinal.setSpacingBefore(-14f);
-        document.add(paragraphEmpty());
-        document.add(paragraphEmpty());
         document.add(pagamentoFinal);
-        document.add(paragraphEmpty());
+        //-----------------------------------------------------------------------------------------------
 
+        //Formas Pagamento
         Phrase headerPagamentoForm = new Phrase("Formas de Pagamento: ", fontEndQuestions);
-        Phrase bodyPagamentoForm = new Phrase("DÉBITO | CRÉDITO | PIX | DINHEIRO", fontTrs);
+        Phrase bodyPagamentoForm = new Phrase("DÉBITO | CRÉDITO | PIX | DINHEIRO", FontFactory.getFont(FontFactory.HELVETICA, 14, new BaseColor(255, 187, 51)));
         headerPagamentoForm.add(bodyPagamentoForm);
 
         Paragraph formaPagamentoFinal = new Paragraph(headerPagamentoForm);
         pagamentoFinal.setAlignment(Element.ALIGN_LEFT);
-        pagamentoFinal.setSpacingBefore(-14f);
         document.add(formaPagamentoFinal);
+        //------------------------------------------------------------------------------------------------
 
+        //Data Emissão
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -305,17 +309,21 @@ public class CreateAttachmentFile {
         time.setAlignment(Element.ALIGN_RIGHT);
         time.setSpacingBefore(9f);
         document.add(time);
+        //------------------------------------------------------------------------------------------------
 
-
+        //Mensagem Biblica
         Paragraph msg = new Paragraph(new Phrase(14F, "O Senhor é o meu pastor: nada me faltará.\nSalmos 23:1", FontFactory.getFont(FontFactory.TIMES_ITALIC, 11, new BaseColor(220, 221, 216))));
         msg.setAlignment(Element.ALIGN_LEFT);
         msg.setSpacingBefore(-14f);
         document.add(msg);
+        //------------------------------------------------------------------------------------------------
 
+        //Footer
         Paragraph footer = new Paragraph(new Phrase("By Serralheria Qualidade e Pontualidade", FontFactory.getFont(FontFactory.TIMES_ITALIC, 11, new BaseColor(255, 187, 51))));
         footer.setAlignment(Element.ALIGN_CENTER);
 
         document.add(footer);
+        //-------------------------------------------------------------------------------------------------
         document.close();
 
         return documentName;
