@@ -251,6 +251,7 @@ public class CreateAttachmentFile {
         }
         if(!ocultarMaoDeObra){
             document.add(paragraphEmpty());
+            tableMaoDeObra.setHorizontalAlignment(Element.ALIGN_LEFT);
             document.add(tableMaoDeObra);
             document.add(paragraphEmpty());
         }
@@ -268,6 +269,7 @@ public class CreateAttachmentFile {
         Phrase value = new Phrase("R$ " + servico.getValorPagamentoFinal() + ",00", fontValues);
         Phrase text = new Phrase("Total a pagar na conclusão do serviço: ");
         text.add(value);
+        text.setFont(new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD));
 
         Paragraph pagamentoFinal = new Paragraph(text);
         pagamentoFinal.setAlignment(Element.ALIGN_LEFT);
