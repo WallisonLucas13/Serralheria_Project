@@ -70,11 +70,12 @@ public class CreateAttachmentFile {
         fontValues.setColor(new BaseColor(0, 128, 0));
 
         Font fontImportant = new Font();
-        fontImportant.setColor(new BaseColor(128, 0, 0));
+        fontImportant.setColor(new BaseColor(255, 187, 51));
 
         Font fontTitle = new Font();
         fontTitle.setStyle(Font.BOLD);
         fontTitle.setSize(25);
+        fontTitle.setColor(new BaseColor(255, 187, 51));
 
         //TABLES
         PdfPTable tablePrestador = new PdfPTable(new float[]{5f});
@@ -312,7 +313,7 @@ public class CreateAttachmentFile {
     private PdfPCell cellBackgroundGray(String body, Font font) {
         PdfPCell cell = new PdfPCell(new Phrase(body, font));
         cell.setFixedHeight(20f);
-        cell.setBackgroundColor(new BaseColor(255, 187, 51));
+        cell.setBackgroundColor(new BaseColor(34, 35, 35));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_CENTER);
         return cell;
