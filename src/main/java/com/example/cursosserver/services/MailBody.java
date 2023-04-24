@@ -1,6 +1,5 @@
 package com.example.cursosserver.services;
 
-import com.example.cursosserver.models.Cliente;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -8,10 +7,6 @@ import java.util.Date;
 
 @Service
 public class MailBody {
-
-    public String bodyMail(Cliente cliente) {
-        return "";
-    }
 
     public String attachmentBody(){
         Date date = new Date();
@@ -25,7 +20,4 @@ public class MailBody {
         return "Olá ADM, aqui está o seu código temporário!\n\n" + code;
     }
 
-    public String titleMail(String adress){
-        return "Orçamento";
-    }
 }

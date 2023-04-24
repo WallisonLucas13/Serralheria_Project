@@ -6,7 +6,6 @@ import com.example.cursosserver.dtos.PagamentoFinal;
 import com.example.cursosserver.dtos.ValoresServico;
 import com.example.cursosserver.enums.FormaPagamento;
 import com.example.cursosserver.exceptions.ObjetoInexistenteException;
-import com.example.cursosserver.models.Cliente;
 import com.example.cursosserver.models.Material;
 import com.example.cursosserver.models.Servico;
 import com.example.cursosserver.repositories.ServicoRepository;
@@ -53,23 +52,17 @@ public class ServicoService {
     public void apagarServico(Long id) throws ObjetoInexistenteException{
 
         if(!repository.existsById(id)){
-            throw new ObjetoInexistenteException("Cliente Inexistente!");
+            throw new ObjetoInexistenteException("Serviço Inexistente!");
         }
 
         repository.deleteById(id);
     }
 
     @Transactional
-    public Servico getById(Long id) throws ObjetoInexistenteException{
-        return repository.findById(id).or(() -> {
-            throw new ObjetoInexistenteException("");
-        }).get();
-    }
-
-    @Transactional
     public void addMaterialInServico(Material material, Long idServico){
 
-        Servico servico = repository.findById(idServico).get();
+        Servico servico = repository.findById(idServico)
+                .orElseThrow(() -> new ObjetoInexistenteException("Inexistente"));;
 
         List<Material> novaLista = servico.getMateriais();
         novaLista.add(material);
@@ -103,7 +96,9 @@ public class ServicoService {
     }
 
     public List<Material> listarTodosMateriais(Long id){
-        Servico servico = repository.findById(id).get();
+        Servico servico = repository.findById(id)
+                .orElseThrow(() -> new ObjetoInexistenteException("Inexistente"));
+
         return servico.getMateriais();
     }
 
@@ -120,7 +115,9 @@ public class ServicoService {
 
     @Transactional
     public void setMaoDeObra(int maoDeObra, Long id){
-        Servico servico = repository.findById(id).get();
+        Servico servico = repository.findById(id)
+                .orElseThrow(() -> new ObjetoInexistenteException("Inexistente"));
+
         servico.setMaoDeObra(maoDeObra);
         servico.setValorFinal(servico.getMaoDeObra() + servico.getValorTotalMateriais());
         servico.setValorEntrada(String.valueOf((servico.getValorFinal()*Integer.parseInt(servico.getPorcentagemEntrada()))/100));
@@ -131,17 +128,9 @@ public class ServicoService {
     @Transactional
     public ValoresServico getValores(Long id){
 
-        Servico servico = repository.findById(id).get();
+        Servico servico = repository.findById(id)
+                .orElseThrow(() -> new ObjetoInexistenteException("Inexistente"));
 
-        if(servico.getFormaPagamentoEntrada() == null){
-            servico.setFormaPagamentoEntrada(FormaPagamento.NENHUMA);
-            repository.save(servico);
-        }
-
-        if(servico.getFormaPagamentoFinal() == null){
-            servico.setFormaPagamentoFinal(FormaPagamento.NENHUMA);
-            repository.save(servico);
-        }
 
         ValoresServico valoresServico = new ValoresServico();
         valoresServico.setValor(servico.getMaoDeObra());
@@ -157,10 +146,10 @@ public class ServicoService {
     @Transactional
     public void aplicarDesconto(Long id, int desconto){
 
-        Servico servico = repository.findById(id).get();
+        Servico servico = repository.findById(id)
+                .orElseThrow(() -> new ObjetoInexistenteException("Inexistente"));
 
         servico.setValorFinal(servico.getMaoDeObra() + servico.getValorTotalMateriais());
-        repository.save(servico);
 
         double desc = ((double) desconto / 100) * servico.getValorFinal();
 
@@ -175,19 +164,19 @@ public class ServicoService {
     @Transactional
     public void sendOrcamento(Long id, OrcamentoAdressTo adress){
 
-        Cliente cliente = clienteService.getById(adress.getIdCliente());
-        Servico servico = repository.findById(id).get();
+        Servico servico = repository.findById(id)
+                .orElseThrow(() -> new ObjetoInexistenteException("Inexistente"));;
 
-        sendMailService.createMailAndSendWithAttachments(adress, cliente, servico);
+        sendMailService.createMailAndSendWithAttachments(adress, servico);
     }
 
     @Transactional
     public void sendEntrada(Entrada entrada, Long idServico){
-        Servico servico = repository.findById(idServico).get();
+
+        Servico servico = repository.findById(idServico)
+                .orElseThrow(() -> new ObjetoInexistenteException("Inexistente"));
 
         servico.setValorFinal(servico.getMaoDeObra() + servico.getValorTotalMateriais());
-        repository.save(servico);
-
 
         servico.setPorcentagemEntrada(String.valueOf(entrada.getPorcentagem()));
         servico.setValorEntrada(String.valueOf((servico.getValorFinal()*Integer.parseInt(entrada.getPorcentagem()))/100));
@@ -198,7 +187,9 @@ public class ServicoService {
 
     @Transactional
     public void sendFormaPagamentoFinal(PagamentoFinal pagamentoFinal, Long idServico){
-        Servico servico = repository.findById(idServico).get();
+
+        Servico servico = repository.findById(idServico)
+                .orElseThrow(() -> new ObjetoInexistenteException("Inexistente"));
 
         servico.setFormaPagamentoFinal(formatarFormaPagamento(pagamentoFinal.getFormaPagamento()));
         repository.save(servico);

@@ -27,15 +27,18 @@ public class CreateAttachmentFile {
                          String cnpj,
                          String telefone) throws DocumentException, IOException {
 
-        Document document = new Document();
-
-        String documentName = "Orcamento.pdf";
-
+        //REGRAS DE NEGOCIO
         List<Material> materiais = servico.getMateriais();
 
         boolean ocultarMateriais = orcamentoAdressTo.isOcultarMateriais();
         boolean ocultarMaoDeObra = orcamentoAdressTo.isOcultarMaoDeObra();
         boolean ocultarDesconto = orcamentoAdressTo.isOcultarDesconto();
+        //---------------------------------------------------------------------
+
+        //INSTANCIA DO DOCUMENTO
+        Document document = new Document();
+
+        String documentName = "Orcamento.pdf";
 
         ResourceLoader resourceLoader = new DefaultResourceLoader();
         Resource resource = resourceLoader.getResource("file:files\\" + documentName);
@@ -55,16 +58,9 @@ public class CreateAttachmentFile {
         document.setPageSize(rectangle);
         document.open();
         document.add(rectangle);
+        //--------------------------------------------------------------------------------------------
 
         //FONTS
-        Font fontTrs = new Font(Font.FontFamily.HELVETICA);
-        fontTrs.setStyle(Font.BOLD);
-        fontTrs.setColor(new BaseColor(255, 187, 51));
-
-        Font fontBody = new Font();
-        fontBody.setSize(11);
-        fontBody.setColor(new BaseColor(220, 221, 216));
-
         Font fontValues = new Font();
         fontValues.setColor(new BaseColor(0, 128, 0));
         fontValues.setSize(14);
@@ -359,6 +355,7 @@ public class CreateAttachmentFile {
         return documentName;
     }
 
+    //FORMATAR MATERIAL STRING
     private Phrase formatarMaterial(Material material, Font valuesFont, Font importantFont, Font fontPadrao){
 
         Phrase quant = new Phrase(String.valueOf(material.getQuant()), importantFont);
@@ -373,10 +370,14 @@ public class CreateAttachmentFile {
         start.add(res);
         return start;
     }
+    //------------------------------------------------------------------------------------------------------
+
+    //DIVISER DESIGN
     private Paragraph divider(){
         Phrase p = new Phrase("__________________________________________________________________", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, new BaseColor(123, 123, 123, 1)));
         Paragraph a = new Paragraph(p);
         a.setAlignment(Element.ALIGN_CENTER);
         return new Paragraph(p);
     }
+    //-------------------------------------------------------------------------------
 }

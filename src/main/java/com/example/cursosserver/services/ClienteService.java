@@ -14,8 +14,6 @@ import java.util.List;
 public class ClienteService {
     @Autowired
     private ClienteRepository repository;
-    @Autowired
-    private SendMailService sendMailService;
 
     @Transactional
     public List<Cliente> listarTodos() throws RuntimeException{
@@ -24,13 +22,7 @@ public class ClienteService {
 
     @Transactional
     public Cliente getById(Long id) throws ObjetoInexistenteException {
-
-        boolean exist = repository.existsById(id);
-
-        if(!exist){
-            throw new ObjetoInexistenteException("Cliente Inexistente!");
-        }
-        return repository.findById(id).get();
+        return repository.findById(id).orElseThrow(() -> new ObjetoInexistenteException("Inexistente"));
     }
 
     @Transactional
@@ -65,7 +57,8 @@ public class ClienteService {
     @Transactional
     public void addServicoInClient(Servico servico, Long idCliente){
 
-        Cliente cliente = repository.findById(idCliente).get();
+        Cliente cliente = repository.findById(idCliente)
+                .orElseThrow(() -> new ObjetoInexistenteException("Inexistente"));
 
         List<Servico> novaLista = cliente.getServicos();
         novaLista.add(servico);
@@ -74,8 +67,11 @@ public class ClienteService {
         repository.save(cliente);
     }
 
+    @Transactional
     public List<Servico> listarTodosServicos(Long id){
-        Cliente cliente = repository.findById(id).get();
+        Cliente cliente = repository.findById(id)
+                .orElseThrow(() -> new ObjetoInexistenteException("Inexistente"));
+
         return cliente.getServicos();
     }
 }

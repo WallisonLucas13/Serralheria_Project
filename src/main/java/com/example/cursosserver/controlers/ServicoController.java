@@ -71,38 +71,51 @@ public class ServicoController {
         }
     }
 
+    //DEFINIR MAO DE OBRA - REGRA NEGOCIO
     @PutMapping("/MaoDeObra")
     public ResponseEntity<String> maoDeObra(@RequestBody ValoresServico maoDeObra, @RequestParam(name = "id") Long id){
         service.setMaoDeObra(maoDeObra.getValor(), id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+    //-----------------------------------------------------------
 
+    //RETORNA TODOS OS VALORES RELACIONADOS A REGRA NEGOCIO
     @GetMapping("/Valores")
     public ResponseEntity<ValoresServico> getvalores(@RequestParam(name = "id") Long id){
         return ResponseEntity.status(HttpStatus.OK).body(service.getValores(id));
     }
+    //--------------------------------------------------------------------------------
 
+    //DEFINIR DESCONTO - REGRA NEGOCIO
     @PutMapping("/Desconto")
     public ResponseEntity<String> desconto(@RequestParam(name = "id") Long id, @RequestBody DescontoDto desconto){
         service.aplicarDesconto(id, desconto.getPorcentagem());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+    //---------------------------------------------------------------------------------
 
+    //DEFINIR ENTRADA - REGRA NEGOCIO
     @PutMapping("/Entrada/{id}")
     public ResponseEntity<String> entrada(@PathVariable("id") Long id, @RequestBody Entrada entrada){
         service.sendEntrada(entrada, id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+    //----------------------------------------------------------------------------------
+
+    //DEFINIR PAGAMENTO FINAL - REGRA NEGOCIO
     @PutMapping("/PagamentoFinal/{id}")
     public ResponseEntity<String> pagamentoFinal(@PathVariable("id") Long id, @RequestBody PagamentoFinal pagamentoFinal){
         service.sendFormaPagamentoFinal(pagamentoFinal, id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+    //-----------------------------------------------------------------------------------
 
+    //GERAR ORCAMENTO - REGRA NEGOCIO
     @PostMapping("/Orcamento")
     public ResponseEntity<String> sendOrcamento(@RequestParam("id") Long id, @RequestBody OrcamentoAdressTo adressTo){
         service.sendOrcamento(id, adressTo);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+    //------------------------------------------------------------------------------------
 
 }

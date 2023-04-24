@@ -10,6 +10,9 @@ public class CodeKeyGenerator {
 
         Random random = new Random();
 
+        //Simples Key 64 Digitos
+        int size = 64;
+
         String lowerLetters = "q,w,,e,r,t,y,u,i,o,p,,a,,s,d,f,g,h,j,k,l,ç,z,x,c,v,b,n,m";
         String upperLetters = ",Q,W,E,R,T,Y,U,I,O,P,A,S,D,F,G,H,J,K,L,Ç,Z,X,C,V,B,N,M";
         String numbers = ",1,2,3,4,5,6,7,8,9,0";
@@ -18,7 +21,7 @@ public class CodeKeyGenerator {
         List<String> list = Arrays.asList(keyLine.split(","));
         String keyFinish = "";
 
-        for(int i=0; i<64; i++){
+        for(int i=0; i<size; i++){
             keyFinish += list.get(random.nextInt(list.size()-1));
         }
 

@@ -46,13 +46,13 @@ public class Servico {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private FormaPagamento formaPagamentoEntrada = FormaPagamento.DEFAULT;
+    private FormaPagamento formaPagamentoEntrada = FormaPagamento.NENHUMA;
 
     @Column
     private String valorPagamentoFinal = "0";
 
     @Enumerated(EnumType.STRING)
-    private FormaPagamento formaPagamentoFinal = FormaPagamento.DEFAULT;
+    private FormaPagamento formaPagamentoFinal = FormaPagamento.NENHUMA;
 
     @ManyToOne
     private Cliente cliente;

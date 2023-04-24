@@ -1,7 +1,6 @@
 package com.example.cursosserver.services;
 
 import com.example.cursosserver.dtos.OrcamentoAdressTo;
-import com.example.cursosserver.models.Cliente;
 import com.example.cursosserver.models.Servico;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +39,8 @@ public class SendMailService{
     @Autowired
     private MailBody mailBody;
 
-    private CreateAttachmentFile createAttachmentFile = new CreateAttachmentFile();
-    private CodeKeyGenerator codeKeyGenerator = new CodeKeyGenerator();
+    private final CreateAttachmentFile createAttachmentFile = new CreateAttachmentFile();
+    private final CodeKeyGenerator codeKeyGenerator = new CodeKeyGenerator();
 
     public String createMailAndSend(){
 
@@ -55,12 +54,12 @@ public class SendMailService{
             return code;
         }
         catch (Exception e){
-            System.out.println("Encontramos problemas para enviar o Email! Tente Novamente!");
+            e.printStackTrace();
             return "";
         }
     }
 
-    public void createMailAndSendWithAttachments(OrcamentoAdressTo adress, Cliente cliente, Servico servico) {
+    public void createMailAndSendWithAttachments(OrcamentoAdressTo adress, Servico servico) {
 
         try {
             String orcamento = createAttachmentFile.create(servico,
@@ -70,7 +69,7 @@ public class SendMailService{
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
             ResourceLoader resourceLoader = new DefaultResourceLoader();
 
-            helper.setSubject(mailBody.titleMail(adress.getAdress()));
+            helper.setSubject("Orçamento");
             helper.setFrom("Serralheria");
             helper.setTo(adress.getAdress());
 
@@ -81,7 +80,7 @@ public class SendMailService{
             javaMailSender.send(mimeMessage);
         }
         catch(Exception e){
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 

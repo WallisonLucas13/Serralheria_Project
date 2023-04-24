@@ -149,19 +149,6 @@ public class UserService {
         return keyCode.equals(code);
     }
 
-
-    private RoleModel generateRoleUser(){
-        RoleModel roleModel = new RoleModel();
-        roleModel.setRoleName(RoleName.ROLE_USER);
-        return roleModel;
-    }
-
-    private RoleModel generateRoleRead(){
-        RoleModel roleModel = new RoleModel();
-        roleModel.setRoleName(RoleName.ROLE_READ);
-        return roleModel;
-    }
-
     @Transactional
     public List<UserViewModel> findAllUsers(){
         return repository.findAll().stream()
@@ -187,6 +174,18 @@ public class UserService {
                 .filter(role -> role.getRoleName().name().equals("ROLE_ADMIN"))
                 .collect(Collectors.toList())
                 .isEmpty();
+    }
+
+    private RoleModel generateRoleUser(){
+        RoleModel roleModel = new RoleModel();
+        roleModel.setRoleName(RoleName.ROLE_USER);
+        return roleModel;
+    }
+
+    private RoleModel generateRoleRead(){
+        RoleModel roleModel = new RoleModel();
+        roleModel.setRoleName(RoleName.ROLE_READ);
+        return roleModel;
     }
 
 }

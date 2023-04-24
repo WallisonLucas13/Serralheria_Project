@@ -47,7 +47,9 @@ public class MaterialService {
             throw new ObjetoInexistenteException("Cliente Inexistente!");
         }
 
-        servicoService.apagarMaterialInServico(repository.findById(id).get());
+        servicoService.apagarMaterialInServico(repository.findById(id)
+                .orElseThrow(() -> new ObjetoInexistenteException("Inexistente")));
+
         repository.deleteById(id);
     }
 }
